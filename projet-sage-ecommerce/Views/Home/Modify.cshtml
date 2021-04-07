@@ -1,0 +1,36 @@
+﻿@model projet_sage_ecommerce.Models.CAdxModel
+
+@{
+    ViewBag.Title = "Modify";
+}
+
+<h2> Modify</h2>
+
+<div>
+    @using (Html.BeginForm())
+    {
+        <p>Code de la langue : </p>
+        @Html.TextBox("codeLang_context", Model.CodeLang)
+
+        <p>Alias de la pool : </p>
+        @Html.TextBox("poolAlias_context", Model.PoolAlias)
+
+        <p>Request config : </p>
+        @Html.TextBox("requestConfig_context", Model.RequestConfig)
+
+        <p>WS Name : </p>
+        @Html.TextBox("wsname_param", Model.WsAlias)
+
+        <p>Clé : </p>
+        @Html.TextBox("key_param", Model.Key)
+
+        <p>Valeur : </p>
+        @Html.TextBox("value_param", Model.Value)
+
+        <p>Entrée : </p>
+        @Html.TextBox("xml_entry", Model.Json)
+
+        <input type="submit" value="Valider" />
+    }
+</div>
+<p>@ViewData["message"]</p>

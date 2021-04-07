@@ -1,0 +1,61 @@
+﻿@{
+   
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+        <h1>Demander un devis </h1>
+        <hr />
+        <form>
+            <div class="mb-3">
+                <label for="date" class="form-label">Date</label>
+                <input type="text" class="form-control" id="date" value="@DateTime.Now" aria-describedby="dateHelp" disabled>
+
+                <label for="nom" class="form-label">Nom Client</label>
+                <input type="text" class="form-control" id="nom" aria-describedby="nomHelp">
+
+                <label for="adresse" class="form-label">Adresse</label>
+                <input type="text" class="form-control" id="adresse" aria-describedby="adrHelp">
+
+                <br />
+                <label for="commande" class="form-label">Total Commande</label>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Nom</th>
+                            <th scope="col">Désignation</th>
+                            <th scope="col">Prix</th>
+                            <th scope="col">Quantité</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 1; i <= 3; i++)
+                {
+                        <tr>
+                            <th scope="row">@i</th>
+                            <td>Article @i</td>
+                            <td>Infos</td>
+                            <td>1</td>
+                            <td>1</td>
+                        </tr>
+                }
+                    </tbody>
+                </table>
+            </div>
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">CGU</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Valider</button>
+        </form>
+    </div>
+</body>
+</html>

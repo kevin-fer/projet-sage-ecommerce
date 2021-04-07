@@ -1,0 +1,56 @@
+﻿@model projet_sage_ecommerce.Models.CAdxModel
+
+@{
+    ViewBag.Title = "Article";
+}
+
+<h1>Article_name</h1>
+
+<div class="grid-read">
+
+    <div class="request-container">
+        @using (Html.BeginForm())
+        {
+            <p>Code de la langue : </p>
+            @Html.TextBox("codeLang_context", Model.CodeLang)
+
+            <p>Alias de la pool : </p>
+            @Html.TextBox("poolAlias_context", Model.PoolAlias)
+
+            <p>Request config : </p>
+            @Html.TextBox("requestConfig_context", Model.RequestConfig)
+
+            <p>WS Name : </p>
+            @Html.TextBox("wsname_param", Model.WsAlias)
+
+            <p>Entrée : </p>
+            @Html.TextBox("entreexml", Model.Key)
+
+            <input type="submit" value="Valider" />
+        }
+    </div>
+    <!--<p>@ViewData["message"]</p>-->
+
+    <div class="result-container">
+        <!--<p>Nom : @ViewData["nom0"]</p>
+        <p>Designation : @ViewData["des0"]</p>
+        <p>Image :</p>
+        <img src="data:image/png;base64, @ViewData["blob0"]" alt="Veuillez remplir le formulaire" />
+        <p>Prix : @ViewData["prix0"]</p>
+        <p>Qt : @ViewData["quantite0"]</p>-->
+        @if (@ViewData["nom0"] != null)
+        {
+            for (int i = 0; i < Int32.Parse(@ViewData["length"].ToString()); i++)
+            {
+                <p>Nom : @ViewData["nom" + i.ToString()]</p><!--Nom de larticle-->
+                <p>Designation : @ViewData["des" + i.ToString()]</p><!--Nom de larticle-->
+                <p>Image :</p>
+                <img src="data:image/png;base64, @ViewData["blob"+i.ToString()]" alt="Veuillez remplir le formulaire" /><!--Image-->
+                <p>Prix : @ViewData["prix" + i.ToString()]</p>
+                <p>Qt : @ViewData["quantite" + i.ToString()]</p>
+            }
+        }
+
+    </div>
+
+</div>

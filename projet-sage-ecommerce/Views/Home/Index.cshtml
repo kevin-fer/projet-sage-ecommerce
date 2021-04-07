@@ -1,0 +1,39 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<div class="container">
+    <div class="jumbotron text-center">
+        <h1>Dada Shop</h1>
+        <p class="lead">Bienvenue sur le Dada Shop, le meilleur site e-commerce de l'histoire d'internet</p>
+        <p><a href="https://localhost:44365/Home/Catalogue" class="btn btn-primary btn-lg">Voir plus d'articles &raquo;</a></p>
+    </div>
+</div>
+
+@if (Int32.Parse(@ViewData["length"].ToString()) > 1)
+{
+    <div class="container text-justify">
+        <div class="row">
+            @for (int i = 0; i < Int32.Parse(@ViewData["length"].ToString()); i++)
+            {
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="card">
+                    <img src="data:image/png;base64, @ViewData["blob"+i.ToString()]" class="card-img-top" alt="..." width="250" height="250">
+                    <div class="card-body">
+                        <h5 class="card-title">@ViewData["des" + i.ToString()]</h5>
+                        @if (Int32.Parse(@ViewData["quantite" + i.ToString()].ToString()) == 0)
+                        {
+                            <h5><span style="background-color: #ECE8E5;" class="badge">@ViewData["prix" + i.ToString()] €</span> <span style="background-color: #FA3A3A; color: #FFFFFF;" class="badge">Rupture de stock</span></h5>
+                        }
+                        else
+                        {
+                            <h5><span style="background-color: #ECE8E5;" class="badge">@ViewData["prix" + i.ToString()] €</span> <span style="background-color: #20c997; color: #FFFFFF;" class="badge">@ViewData["quantite" + i.ToString()] en stock</span></h5>
+                        }
+                        @Html.ActionLink("Voir plus", "Item", "Home", new { id = @ViewData["nom" + i.ToString()] }, "btn btn-primary")
+                    </div>
+                </div>
+                <br />
+            </div>
+            }
+        </div>
+    </div>
+}
