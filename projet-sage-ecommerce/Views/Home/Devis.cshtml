@@ -13,8 +13,12 @@
     <div>
         <h1>Panier</h1>
         <hr />
+        <button type="button" class="btn btn-warning">Modifier</button>
+        <button type="button" class="btn btn-danger">Supprimer</button>
+        
         <form>
             <div class="mb-3">
+                <br />
                 <label for="date" class="form-label">Date</label>
                 <input type="text" class="form-control" id="date" value="@DateTime.Now.Date.ToString().Substring(0,10)" aria-describedby="dateHelp" disabled>
 
@@ -41,27 +45,28 @@
                         {
                             <tr>
                                 <th scope="row">@i</th>
-                                <td>Article @i</td>
-                                <td>Infos</td>
-                                <td>1</td>
-                                <td>1</td>
+                                <td>@ViewData["nom"]</td>
+                                <td>@ViewData["des"]</td>
+                                <td>@ViewData["prix"] @ViewData["devise"]</td>
+                                <td><input type="number" id="qte" value="0" aria-describedby="qteHelp"></td>
                             </tr>
                         }
                     </tbody>
                 </table>
+                <div style="float: right">
+                    <label for="totalc" class="form-label">Total Commande</label>
+                    <input type="text" class="form-control" id="totalc" value="0" aria-describedby="totalcHelp" disabled>
+                </div>
             </div>
-
+            
+            <br />
             <div class="mb-3 form-check">
-                <label for="totalc" class="form-label">Total Commande</label>
-                <input type="text" class="form-control" id="totalc" value="0" aria-describedby="totalcHelp" disabled>
-
                 <input type="checkbox" class="form-check-input" id="exampleCheck1">
                 <label class="form-check-label" for="exampleCheck1">CGU</label>
             </div>
             <button type="submit" class="btn btn-primary">Valider</button>
         </form>
-        <button type="button" class="btn btn-danger">Modifier</button>
-        <button type="button" class="btn btn-warning">Supprimer</button>
+
     </div>
 </body>
 </html>

@@ -279,9 +279,14 @@ namespace projet_sage_ecommerce.Controllers
         public ActionResult Devis()
         {
             CAdxModel client = new CAdxModel();
-            ViewBag.Message = "Your Devis page.";
 
-            return View();
+            client.WsAlias = Request.Form["wsname_param"];
+            client.Json = Request.Form["entreexml"];
+
+            client.save();
+            //nblig
+            //HHXBOX
+            return View("Item", c);
         }
         public ActionResult Commande()
         {
@@ -290,5 +295,6 @@ namespace projet_sage_ecommerce.Controllers
 
             return View();
         }
+       
     }
 }
