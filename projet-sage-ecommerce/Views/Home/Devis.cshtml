@@ -11,12 +11,12 @@
 </head>
 <body>
     <div>
-        <h1>Demander un devis </h1>
+        <h1>Panier</h1>
         <hr />
         <form>
             <div class="mb-3">
                 <label for="date" class="form-label">Date</label>
-                <input type="text" class="form-control" id="date" value="@DateTime.Now" aria-describedby="dateHelp" disabled>
+                <input type="text" class="form-control" id="date" value="@DateTime.Now.Date.ToString().Substring(0,10)" aria-describedby="dateHelp" disabled>
 
                 <label for="nom" class="form-label">Nom Client</label>
                 <input type="text" class="form-control" id="nom" aria-describedby="nomHelp">
