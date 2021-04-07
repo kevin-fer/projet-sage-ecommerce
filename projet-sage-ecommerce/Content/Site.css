@@ -26,14 +26,7 @@ textarea {
 }
 
 
-/*page de lecture d'un article*/
-.grid-read {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 1fr;
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
-}
+/*recherche d'un article*/
 
 .request-container {
     grid-area: 1 / 1 / 2 / 2;
@@ -43,4 +36,14 @@ textarea {
 .result-container {
     margin-left: 20px;
     grid-area: 1 / 2 / 2 / 3;
+}
+
+#nom_article_recherche {
+    display: block;
+    width: 100%;
+    background-clip: padding-box;
+    border: 1px solid;
+    border-radius : 0.25rem;
+    line-height:1.5;
+    font-size : 1.25rem;
 }
