@@ -1,5 +1,5 @@
-﻿@{
-   
+@{
+
 }
 
 <!DOCTYPE html>
@@ -25,7 +25,7 @@
                 <input type="text" class="form-control" id="adresse" aria-describedby="adrHelp">
 
                 <br />
-                <label for="commande" class="form-label">Total Commande</label>
+                <label for="commande" class="form-label">Total Articles</label>
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -38,24 +38,30 @@
                     </thead>
                     <tbody>
                         @for (int i = 1; i <= 3; i++)
-                {
-                        <tr>
-                            <th scope="row">@i</th>
-                            <td>Article @i</td>
-                            <td>Infos</td>
-                            <td>1</td>
-                            <td>1</td>
-                        </tr>
-                }
+                        {
+                            <tr>
+                                <th scope="row">@i</th>
+                                <td>Article @i</td>
+                                <td>Infos</td>
+                                <td>1</td>
+                                <td>1</td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>
+
             <div class="mb-3 form-check">
+                <label for="totalc" class="form-label">Total Commande</label>
+                <input type="text" class="form-control" id="totalc" value="0" aria-describedby="totalcHelp" disabled>
+
                 <input type="checkbox" class="form-check-input" id="exampleCheck1">
                 <label class="form-check-label" for="exampleCheck1">CGU</label>
             </div>
             <button type="submit" class="btn btn-primary">Valider</button>
         </form>
+        <button type="button" class="btn btn-danger">Modifier</button>
+        <button type="button" class="btn btn-warning">Supprimer</button>
     </div>
 </body>
 </html>
