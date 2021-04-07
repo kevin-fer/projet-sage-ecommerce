@@ -4,20 +4,26 @@
     ViewBag.Title = "SuiviCommande";
 }
 
-<h2>Résultat pour la recherche @ViewData["recherche"]</h2>
+<h2>Suivre une commande en particulier</h2>
+
+@using (Html.BeginForm())
+{
+    <p>Numéro de la commande : </p>
+    @Html.TextBox("order-num")
+    <input type="submit" value="Valider" />
+}
+
 
 <div class="grid-read">
     <div class="result-container">
-        @if (@ViewData["nom0"] != null)
-        {
 
-            <p></p>
+        @if (@ViewData["order-num"] != null)
+        {
             for (int i = 0; i < Int32.Parse(@ViewData["length"].ToString()); i++)
             {
 
                 if (ViewData["nom" + i.ToString()].ToString().Contains(@ViewData["recherche"].ToString()))
                 {
-
                     <p>Nom : @ViewData["nom" + i.ToString()]</p><!--Nom de larticle-->
                     <p>Designation : @ViewData["des" + i.ToString()]</p><!--Nom de larticle-->
                     <p>Image :</p>
@@ -26,8 +32,7 @@
                 }
             }
         }
-
-
     </div>
 
+</div>
 </div>

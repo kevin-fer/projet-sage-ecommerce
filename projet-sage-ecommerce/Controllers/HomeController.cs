@@ -98,6 +98,56 @@ namespace projet_sage_ecommerce.Controllers
             return View();
         }
 
+        public ActionResult SuiviCommande()
+        {
+
+            return View();
+        }
+
+        public ActionResult SuiviCommande(string id)
+        {
+            CAdxModel c = new CAdxModel();
+
+            c.WsAlias = "WSYCOMERP";
+            c.Param[0] = new CAdxParamKeyValue();
+
+            c.Param[0].key = "SOHNUM";
+            c.Param[0].value = id;
+
+            c.readObject();
+
+            for (int i = 0; i < c.Resultat.messages.Length; i++) // Boucle pour récupérer les messages
+            {
+                if (c.Resultat.messages[i].type.Equals("1")) Console.WriteLine("INFORMATION : ");
+                if (c.Resultat.messages[i].type.Equals("2")) Console.WriteLine("AVERTISSEMENT : ");
+                if (c.Resultat.messages[i].type.Equals("3")) Console.WriteLine("ERREUR : ");
+                Console.WriteLine(c.Resultat.messages[i].message);
+            }
+
+            JObject json = JObject.Parse(c.Resultat.resultXml);
+
+            ViewData["nom"] = json.GetValue("ITM0_1").SelectToken("ITMREF"); // client.Resultat.resultXml;
+            ViewData["des"] = json.GetValue("ITM0_1").SelectToken("DES1AXX"); // client.Resultat.resultXml;
+            ViewData["blob"] = json.GetValue("ITM1_7").SelectToken("IMG"); // client.Resultat.resultXml;
+            ViewData["prix"] = json.GetValue("ITS_3").SelectToken("BASPRI"); // client.Resultat.resultXml;
+            ViewData["devise"] = json.GetValue("ITS_3").SelectToken("CUR"); // client.Resultat.resultXml;
+            ViewData["description"] = json.GetValue("ITM0_1").SelectToken("YDESCRIPTION"); // client.Resultat.resultXml;
+
+            c.Param[1] = new CAdxParamKeyValue();
+            c.Param[1].key = "STOFCY";
+            c.Param[1].value = "FR014";
+
+            c.WsAlias = "WSSTOCK";
+
+            c.readObject();
+
+            json = JObject.Parse(c.Resultat.resultXml);
+
+            ViewData["quantite"] = json.GetValue("ITF8_1").SelectToken("PHYSTO"); // client.Resultat.resultXml;
+
+            return View("SuiviCommande", c);
+        }
+
         public ActionResult About()
         {
             ViewBag.Title = "A propos";
