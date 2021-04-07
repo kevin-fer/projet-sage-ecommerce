@@ -283,6 +283,13 @@ namespace projet_sage_ecommerce.Controllers
 
             return View();
         }
+        public ActionResult Commande()
+        {
+            CAdxModel client = new CAdxModel();
+            ViewBag.Message = "Your Commande page.";
+
+            return View();
+        }
 
     }
 }
