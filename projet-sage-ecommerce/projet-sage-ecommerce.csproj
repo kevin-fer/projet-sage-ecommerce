@@ -291,7 +291,6 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Views\Home\Article.cshtml" />
     <Content Include="Views\Home\Run.cshtml" />
     <Content Include="Views\Home\Item.cshtml" />
     <Content Include="Views\Home\Devis.cshtml" />
