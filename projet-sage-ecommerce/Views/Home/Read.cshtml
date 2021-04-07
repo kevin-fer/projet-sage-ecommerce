@@ -4,26 +4,13 @@
     ViewBag.Title = "Read";
 }
 
-<h2>Recherchez un article en particulier :</h2>
+<h2>Résultat pour la recherche @ViewData["recherche"]</h2>
 
 <div class="grid-read">
-
-    <div class="request-container">
-        @using (Html.BeginForm())
-        {
-        <p>recherchez un article : </p>
-        @Html.TextBox("nom_article_recherche", Model.CodeLang)
-        
-
-        <input type="submit" value="Valider" />
-        }
-    </div>
-    <p>@ViewData["message"]</p>
-
     <div class="result-container">
         @if(@ViewData["nom0"] != null) {
 
-            <p>Résultat pour la recherche @ViewData["recherche"]</p>
+            <p></p>
             for (int i = 0; i < Int32.Parse(@ViewData["length"].ToString()); i++) {
 
                 if (ViewData["nom"+ i.ToString()].ToString().Contains(@ViewData["recherche"].ToString())) {

@@ -27,6 +27,9 @@
     </nav>
     <br />
     <div class="container body-content">
+        @{
+            Html.RenderPartial("_RechercheArticle");
+        }
         @RenderBody()
         <hr />
     </div>
