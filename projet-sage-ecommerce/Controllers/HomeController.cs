@@ -273,7 +273,7 @@ namespace projet_sage_ecommerce.Controllers
                 if (client.Resultat.messages[i].type.Equals("3")) Console.WriteLine("ERREUR : ");
                 Console.WriteLine(client.Resultat.messages[i].message);
             }
-            ViewData["recherche"] = Request.Form["nom_article_recherche"];
+            ViewData["recherche"] = Request["nom_article_recherche"];
 
             JObject json = JObject.Parse(client.Resultat.resultXml);
             JArray jsonArray = (JArray)json.GetValue("GRP1");

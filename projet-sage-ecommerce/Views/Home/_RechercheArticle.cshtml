@@ -5,11 +5,15 @@
 
         @using (Html.BeginForm("Read","Home"))
         {
-        <div style="display:flex">
-            @Html.TextBox("nom_article_recherche")
-            <button class="btn btn-primary" type="submit">Rechercher</button>
+        <div class="d-flex">
+            <input class="form-control" type="search" name="nom_article_recherche" placeholder="Recherche">
+            <div class="input-group-append">
+                <button class="btn btn-dark" type="submit">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
         </div>
-        
         }
+        
     </div>
 </div>

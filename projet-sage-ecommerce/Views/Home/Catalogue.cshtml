@@ -7,16 +7,6 @@
 <h2>@ViewBag.Title</h2>
 <h3>@ViewBag.Message</h3>
 
-<div class="d-flex">
-    <div class="input-group justify-content-end">
-        <input class="form-control" type="search" placeholder="Recherche">
-        <div class="input-group-append">
-            <button class="btn btn-dark" type="button">
-                <i class="bi bi-search"></i>
-            </button>
-        </div>
-    </div>
-</div>
 <br />
 <!DOCTYPE html>
 
@@ -44,8 +34,7 @@
                         {
                             <h5><span style="background-color: #ECE8E5;" class="badge">@ViewData["prix" + i.ToString()] €</span> <span style="background-color: #20c997; color: #FFFFFF;" class="badge">@ViewData["quantite" + i.ToString()] en stock</span></h5>
                         }
-                        <!--<a class="btn btn-primary">@Html.ActionLink("Voir plus", "Item", "Home")</a>-->
-                        @Html.ActionLink("Voir plus", "Item", "Home", new { id = @ViewData["nom" + i.ToString()] }, "btn btn-primary")
+                        <a class="btn btn-dark" href="https://localhost:44365/Home/Item/@ViewData["nom" + i.ToString()]">Voir plus</a>
                     </div>
                 </div>
                 <br />

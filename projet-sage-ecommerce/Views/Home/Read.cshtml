@@ -19,7 +19,7 @@
                     <p>Designation : @ViewData["des"+ i.ToString()]</p><!--Nom de larticle-->
                     <p>Image :</p>
                     <img src="data:image/png;base64, @ViewData["blob"+ i.ToString()]" alt="Veuillez remplir le formulaire" /><!--Image-->
-                    <p>Prix : @ViewData["prix"] @ViewData["devise"+ i.ToString()] </p>
+                    <p>Prix : @ViewData["prix" + i.ToString()] € </p>
                 }
             }
         }
