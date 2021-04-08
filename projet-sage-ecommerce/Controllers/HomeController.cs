@@ -116,22 +116,21 @@ namespace projet_sage_ecommerce.Controllers
 
             c.readObject();
 
-            for (int i = 0; i < c.Resultat.messages.Length; i++) // Boucle pour récupérer les messages
-            {
-                if (c.Resultat.messages[i].type.Equals("1")) Console.WriteLine("INFORMATION : ");
-                if (c.Resultat.messages[i].type.Equals("2")) Console.WriteLine("AVERTISSEMENT : ");
-                if (c.Resultat.messages[i].type.Equals("3")) Console.WriteLine("ERREUR : ");
-                Console.WriteLine(c.Resultat.messages[i].message);
-            }
-
             JObject json = JObject.Parse(c.Resultat.resultXml);
+            // Zone principale 
+            ViewData["sitedevente"] = json.GetValue("SOH0_1").SelectToken("SALFCY"); // Site de vente
+            ViewData["numcommande"] = json.GetValue("SOH0_1").SelectToken("SOHNUM"); // Numéro de la commande
+            ViewData["datecommande"] = json.GetValue("SOH0_1").SelectToken("ORDDAT"); // Date de la commande
+            ViewData["codeclient"] = json.GetValue("SOH0_1").SelectToken("BPCORD"); // Num client
+            // État de la commande
+            ViewData["etatcommande"] = json.GetValue("SOH1_5").SelectToken("ORDSTA_LBL"); // État de la commande
+            ViewData["facturation"] = json.GetValue("SOH1_5").SelectToken("INVSTA_LBL"); // État de la facturation
+            // Fournisseur
+            ViewData["fournisseur"] = json.GetValue("SOH2_1").SelectToken("STOFCY"); // Fournisseur
+            // Livraison | Information transporteur
+            ViewData["transporteurnum"] = json.GetValue("SOH2_3").SelectToken("BPTNUM"); // Id du transporteur
+            ViewData["transporteurnom"] = json.GetValue("SOH2_3").SelectToken("ZBPTNUM"); // Nom du transporteur
 
-            ViewData["nom"] = json.GetValue("ITM0_1").SelectToken("ITMREF"); // client.Resultat.resultXml;
-            ViewData["des"] = json.GetValue("ITM0_1").SelectToken("DES1AXX"); // client.Resultat.resultXml;
-            ViewData["blob"] = json.GetValue("ITM1_7").SelectToken("IMG"); // client.Resultat.resultXml;
-            ViewData["prix"] = json.GetValue("ITS_3").SelectToken("BASPRI"); // client.Resultat.resultXml;
-            ViewData["devise"] = json.GetValue("ITS_3").SelectToken("CUR"); // client.Resultat.resultXml;
-            ViewData["description"] = json.GetValue("ITM0_1").SelectToken("YDESCRIPTION"); // client.Resultat.resultXml;
 
             c.Param[1] = new CAdxParamKeyValue();
             c.Param[1].key = "STOFCY";
