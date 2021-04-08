@@ -15,18 +15,18 @@
         <hr />
         <button type="button" class="btn btn-warning">Modifier</button>
         <button type="button" class="btn btn-danger">Supprimer</button>
-        
+
         <form>
             <div class="mb-3">
                 <br />
                 <label for="date" class="form-label">Date</label>
                 <input type="text" class="form-control" id="date" value="@DateTime.Now.Date.ToString().Substring(0,10)" aria-describedby="dateHelp" disabled>
 
-                <label for="nom" class="form-label">Code client</label>
-                <input type="text" class="form-control" id="nom" aria-describedby="nomHelp">
+                <label for="client" class="form-label">Code client</label>
+                <input type="text" class="form-control" id="client" value=@ViewData["client"] aria-describedby="nomHelp">
 
                 <label for="adresse" class="form-label">Adresse</label>
-                <input type="text" class="form-control" id="adresse" aria-describedby="adrHelp">
+                <input type="text" class="form-control" id="adresse" value=@ViewData["adr_cli"] aria-describedby="adrHelp">
 
                 <br />
                 <label for="commande" class="form-label">Total Articles</label>
@@ -45,10 +45,10 @@
                         {
                             <tr>
                                 <th scope="row">@i</th>
-                                <td>@ViewData["nom"]</td>
+                                <td>@ViewData["idarticle"]</td>
                                 <td>@ViewData["des"]</td>
                                 <td>@ViewData["prix"] @ViewData["devise"]</td>
-                                <td><input type="number" id="qte" value="0" aria-describedby="qteHelp"></td>
+                                <td><input type="number" min="0" id="qte" value=@ViewData["qte"] aria-describedby="qteHelp"></td>
                             </tr>
                         }
                     </tbody>

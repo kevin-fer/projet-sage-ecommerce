@@ -276,18 +276,54 @@ namespace projet_sage_ecommerce.Controllers
             return View("Modify", client);
         }
 
+        //--------------------------------------------------devis---------------------------------------------------
+
         public ActionResult Devis()
         {
             CAdxModel client = new CAdxModel();
 
-            client.WsAlias = Request.Form["wsname_param"];
-            client.Json = Request.Form["entreexml"];
+            client.WsAlias = "WSYDEVIS"; //WJWSDEVIS
+            //client.Json = Request.Form["entreexml"];
+            client.Json = "{}";
 
-            client.save();
-            //nblig
-            //HHXBOX
-            return View("Item", c);
+            client.Param[0] = new CAdxParamKeyValue();
+            client.Param[0].key = "SQHNUM";
+            client.Param[0].value = "FR0152104SQN00000003";
+
+            client.readObject();
+
+            //nblig nbre de lignes tableau
+            //YYPS4 exemple devis n° FR0152104SQN00000003
+
+            JObject json = JObject.Parse(client.Resultat.resultXml);
+            JArray jsonArray = (JArray)json.GetValue("SQH2_1");
+
+            ViewData["sitevente"] = json.GetValue("SQH0_1").SelectToken("SALFCY"); // client.Resultat.resultXml;
+            ViewData["typedevis"] = json.GetValue("SQH0_1").SelectToken("SQHTYP");
+            ViewData["date"] = json.GetValue("SQH0_1").SelectToken("QUODAT");
+            ViewData["client"] = json.GetValue("SQH0_1").SelectToken("BPCORD");
+            ViewData["adr_cli"] = json.GetValue("SQH1_1").SelectToken("BPAADD");
+            ViewData["siteexpedition"] = json.GetValue("SQH1_2").SelectToken("STOFCY");
+
+            //tableau article
+            int e = 0;
+            foreach (JObject jsonObject in jsonArray)
+            {
+                ViewData["idarticle"] = jsonObject.SelectToken("ITMREF"); // article ITMREF et qte QTY
+                ViewData["des"] = jsonObject.SelectToken("ITMDES");
+                ViewData["prix"] = jsonObject.SelectToken("NETPRI");
+                ViewData["qte"] = jsonObject.SelectToken("QTY");
+                e++;
+            }
+            ViewData["length"] = e;
+
+            client.Param[1] = new CAdxParamKeyValue();
+            client.Param[1].key = "STOFCY";
+            client.Param[1].value = "FR014";
+
+            return View("Devis", client);
         }
+
         public ActionResult Commande()
         {
             CAdxModel client = new CAdxModel();
