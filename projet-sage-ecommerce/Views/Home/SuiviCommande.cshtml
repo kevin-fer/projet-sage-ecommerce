@@ -17,16 +17,12 @@
 <div class="grid-read">
     <div class="result-container">
 
-        @if (@ViewData["order-num"] != null)
+        @if (ViewData["numcommande"]!=null)
         {
-            <p>Nom : @ViewData["nom" + i.ToString()]</p><!--Nom de larticle-->
-            <p>Designation : @ViewData["des" + i.ToString()]</p><!--Nom de larticle-->
-            <p>Image :</p>
-            <img src="data:image/png;base64, @ViewData["blob"+ i.ToString()]" alt="Veuillez remplir le formulaire" /><!--Image-->
-            <p>Prix : @ViewData["prix"] @ViewData["devise" + i.ToString()] </p>
-                        
+            <p>Site de vente : @ViewData["sitedevente"]</p>
+            <p>Numéro de commande : @ViewData["numcommande"]</p>
         }
-    </div>
 
-</div>
+
+    </div>
 </div>

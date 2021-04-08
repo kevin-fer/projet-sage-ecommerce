@@ -100,43 +100,52 @@ namespace projet_sage_ecommerce.Controllers
 
         public ActionResult SuiviCommande()
         {
-
-            return View();
+            CAdxModel c = new CAdxModel();
+            return View(c);   
         }
 
-        public ActionResult SuiviCommande(string id)
+        [AcceptVerbs(HttpVerbs.Post)]
+
+        public ActionResult SuiviCommande(CAdxModel c)
         {
-            CAdxModel c = new CAdxModel();
+            c = new CAdxModel();
 
             c.WsAlias = "WSYCOMERP";
             c.Param[0] = new CAdxParamKeyValue();
 
             c.Param[0].key = "SOHNUM";
-            c.Param[0].value = id;
-
+            if(Session["numcommande"]==null)
+            {
+                c.Param[0].value = Request.Form["order-num"];
+            }
+            else
+            {
+                c.Param[0].value = (string)Session["numcommande"];
+            }
+                       
             c.readObject();
 
             JObject json = JObject.Parse(c.Resultat.resultXml);
             // Zone principale 
             ViewData["sitedevente"] = json.GetValue("SOH0_1").SelectToken("SALFCY"); // Site de vente
             ViewData["numcommande"] = json.GetValue("SOH0_1").SelectToken("SOHNUM"); // Numéro de la commande
-            ViewData["datecommande"] = json.GetValue("SOH0_1").SelectToken("ORDDAT"); // Date de la commande
-            ViewData["codeclient"] = json.GetValue("SOH0_1").SelectToken("BPCORD"); // Num client
+            //ViewData["datecommande"] = json.GetValue("SOH0_1").SelectToken("ORDDAT"); // Date de la commande
+            //ViewData["codeclient"] = json.GetValue("SOH0_1").SelectToken("BPCORD"); // Num client
             // État de la commande
-            ViewData["etatcommande"] = json.GetValue("SOH1_5").SelectToken("ORDSTA_LBL"); // État de la commande
-            ViewData["facturation"] = json.GetValue("SOH1_5").SelectToken("INVSTA_LBL"); // État de la facturation
+            //ViewData["etatcommande"] = json.GetValue("SOH1_5").SelectToken("ORDSTA_LBL"); // État de la commande
+            //ViewData["facturation"] = json.GetValue("SOH1_5").SelectToken("INVSTA_LBL"); // État de la facturation
             // Fournisseur
-            ViewData["fournisseur"] = json.GetValue("SOH2_1").SelectToken("STOFCY"); // Fournisseur
+            //ViewData["fournisseur"] = json.GetValue("SOH2_1").SelectToken("STOFCY"); // Fournisseur
             // Livraison | Information transporteur
-            ViewData["transporteurnum"] = json.GetValue("SOH2_3").SelectToken("BPTNUM"); // Id du transporteur
-            ViewData["transporteurnom"] = json.GetValue("SOH2_3").SelectToken("ZBPTNUM"); // Nom du transporteur
-            ViewData["transporteurnom"] = json.GetValue("SOH2_3").SelectToken("ZBPTNUM");
-            ViewData["modedelivraison"] = json.GetValue("SOH2_3").SelectToken("MDL");
-            ViewData["modedelivraisonnom"] = json.GetValue("SOH2_3").SelectToken("ZMDL");
-            ViewData["livraisonnum"] = json.GetValue("SOH2_4").SelectToken("LASDLVNUM"); //Numéro de la livraison
-            ViewData["livraisondate"] = json.GetValue("SOH2_4").SelectToken("LASDLVDAT");
+            //ViewData["transporteurnum"] = json.GetValue("SOH2_3").SelectToken("BPTNUM"); // Id du transporteur
+            //ViewData["transporteurnom"] = json.GetValue("SOH2_3").SelectToken("ZBPTNUM"); // Nom du transporteur
+            //ViewData["transporteurnom"] = json.GetValue("SOH2_3").SelectToken("ZBPTNUM");
+            //ViewData["modedelivraison"] = json.GetValue("SOH2_3").SelectToken("MDL");
+            //ViewData["modedelivraisonnom"] = json.GetValue("SOH2_3").SelectToken("ZMDL");
+            //ViewData["livraisonnum"] = json.GetValue("SOH2_4").SelectToken("LASDLVNUM"); //Numéro de la livraison
+            //ViewData["livraisondate"] = json.GetValue("SOH2_4").SelectToken("LASDLVDAT");
             // Adresse 
-            ViewData["adpays"] = json.GetValue("ADB2_1").SelectToken("ZCRY"); //Pays
+            /*ViewData["adpays"] = json.GetValue("ADB2_1").SelectToken("ZCRY"); //Pays
             JArray jsonArray = (JArray)json.GetValue("ADB2_1").SelectToken("BPAADDLIG");//Adresse
             
             int e = 0;
@@ -145,10 +154,10 @@ namespace projet_sage_ecommerce.Controllers
                 
                 e++;
             }
-
+            */
             json = JObject.Parse(c.Resultat.resultXml);
 
-            return View("SuiviCommande", c);
+            return View("SuiviCommande");
         }
 
         public ActionResult About()
