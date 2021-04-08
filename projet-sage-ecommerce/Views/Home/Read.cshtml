@@ -6,27 +6,28 @@
 
 
 
-<div class="grid-read">
-    <div class="container">
-        @if(@ViewData["nom0"] != null) {
-            <h2>Résultat pour @ViewData["recherche"].ToString()</h2>
-            <div class="card-deck"></div>
+<div class="container">
+    @if(@ViewData["nom0"] != null) {
+        <h2>Résultat pour @ViewData["recherche"].ToString()</h2>
+        <div class="row">
 
-            for (int i = 0; i < Int32.Parse(@ViewData["length"].ToString()); i++) {
+            @for (int i = 0; i < Int32.Parse(@ViewData["length"].ToString()); i++) {
                 
                 if (ViewData["nom"+ i.ToString()].ToString().Contains(@ViewData["recherche"].ToString())) {
-                    <div class="card" style="display:block ruby;width:50%;">
-                        <img src="data:image/png;base64, @ViewData["blob"+ i.ToString()]" class="card-img-top img-fluid img-thumbnail"  alt="Veuillez remplir le formulaire" /><!--Image-->
-                        <div class="card-body">
-                            <h2 class="card-title">@ViewData["des"+ i.ToString()]</h2><!--Nom de larticle-->
-                            <p>@ViewData["nom"+ i.ToString()]</p><!--Nom de larticle-->
-                            <p>Prix : @ViewData["prix"] @ViewData["devise"+ i.ToString()] </p>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="card">
+                            <img src="data:image/png;base64, @ViewData["blob"+ i.ToString()]" class="card-img-top img-fluid img-thumbnail" alt="img" />
+                            <div class="card-body">
+                                <h2 class="card-title">@ViewData["des"+ i.ToString()]</h2><!--Nom de larticle-->
+                                <p>@ViewData["nom"+ i.ToString()]</p><!--Nom de larticle-->
+                                <p>Prix : @ViewData["prix"] @ViewData["devise"+ i.ToString()] </p>
+                            </div>
                         </div>
                     </div>
-                    <br />
                 }
                 
             }
+            </div>
         }
         else {
             <h2>Rechercher un article en particulier</h2>
@@ -38,8 +39,4 @@
                 }
             </div>
         }
-
-
-    </div>
-
 </div>
