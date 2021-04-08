@@ -16,12 +16,12 @@
     <div class="">
         @if (Session["numcommandeSession"] != null)
         {
-            <div class="alert alert-dark" role="alert">
+            <div class="alert alert-secondary" role="alert">
                 <h4 class="alert-heading">Suivez votre dernière commande suivie</h4>
-                <p>Vous avez consulté la commande N° @Session["numcommandeSession"] lors de votre précédente navigation dans la page de suivi</p>
+                <p>Vous avez consulté la commande <strong>N° @Session["numcommandeSession"]</strong> lors de votre précédente navigation dans la page de suivi.</p>
                 <input class="btn btn-primary" type="submit" value="Suivre cette commande" />
                 <hr>
-                <p class="mb-0">Ces données seront supprimées lors de la fermeture de votre session</p>
+                <p class="mb-0">Ces données seront supprimées lors de la fermeture de votre session.</p>
             </div>
         }
     </div>
