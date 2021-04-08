@@ -276,10 +276,11 @@ namespace projet_sage_ecommerce.Controllers
                 if (client.Resultat.messages[i].type.Equals("3")) Console.WriteLine("ERREUR : ");
                 Console.WriteLine(client.Resultat.messages[i].message);
             }
-            ViewData["recherche"] = Request["nom_article_recherche"];
+            ViewData["recherche"] = Request["nom_article_recherche"].ToUpper();
 
             JObject json = JObject.Parse(client.Resultat.resultXml);
             JArray jsonArray = (JArray)json.GetValue("GRP1");
+            JArray jsonArrayDesc = (JArray)json.GetValue("GRP3");
 
             int e = 0;
             foreach (JObject jsonObject in jsonArray) {
@@ -288,9 +289,15 @@ namespace projet_sage_ecommerce.Controllers
                 ViewData["blob" + e.ToString()] = jsonObject.SelectToken("BLOB"); // client.Resultat.resultXml;
                 ViewData["prix" + e.ToString()] = jsonObject.SelectToken("BASPRI"); // client.Resultat.resultXml;
                 ViewData["quantite" + e.ToString()] = jsonObject.SelectToken("QTYPCU"); // client.Resultat.resultXml;
+                
                 e++;
             }
-            ViewData["length"] = e;
+            e = 0;
+            foreach (JObject jsonObject in jsonArrayDesc) {
+                ViewData["description" + e.ToString()] = jsonObject.SelectToken("YDESCRIPTION");
+                e++;
+            }
+                ViewData["length"] = e;
             return View("Read", client);
         }
 

@@ -12,22 +12,27 @@
         <div class="row">
 
             @for (int i = 0; i < Int32.Parse(@ViewData["length"].ToString()); i++) {
-                
-                if (ViewData["nom"+ i.ToString()].ToString().Contains(@ViewData["recherche"].ToString())) {
-                    <div class="col-lg-6 col-md-6 col-sm-12">
-                        <div class="card">
-                            <img src="data:image/png;base64, @ViewData["blob"+ i.ToString()]" class="card-img-top img-fluid img-thumbnail" alt="img" />
-                            <div class="card-body">
-                                <h2 class="card-title">@ViewData["des"+ i.ToString()]</h2><!--Nom de larticle-->
-                                <p>@ViewData["nom"+ i.ToString()]</p><!--Nom de larticle-->
-                                <p>Prix : @ViewData["prix" + i.ToString()] € </p>
-                            </div>
+            if (ViewData["nom"+ i.ToString()].ToString().Contains(@ViewData["recherche"].ToString()) || 
+            ViewData["nom"+ i.ToString()].ToString().ToUpper().Contains(@ViewData["recherche"].ToString())) {
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="card">
+                    <img src="data:image/png;base64, @ViewData["blob"+ i.ToString()]" class="card-img-top img-fluid img-thumbnail" alt="img" />
+                    <div class="card-body">
+                        <h2 class="card-title">@ViewData["des"+ i.ToString()]</h2><!--Nom de larticle-->
+                        <p class="card-text text-justify">@ViewData["description"+ i.ToString()]</p><!--description de larticle-->
+                        <p style="display:none">@ViewData["nom"+ i.ToString()]</p><!--Nom de larticle-->
+                        <div class="d-flex">
+                            <p class="badge mr-auto p-2" style="background-color: #ECE8E5;font-size:125%;margin-bottom:0rem;">Prix : @ViewData["prix" + i.ToString()] € </p>
+                            <a class="btn btn-dark p-2" href="https://localhost:44365/Home/Item/@ViewData["nom" + i.ToString()]">Voir plus</a>
                         </div>
+
                     </div>
-                }
-                
-            }
+                </div>
             </div>
+            }
+
+            }
+        </div>
         }
         else {
             <h2>Rechercher un article en particulier</h2>
