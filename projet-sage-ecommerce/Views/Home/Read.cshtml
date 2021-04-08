@@ -6,28 +6,33 @@
 
 
 
-<div class="container">
+<div class="container text-justify">
     @if(@ViewData["nom0"] != null) {
         <h2>Résultat pour @ViewData["recherche"].ToString()</h2>
+        <br />
         <div class="row">
 
             @for (int i = 0; i < Int32.Parse(@ViewData["length"].ToString()); i++) {
             if (ViewData["nom"+ i.ToString()].ToString().Contains(@ViewData["recherche"].ToString()) || 
             ViewData["nom"+ i.ToString()].ToString().ToUpper().Contains(@ViewData["recherche"].ToString())) {
-            <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="col-lg-4 col-md-6 col-sm-12">
                 <div class="card">
-                    <img src="data:image/png;base64, @ViewData["blob"+ i.ToString()]" class="card-img-top img-fluid img-thumbnail" alt="img" />
+                    <img src="data:image/png;base64, @ViewData["blob"+i.ToString()]" class="card-img-top" alt="..." width="250" height="250">
                     <div class="card-body">
-                        <h2 class="card-title">@ViewData["des"+ i.ToString()]</h2><!--Nom de larticle-->
-                        <p class="card-text text-justify">@ViewData["description"+ i.ToString()]</p><!--description de larticle-->
-                        <p style="display:none">@ViewData["nom"+ i.ToString()]</p><!--Nom de larticle-->
-                        <div class="d-flex">
-                            <p class="badge mr-auto p-2" style="background-color: #ECE8E5;font-size:125%;margin-bottom:0rem;">Prix : @ViewData["prix" + i.ToString()] € </p>
-                            <a class="btn btn-dark p-2" href="https://localhost:44365/Home/Item/@ViewData["nom" + i.ToString()]">Voir plus</a>
-                        </div>
-
+                        <h5 class="card-title">@ViewData["des" + i.ToString()]</h5>
+                        <p class="card-text text-justify description">@ViewData["description" + i.ToString()]</p>
+                        @if (Int32.Parse(@ViewData["quantite" + i.ToString()].ToString()) == 0)
+                        {
+                            <h5><span style="background-color: #ECE8E5;" class="badge">@ViewData["prix" + i.ToString()] €</span> <span style="background-color: #FA3A3A; color: #FFFFFF;" class="badge">Rupture de stock</span></h5>
+                        }
+                        else
+                        {
+                            <h5><span style="background-color: #ECE8E5;" class="badge">@ViewData["prix" + i.ToString()] €</span> <span style="background-color: #20c997; color: #FFFFFF;" class="badge">@ViewData["quantite" + i.ToString()] en stock</span></h5>
+                        }
+                        <a class="btn btn-dark" href="https://localhost:44365/Home/Item/@ViewData["nom" + i.ToString()]">Voir plus</a>
                     </div>
                 </div>
+                <br />
             </div>
             }
 
