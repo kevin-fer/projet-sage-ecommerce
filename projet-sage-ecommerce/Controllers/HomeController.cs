@@ -130,6 +130,12 @@ namespace projet_sage_ecommerce.Controllers
             // Livraison | Information transporteur
             ViewData["transporteurnum"] = json.GetValue("SOH2_3").SelectToken("BPTNUM"); // Id du transporteur
             ViewData["transporteurnom"] = json.GetValue("SOH2_3").SelectToken("ZBPTNUM"); // Nom du transporteur
+            ViewData["transporteurnom"] = json.GetValue("SOH2_3").SelectToken("ZBPTNUM");
+            ViewData["modedelivraison"] = json.GetValue("SOH2_3").SelectToken("MDL");
+            ViewData["modedelivraisonnom"] = json.GetValue("SOH2_3").SelectToken("ZMDL");
+            ViewData["livraisonnum"] = json.GetValue("SOH2_4").SelectToken("LASDLVNUM"); //Numéro de la livraison
+            ViewData["livraisondate"] = json.GetValue("SOH2_4").SelectToken("LASDLVDAT");
+
 
 
             c.Param[1] = new CAdxParamKeyValue();
