@@ -95,7 +95,18 @@ namespace projet_sage_ecommerce.Controllers
             }
             ViewData["length"] = e;
 
-            return View();
+            JArray jsonArray3 = (JArray)json.GetValue("GRP3");
+
+            e = 0;
+            foreach (JObject jsonObject in jsonArray3)
+            {
+                string des = (string)jsonObject.SelectToken("YDESCRIPTION");
+
+                ViewData["description" + e.ToString()] = des; // client.Resultat.resultXml;
+                e++;
+            }
+
+            return View("Catalogue", client);
         }
 
         public ActionResult SuiviCommande()
