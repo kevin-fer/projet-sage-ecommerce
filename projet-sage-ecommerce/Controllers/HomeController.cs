@@ -114,13 +114,14 @@ namespace projet_sage_ecommerce.Controllers
             c.Param[0] = new CAdxParamKeyValue();
 
             c.Param[0].key = "SOHNUM";
-            if(Session["numcommande"]==null)
+            if(Session["numcommandeSession"] == null || Request.Form["order-num"] != (string)Session["numcommandeSession"] && Request.Form["order-num"] != String.Empty)
             {
                 c.Param[0].value = Request.Form["order-num"];
+                Session["numcommandeSession"] = c.Param[0].value;
             }
             else
             {
-                c.Param[0].value = (string)Session["numcommande"];
+                c.Param[0].value = (string)Session["numcommandeSession"];
             }
                        
             c.readObject();

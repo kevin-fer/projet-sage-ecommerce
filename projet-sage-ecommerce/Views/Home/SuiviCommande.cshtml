@@ -13,16 +13,26 @@
     <input type="submit" value="Valider" />
 }
 
+@if (@Session["numcommandeSession"] != null)
+{
+    using (Html.BeginForm())
+    {
+        <h2>Votre dernière commande suivie :</h2>
+        <p>Commande : @Session["numcommandeSession"]</p>
+
+        <input class="btn btn-primary" type="submit" value="Suivre cette commande" />
+    }
+}
+
+
 
 <div class="grid-read">
     <div class="result-container">
-
-        @if (ViewData["numcommande"]!=null)
+        @if (ViewData["numcommande"] != null)
         {
             <p>Site de vente : @ViewData["sitedevente"]</p>
             <p>Numéro de commande : @ViewData["numcommande"]</p>
+            <p>Numéro de commande : @Session["numcommandeSession"]</p>
         }
-
-
     </div>
 </div>
