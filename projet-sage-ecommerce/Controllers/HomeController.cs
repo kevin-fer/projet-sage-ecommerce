@@ -135,20 +135,18 @@ namespace projet_sage_ecommerce.Controllers
             ViewData["modedelivraisonnom"] = json.GetValue("SOH2_3").SelectToken("ZMDL");
             ViewData["livraisonnum"] = json.GetValue("SOH2_4").SelectToken("LASDLVNUM"); //Numéro de la livraison
             ViewData["livraisondate"] = json.GetValue("SOH2_4").SelectToken("LASDLVDAT");
-
-
-
-            c.Param[1] = new CAdxParamKeyValue();
-            c.Param[1].key = "STOFCY";
-            c.Param[1].value = "FR014";
-
-            c.WsAlias = "WSSTOCK";
-
-            c.readObject();
+            // Adresse 
+            ViewData["adpays"] = json.GetValue("ADB2_1").SelectToken("ZCRY"); //Pays
+            JArray jsonArray = (JArray)json.GetValue("ADB2_1").SelectToken("BPAADDLIG");//Adresse
+            
+            int e = 0;
+            foreach (JObject jsonObject in jsonArray)
+            {
+                
+                e++;
+            }
 
             json = JObject.Parse(c.Resultat.resultXml);
-
-            ViewData["quantite"] = json.GetValue("ITF8_1").SelectToken("PHYSTO"); // client.Resultat.resultXml;
 
             return View("SuiviCommande", c);
         }
