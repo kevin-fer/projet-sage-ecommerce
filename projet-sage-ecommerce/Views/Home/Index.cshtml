@@ -5,7 +5,7 @@
     <div class="jumbotron text-center">
         <h1>Dada Shop</h1>
         <p class="lead">Bienvenue sur le Dada Shop, le meilleur site e-commerce de l'histoire d'internet</p>
-        <p><a href="https://localhost:44365/Home/Catalogue" class="btn btn-primary btn-lg">Voir plus d'articles &raquo;</a></p>
+        <p><a href="https://localhost:44365/Home/Catalogue" class="btn btn-dark btn-lg">Voir plus d'articles &raquo;</a></p>
     </div>
 </div>
 
@@ -28,7 +28,7 @@
                             {
                                 <h5><span style="background-color: #ECE8E5;" class="badge">@ViewData["prix" + i.ToString()] €</span> <span style="background-color: #20c997; color: #FFFFFF;" class="badge">@ViewData["quantite" + i.ToString()] en stock</span></h5>
                             }
-                            @Html.ActionLink("Voir plus", "Item", "Home", new { id = @ViewData["nom" + i.ToString()] }, "btn btn-primary")
+                            <a class="btn btn-dark" href="https://localhost:44365/Home/Item/@ViewData["nom" + i.ToString()]" >Voir plus</a>
                         </div>
                     </div>
                     <br />

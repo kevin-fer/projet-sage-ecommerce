@@ -1,0 +1,32 @@
+﻿@model projet_sage_ecommerce.Models.CAdxModel
+
+@{
+    ViewBag.Title = "SuiviCommande";
+}
+
+<h2>Suivre une commande en particulier</h2>
+
+@using (Html.BeginForm())
+{
+    <p>Numéro de la commande : </p>
+    @Html.TextBox("order-num")
+    <input type="submit" value="Valider" />
+}
+
+
+<div class="grid-read">
+    <div class="result-container">
+
+        @if (@ViewData["order-num"] != null)
+        {
+            <p>Nom : @ViewData["nom" + i.ToString()]</p><!--Nom de larticle-->
+            <p>Designation : @ViewData["des" + i.ToString()]</p><!--Nom de larticle-->
+            <p>Image :</p>
+            <img src="data:image/png;base64, @ViewData["blob"+ i.ToString()]" alt="Veuillez remplir le formulaire" /><!--Image-->
+            <p>Prix : @ViewData["prix"] @ViewData["devise" + i.ToString()] </p>
+                        
+        }
+    </div>
+
+</div>
+</div>

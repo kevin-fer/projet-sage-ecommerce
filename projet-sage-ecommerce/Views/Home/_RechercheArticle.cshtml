@@ -1,14 +1,19 @@
 ﻿@model projet_sage_ecommerce.Models.CAdxModel
 
+<div class="d-flex">
+    <div class="input-group justify-content-end">
 
-<div class="request-container">
-
-    @using (Html.BeginForm("Read","Home"))
-    {
-    <p>
-        recherchez un article :
-        @Html.TextBox("nom_article_recherche")
-    </p>
-    <input type="submit" value="Valider" />
-    }
+        @using (Html.BeginForm("Read","Home"))
+        {
+        <div class="d-flex">
+            <input class="form-control" type="search" name="nom_article_recherche" placeholder="Recherche">
+            <div class="input-group-append">
+                <button class="btn btn-dark" type="submit">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </div>
+        }
+        
+    </div>
 </div>
