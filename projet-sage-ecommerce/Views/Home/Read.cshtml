@@ -4,24 +4,39 @@
     ViewBag.Title = "Read";
 }
 
-<h2>Rechercher un article en particulier</h2>
+
 
 <div class="grid-read">
-    <div class="result-container">
+    <div class="container">
         @if(@ViewData["nom0"] != null) {
+            <h2>Résultat pour @ViewData["recherche"].ToString()</h2>
+            <div class="card-deck"></div>
 
-            <p></p>
             for (int i = 0; i < Int32.Parse(@ViewData["length"].ToString()); i++) {
-
+                
                 if (ViewData["nom"+ i.ToString()].ToString().Contains(@ViewData["recherche"].ToString())) {
-
-                    <p>Nom : @ViewData["nom"+ i.ToString()]</p><!--Nom de larticle-->
-                    <p>Designation : @ViewData["des"+ i.ToString()]</p><!--Nom de larticle-->
-                    <p>Image :</p>
-                    <img src="data:image/png;base64, @ViewData["blob"+ i.ToString()]" alt="Veuillez remplir le formulaire" /><!--Image-->
-                    <p>Prix : @ViewData["prix" + i.ToString()] € </p>
+                    <div class="card" style="display:block ruby;width:50%;">
+                        <img src="data:image/png;base64, @ViewData["blob"+ i.ToString()]" class="card-img-top img-fluid img-thumbnail"  alt="Veuillez remplir le formulaire" /><!--Image-->
+                        <div class="card-body">
+                            <h2 class="card-title">@ViewData["des"+ i.ToString()]</h2><!--Nom de larticle-->
+                            <p>@ViewData["nom"+ i.ToString()]</p><!--Nom de larticle-->
+                            <p>Prix : @ViewData["prix"] @ViewData["devise"+ i.ToString()] </p>
+                        </div>
+                    </div>
+                    <br />
                 }
+                
             }
+        }
+        else {
+            <h2>Rechercher un article en particulier</h2>
+            <br />
+            <p>Rechercher un article dans tout notre catalogue :</p>
+            <div class="d-flex">
+                @{
+                Html.RenderPartial("_RechercheArticle");
+                }
+            </div>
         }
 
 
