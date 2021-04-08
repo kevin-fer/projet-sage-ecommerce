@@ -19,18 +19,12 @@
 
         @if (@ViewData["order-num"] != null)
         {
-            for (int i = 0; i < Int32.Parse(@ViewData["length"].ToString()); i++)
-            {
-
-                if (ViewData["nom" + i.ToString()].ToString().Contains(@ViewData["recherche"].ToString()))
-                {
-                    <p>Nom : @ViewData["nom" + i.ToString()]</p><!--Nom de larticle-->
-                    <p>Designation : @ViewData["des" + i.ToString()]</p><!--Nom de larticle-->
-                    <p>Image :</p>
-                    <img src="data:image/png;base64, @ViewData["blob"+ i.ToString()]" alt="Veuillez remplir le formulaire" /><!--Image-->
-                    <p>Prix : @ViewData["prix"] @ViewData["devise" + i.ToString()] </p>
-                }
-            }
+            <p>Nom : @ViewData["nom" + i.ToString()]</p><!--Nom de larticle-->
+            <p>Designation : @ViewData["des" + i.ToString()]</p><!--Nom de larticle-->
+            <p>Image :</p>
+            <img src="data:image/png;base64, @ViewData["blob"+ i.ToString()]" alt="Veuillez remplir le formulaire" /><!--Image-->
+            <p>Prix : @ViewData["prix"] @ViewData["devise" + i.ToString()] </p>
+                        
         }
     </div>
 
