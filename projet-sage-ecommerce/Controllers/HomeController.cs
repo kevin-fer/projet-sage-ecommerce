@@ -210,16 +210,9 @@ namespace projet_sage_ecommerce.Controllers
             ViewData["delai"] = json.GetValue("SOH2_2").SelectToken("DAYLTI"); // délai prévu
 
             // Adresse 
-            /*ViewData["adpays"] = json.GetValue("ADB2_1").SelectToken("ZCRY"); //Pays
-            JArray jsonArray = (JArray)json.GetValue("ADB2_1").SelectToken("BPAADDLIG");//Adresse
-            
-            int e = 0;
-            foreach (JObject jsonObject in jsonArray)
-            {
-                
-                e++;
-            }
-            */
+            ViewData["adpays"] = json.GetValue("ADB2_1").SelectToken("CRYNAM"); //Pays
+            JArray jsonArray2 = (JArray)json.GetValue("ADB2_1").SelectToken("BPAADDLIG");//Adresse
+            ViewData["rue"] = jsonArray2[0].ToString();
 
             json = JObject.Parse(c.Resultat.resultXml);
 
