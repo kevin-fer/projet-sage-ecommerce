@@ -117,7 +117,7 @@ namespace projet_sage_ecommerce.Controllers
 
         [AcceptVerbs(HttpVerbs.Post)]
 
-        public ActionResult SuiviCommande(CAdxModel c)
+        public ActionResult SuiviCommande(CAdxModel c, string status = "")
         {
             c = new CAdxModel();
 
@@ -126,15 +126,20 @@ namespace projet_sage_ecommerce.Controllers
 
             c.Param[0].key = "SOHNUM";
 
-            if(Session["numcommandeSession"] == null || Request.Form["order-num"] != (string)Session["numcommandeSession"] && Request.Form["order-num"] != String.Empty)
+            if(Session["numcommandeSession"] == null)
             {
                 c.Param[0].value = Request.Form["order-num"];
                 Session["numcommandeSession"] = c.Param[0].value;
             }
-
+            else if (Request.Form["order-num"] != (string)Session["numcommandeSession"] && Request.Form["order-num"] != null /*!= String.Empty*/)
+            {
+                c.Param[0].value = Request.Form["order-num"];
+                Session["numcommandeSession"] = c.Param[0].value;
+            }
             else
             {
                 c.Param[0].value = (string)Session["numcommandeSession"];
+                ViewData["numcommande"] = "blank";
             }
                        
             c.readObject();
@@ -208,11 +213,14 @@ namespace projet_sage_ecommerce.Controllers
             ViewData["livraisondateexpedition"] = date3.ToString().Substring(0, 10); // Date d'expedition
 
             ViewData["delai"] = json.GetValue("SOH2_2").SelectToken("DAYLTI"); // délai prévu
-
+            ViewData["heureprevu"] = json.GetValue("SOH2_2").SelectToken("DEMDLVHOU").ToString().Substring(0, 2) + ":" + json.GetValue("SOH2_2").SelectToken("DEMDLVHOU").ToString().Substring(2, 2); // délai prévu
             // Adresse 
             ViewData["adpays"] = json.GetValue("ADB2_1").SelectToken("CRYNAM"); //Pays
             JArray jsonArray2 = (JArray)json.GetValue("ADB2_1").SelectToken("BPAADDLIG");//Adresse
             ViewData["rue"] = jsonArray2[0].ToString();
+            ViewData["codepostal"] = json.GetValue("ADB2_1").SelectToken("POSCOD"); //Code postal
+            ViewData["ville"] = json.GetValue("ADB2_1").SelectToken("CTY"); //ville
+            ViewData["statutdelivry"] = json.GetValue("SOH1_5").SelectToken("DLVSTA_LBL"); // statut de la livraison
 
             json = JObject.Parse(c.Resultat.resultXml);
 

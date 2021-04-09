@@ -28,8 +28,12 @@
                         <a class="dropdown-item text-dark" href="https://localhost:44365/Home/SuiviCommande">Suivi commande</a>
                         @if (Session["numcommandeSession"] != null)
                         {
-                            <a class="dropdown-item text-dark" href="https://localhost:44365/Home/SuiviCommande">Suivez votre dernière commande N°<strong>@Session["numcommandeSession"]</strong></a>
-
+                            using (Html.BeginForm("SuiviCommande", "Home", "Post"))
+                            {
+                                <button class="btn btn-dark" type="submit">Suivez votre dernière commande N°<strong>@Session["numcommandeSession"]</strong></button>
+                            }
+                            <!--<a class="dropdown-item text-dark" href="https://localhost:44365/Home/SuiviCommande/sessionActive">Suivez votre dernière commande N°<strong>@Session["numcommandeSession"]</strong></a>-
+                        -->
                         }
                     </div>
                 </li>

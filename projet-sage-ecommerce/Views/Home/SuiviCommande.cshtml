@@ -250,6 +250,18 @@
                             <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["delai"]" disabled readonly>
                         </div>
                     </div>
+                    <div class="col-auto">
+                        <div class="col-auto">
+                            <label class="visually-hidden" for="autoSizingInput">Heure de livraison prévue</label>
+                            <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["heureprevu"]" disabled readonly>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="col-auto">
+                            <label class="visually-hidden" for="autoSizingInput">Statut de la livraison</label>
+                            <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["statutdelivry"]" disabled readonly>
+                        </div>
+                    </div>
                 </div>
                 <br />
                 <h2>Adresse</h2>
@@ -257,7 +269,19 @@
                     <div class="col-auto">
                         <div class="col-auto">
                             <label class="visually-hidden" for="autoSizingInput">Rue</label>
-                            <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["rue"] " disabled readonly/>
+                            <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["rue"] " disabled readonly />
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="col-auto">
+                            <label class="visually-hidden" for="autoSizingInput">Ville</label>
+                            <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["ville"] " disabled readonly />
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="col-auto">
+                            <label class="visually-hidden" for="autoSizingInput">Code postal</label>
+                            <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["codepostal"] " disabled readonly />
                         </div>
                     </div>
                     <div class="col-auto">
