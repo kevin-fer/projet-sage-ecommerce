@@ -1,0 +1,46 @@
+﻿@model projet_sage_ecommerce.Models.CAdxModel
+
+@{
+    ViewBag.Title = "SuiviCommande";
+}
+
+@using (Html.BeginForm())
+{
+    <div class="">
+        <h2>Suivre une commande en particulier</h2>
+        <p>Numéro de la commande : </p>
+        @Html.TextBox("order-num")
+        <input type="submit" value="Valider" />
+    </div>
+    <br />
+    <div class="">
+        @if (Session["numcommandeSession"] != null)
+        {
+            <div class="alert alert-secondary d-none d-light-block" role="alert">
+                <h4 class="alert-heading">Suivez votre dernière commande suivie</h4>
+                <p>Vous avez consulté la commande <strong>N° @Session["numcommandeSession"]</strong> lors de votre précédente navigation dans la page de suivi.</p>
+                <input class="btn btn-dark" type="submit" value="Suivre cette commande" />
+                <hr>
+                <p class="mb-0">Ces données seront supprimées lors de la fermeture de votre session.</p>
+            </div>
+
+            <div class="alert alert-dark d-none d-dark-block" role="alert">
+                <h4 class="alert-heading">Suivez votre dernière commande suivie</h4>
+                <p>Vous avez consulté la commande <strong>N° @Session["numcommandeSession"]</strong> lors de votre précédente navigation dans la page de suivi.</p>
+                <input class="btn btn-dark" type="submit" value="Suivre cette commande" />
+                <hr>
+                <p class="mb-0">Ces données seront supprimées lors de la fermeture de votre session.</p>
+            </div>
+        }
+    </div>
+}
+<div class="grid-read">
+    <div class="result-container">
+        @if (ViewData["numcommande"] != null)
+        {
+            <p>Site de vente : @ViewData["sitedevente"]</p>
+            <p>Numéro de commande : @ViewData["numcommande"]</p>
+            <p>Numéro de commande : @Session["numcommandeSession"]</p>
+        }
+    </div>
+</div>

@@ -95,7 +95,83 @@ namespace projet_sage_ecommerce.Controllers
             }
             ViewData["length"] = e;
 
-            return View();
+            JArray jsonArray3 = (JArray)json.GetValue("GRP3");
+
+            e = 0;
+            foreach (JObject jsonObject in jsonArray3)
+            {
+                string des = (string)jsonObject.SelectToken("YDESCRIPTION");
+
+                ViewData["description" + e.ToString()] = des; // client.Resultat.resultXml;
+                e++;
+            }
+
+            return View("Catalogue", client);
+        }
+
+        public ActionResult SuiviCommande()
+        {
+            CAdxModel c = new CAdxModel();
+            return View(c);   
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+
+        public ActionResult SuiviCommande(CAdxModel c)
+        {
+            c = new CAdxModel();
+
+            c.WsAlias = "WSYCOMERP";
+            c.Param[0] = new CAdxParamKeyValue();
+
+            c.Param[0].key = "SOHNUM";
+
+            if(Session["numcommandeSession"] == null || Request.Form["order-num"] != (string)Session["numcommandeSession"] && Request.Form["order-num"] != String.Empty)
+            {
+                c.Param[0].value = Request.Form["order-num"];
+                Session["numcommandeSession"] = c.Param[0].value;
+            }
+
+            else
+            {
+                c.Param[0].value = (string)Session["numcommandeSession"];
+            }
+                       
+            c.readObject();
+
+            JObject json = JObject.Parse(c.Resultat.resultXml);
+            // Zone principale 
+            ViewData["sitedevente"] = json.GetValue("SOH0_1").SelectToken("SALFCY"); // Site de vente
+            ViewData["numcommande"] = json.GetValue("SOH0_1").SelectToken("SOHNUM"); // Numéro de la commande
+            //ViewData["datecommande"] = json.GetValue("SOH0_1").SelectToken("ORDDAT"); // Date de la commande
+            //ViewData["codeclient"] = json.GetValue("SOH0_1").SelectToken("BPCORD"); // Num client
+            // État de la commande
+            //ViewData["etatcommande"] = json.GetValue("SOH1_5").SelectToken("ORDSTA_LBL"); // État de la commande
+            //ViewData["facturation"] = json.GetValue("SOH1_5").SelectToken("INVSTA_LBL"); // État de la facturation
+            // Fournisseur
+            //ViewData["fournisseur"] = json.GetValue("SOH2_1").SelectToken("STOFCY"); // Fournisseur
+            // Livraison | Information transporteur
+            //ViewData["transporteurnum"] = json.GetValue("SOH2_3").SelectToken("BPTNUM"); // Id du transporteur
+            //ViewData["transporteurnom"] = json.GetValue("SOH2_3").SelectToken("ZBPTNUM"); // Nom du transporteur
+            //ViewData["transporteurnom"] = json.GetValue("SOH2_3").SelectToken("ZBPTNUM");
+            //ViewData["modedelivraison"] = json.GetValue("SOH2_3").SelectToken("MDL");
+            //ViewData["modedelivraisonnom"] = json.GetValue("SOH2_3").SelectToken("ZMDL");
+            //ViewData["livraisonnum"] = json.GetValue("SOH2_4").SelectToken("LASDLVNUM"); //Numéro de la livraison
+            //ViewData["livraisondate"] = json.GetValue("SOH2_4").SelectToken("LASDLVDAT");
+            // Adresse 
+            /*ViewData["adpays"] = json.GetValue("ADB2_1").SelectToken("ZCRY"); //Pays
+            JArray jsonArray = (JArray)json.GetValue("ADB2_1").SelectToken("BPAADDLIG");//Adresse
+            
+            int e = 0;
+            foreach (JObject jsonObject in jsonArray)
+            {
+                
+                e++;
+            }
+            */
+            json = JObject.Parse(c.Resultat.resultXml);
+
+            return View("SuiviCommande");
         }
 
         public ActionResult About()
@@ -223,10 +299,11 @@ namespace projet_sage_ecommerce.Controllers
                 if (client.Resultat.messages[i].type.Equals("3")) Console.WriteLine("ERREUR : ");
                 Console.WriteLine(client.Resultat.messages[i].message);
             }
-            ViewData["recherche"] = Request.Form["nom_article_recherche"];
+            ViewData["recherche"] = Request["nom_article_recherche"].ToUpper();
 
             JObject json = JObject.Parse(client.Resultat.resultXml);
             JArray jsonArray = (JArray)json.GetValue("GRP1");
+            JArray jsonArrayDesc = (JArray)json.GetValue("GRP3");
 
             int e = 0;
             foreach (JObject jsonObject in jsonArray) {
@@ -235,9 +312,15 @@ namespace projet_sage_ecommerce.Controllers
                 ViewData["blob" + e.ToString()] = jsonObject.SelectToken("BLOB"); // client.Resultat.resultXml;
                 ViewData["prix" + e.ToString()] = jsonObject.SelectToken("BASPRI"); // client.Resultat.resultXml;
                 ViewData["quantite" + e.ToString()] = jsonObject.SelectToken("QTYPCU"); // client.Resultat.resultXml;
+                
                 e++;
             }
-            ViewData["length"] = e;
+            e = 0;
+            foreach (JObject jsonObject in jsonArrayDesc) {
+                ViewData["description" + e.ToString()] = jsonObject.SelectToken("YDESCRIPTION");
+                e++;
+            }
+                ViewData["length"] = e;
             return View("Read", client);
         }
 
@@ -276,14 +359,54 @@ namespace projet_sage_ecommerce.Controllers
             return View("Modify", client);
         }
 
+        //--------------------------------------------------devis---------------------------------------------------
+
         public ActionResult Devis()
         {
             CAdxModel client = new CAdxModel();
-            ViewBag.Message = "Your Devis page.";
 
-            return View();
+            client.WsAlias = "WSYDEVIS"; //WJWSDEVIS
+            //client.Json = Request.Form["entreexml"];
+            client.Json = "{}";
+
+            client.Param[0] = new CAdxParamKeyValue();
+            client.Param[0].key = "SQHNUM";
+            client.Param[0].value = "FR0152104SQN00000003";
+
+            client.readObject();
+
+            //nblig nbre de lignes tableau
+            //YYPS4 exemple devis n° FR0152104SQN00000003
+
+            JObject json = JObject.Parse(client.Resultat.resultXml);
+            JArray jsonArray = (JArray)json.GetValue("SQH2_1");
+
+            ViewData["sitevente"] = json.GetValue("SQH0_1").SelectToken("SALFCY"); // client.Resultat.resultXml;
+            ViewData["typedevis"] = json.GetValue("SQH0_1").SelectToken("SQHTYP");
+            ViewData["date"] = json.GetValue("SQH0_1").SelectToken("QUODAT");
+            ViewData["client"] = json.GetValue("SQH0_1").SelectToken("BPCORD");
+            ViewData["adr_cli"] = json.GetValue("SQH1_1").SelectToken("BPAADD");
+            ViewData["siteexpedition"] = json.GetValue("SQH1_2").SelectToken("STOFCY");
+
+            //tableau article
+            int e = 0;
+            foreach (JObject jsonObject in jsonArray)
+            {
+                ViewData["idarticle"] = jsonObject.SelectToken("ITMREF"); // article ITMREF et qte QTY
+                ViewData["des"] = jsonObject.SelectToken("ITMDES");
+                ViewData["prix"] = jsonObject.SelectToken("NETPRI");
+                ViewData["qte"] = jsonObject.SelectToken("QTY");
+                e++;
+            }
+            ViewData["length"] = e;
+
+            client.Param[1] = new CAdxParamKeyValue();
+            client.Param[1].key = "STOFCY";
+            client.Param[1].value = "FR014";
+
+            return View("Devis", client);
         }
-        
+
         public ActionResult Commande()
         {
             CAdxModel client = new CAdxModel();
@@ -291,6 +414,6 @@ namespace projet_sage_ecommerce.Controllers
 
             return View();
         }
-
+       
     }
 }

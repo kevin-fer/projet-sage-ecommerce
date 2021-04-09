@@ -57,5 +57,10 @@ namespace projet_sage_ecommerce.Models
 
             this.resultat = Client.modify(Context, wsalias, param, Json);
         }
+
+        public void save()
+        {
+            this.resultat = Client.save(Context, wsalias, json);
+        }
     }
 }
