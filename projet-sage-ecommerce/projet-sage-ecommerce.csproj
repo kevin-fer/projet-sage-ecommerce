@@ -262,6 +262,7 @@
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Views\Home\Commande.cshtml" />
     <Content Include="Views\Home\SuiviCommande.cshtml" />
+    <Content Include="Views\Home\Error404.cshtml" />
     <None Include="Views\Home\_RechercheArticle.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

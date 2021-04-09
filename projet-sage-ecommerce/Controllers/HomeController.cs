@@ -414,6 +414,11 @@ namespace projet_sage_ecommerce.Controllers
 
             return View();
         }
-       
+
+        public ActionResult Error404(int id) {
+            Response.StatusCode = id;
+            return View("Error404");
+        }
+
     }
 }
