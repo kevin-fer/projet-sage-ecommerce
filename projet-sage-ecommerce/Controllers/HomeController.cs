@@ -126,20 +126,21 @@ namespace projet_sage_ecommerce.Controllers
 
             c.Param[0].key = "SOHNUM";
 
-            if(Session["numcommandeSession"] == null)
+            if(Session["numcommandeSession"] == null) // Formulaire 
             {
-                c.Param[0].value = Request.Form["order-num"];
+                c.Param[0].value = Request.Form["order-num"]; 
                 Session["numcommandeSession"] = c.Param[0].value;
             }
-            else if (Request.Form["order-num"] != (string)Session["numcommandeSession"] && Request.Form["order-num"] != null /*!= String.Empty*/)
+            else if (Request.Form["order-num"] != (string)Session["numcommandeSession"] && Request.Form["order-num"] /*!= null*/ != String.Empty) //BOuton dans la barre de navigation
             {
                 c.Param[0].value = Request.Form["order-num"];
                 Session["numcommandeSession"] = c.Param[0].value;
             }
             else
             {
+                System.Diagnostics.Debug.WriteLine((string)Session["numcommandeSession"]);
                 c.Param[0].value = (string)Session["numcommandeSession"];
-                ViewData["numcommande"] = "blank";
+                //ViewData["numcommande"] = "blank";
             }
                        
             c.readObject();
@@ -154,6 +155,7 @@ namespace projet_sage_ecommerce.Controllers
             // État de la commande
             ViewData["etatcommande"] = json.GetValue("SOH1_5").SelectToken("ORDSTA_LBL"); // État de la commande
             ViewData["facturation"] = json.GetValue("SOH1_5").SelectToken("INVSTA_LBL"); // État de la facturation
+            ViewData["allocation"] = json.GetValue("SOH1_5").SelectToken("ALLSTA_LBL"); // État de l'allocation
             // Fournisseur
             ViewData["fournisseur"] = json.GetValue("SOH2_1").SelectToken("STOFCY"); // Fournisseur
             ViewData["fournisseurnom"] = json.GetValue("SOH2_1").SelectToken("ZSTOFCY"); // Nom du fournisseur
@@ -490,8 +492,26 @@ namespace projet_sage_ecommerce.Controllers
 
         public ActionResult Commande()
         {
-            CAdxModel client = new CAdxModel();
-            ViewBag.Message = "Your Commande page.";
+            return View("Commande");
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult Commande(CAdxModel client)
+        {
+            CAdxModel c = new CAdxModel();
+
+            c.WsAlias = "WSYDEVIS";
+
+            c.Param[0] = new CAdxParamKeyValue();
+
+            c.Param[0].key = "SQHNUM";
+            c.Param[0].value = (string)ViewData["SQHNUM"];
+
+            // FR0152104SQN00000007
+            JObject json = JObject.Parse(c.Resultat.resultXml);
+
+            ViewData["sitevente"] = json.GetValue("SQH0_1").SelectToken("SALFCY"); 
+
 
             return View();
         }
