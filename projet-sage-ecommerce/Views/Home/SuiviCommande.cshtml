@@ -101,7 +101,7 @@
                 <a class="nav-link" id="pills-livraison-tab" data-toggle="pill" href="#pills-livraison" role="tab" aria-controls="pills-livraison" aria-selected="false">Suivre la livraison</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Facturation</a>
+                <a class="nav-link" id="pills-facturation-tab" data-toggle="pill" href="#pills-facturation" role="tab" aria-controls="pills-facturation" aria-selected="false">Facturation</a>
             </li>
         </ul>
         <div class="tab-content" id="pills-tabContent">
@@ -161,6 +161,29 @@
                         <div class="col-auto">
                             <label class="visually-hidden" for="autoSizingInput">Assurance %</label>
                             <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["Assurance"]" disabled readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-facturation" role="tabpanel" aria-labelledby="pills-facturation-tab">
+                <h2>Facturation</h2>
+                <div class="row gy-2 gx-3 align-items-center">
+                    <div class="col-auto">
+                        <div class="col-auto">
+                            <label class="visually-hidden" for="autoSizingInput">Référence condition de paiement</label>
+                            <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["conditionpaiement"] " disabled readonly>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="col-auto">
+                            <label class="visually-hidden" for="autoSizingInput">Condition de paiement</label>
+                            <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["nomconditionpaiement"]" disabled readonly>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="col-auto">
+                            <label class="visually-hidden" for="autoSizingInput">Date de l'échéance</label>
+                            <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["dateecheance"]" disabled readonly>
                         </div>
                     </div>
                 </div>
