@@ -30,8 +30,8 @@
                     <h4>Description de l'article</h4>
                     @ViewData["description"]
                 </p>
-                <a href="https://localhost:44365/Home/Devis/" class="btn btn-dark btn-lg">Acheter</a>
-
+                
+                @Html.ActionLink("Devis", "Devis", "Home", new { id = @ViewData["nom"] }, null)
             </div>
         </div>
     </div>

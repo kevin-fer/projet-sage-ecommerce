@@ -2,71 +2,71 @@
 
 }
 
-<!DOCTYPE html>
+    <!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title></title>
-</head>
-<body>
-    <div>
-        <h1>Panier</h1>
-        <hr />
-        <button type="button" class="btn btn-warning">Modifier</button>
-        <button type="button" class="btn btn-danger">Supprimer</button>
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title></title>
+    </head>
+    <body>
+        <div>
+            <h1>Panier</h1>
+            <hr />
+            <button type="button" class="btn btn-warning">Modifier</button>
+            <button type="button" class="btn btn-danger">Supprimer</button>
 
-        <form>
-            <div class="mb-3">
-                <br />
-                <label for="date" class="form-label">Date</label>
-                <input type="text" class="form-control" id="date" value="@DateTime.Now.Date.ToString().Substring(0,10)" aria-describedby="dateHelp" disabled>
+            <form>
+                <div class="mb-3">
+                    <br />
+                    <label for="date" class="form-label">Date</label>
+                    <input type="text" class="form-control" id="date" value="@DateTime.Now.Date.ToString().Substring(0, 10)" aria-describedby="dateHelp" disabled>
 
-                <label for="client" class="form-label">Code client</label>
-                <input type="text" class="form-control" id="client" value=@ViewData["client"] aria-describedby="nomHelp">
+                    <label for="client" class="form-label">Code client</label>
+                    <input type="text" class="form-control" id="client" value=@ViewData["client"] aria-describedby="nomHelp">
 
-                <label for="adresse" class="form-label">Adresse</label>
-                <input type="text" class="form-control" id="adresse" value=@ViewData["adr_cli"] aria-describedby="adrHelp">
+                    <label for="adresse" class="form-label">Adresse</label>
+                    <input type="text" class="form-control" id="adresse" value=@ViewData["adr_cli"] aria-describedby="adrHelp">
 
-                <br />
-                <label for="commande" class="form-label">Total Articles</label>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Nom</th>
-                            <th scope="col">D&eacute;signation</th>
-                            <th scope="col">Prix</th>
-                            <th scope="col">Quantit&eacute;</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @for (int i = 1; i <= 2; i++)
-                        {
+                    <br />
+                    <label for="commande" class="form-label">Total Articles</label>
+                    <table class="table table-striped">
+                        <thead>
                             <tr>
-                                <th scope="row">@i</th>
-                                <td>@ViewData["idarticle"]</td>
-                                <td>@ViewData["des"]</td>
-                                <td>@ViewData["prix"] @ViewData["devise"]</td>
-                                <td><input type="number" min="0" id="qte" value=@ViewData["qte"] aria-describedby="qteHelp"></td>
+                                <th scope="col">#</th>
+                                <th scope="col">Nom</th>
+                                <th scope="col">D&eacute;signation</th>
+                                <th scope="col">Prix</th>
+                                <th scope="col">Quantit&eacute;</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
-                <div style="float: right">
-                    <label for="totalc" class="form-label">Total Commande</label>
-                    <input type="text" class="form-control" id="totalc" value="0" aria-describedby="totalcHelp" disabled>
+                        </thead>
+                        <tbody>
+                            @for (int i = 1; i <= Int32.Parse(@ViewData["count"].ToString()); i++)
+                            {
+                                <tr>
+                                    <th scope="row">@i</th>
+                                    <td>@ViewData["idarticle"]</td>
+                                    <td>@ViewData["des"]</td>
+                                    <td>@ViewData["prix"] @ViewData["devise"]</td>
+                                    <td><input type="number" min="0" id="qte" value=@ViewData["qte"] aria-describedby="qteHelp"></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <div style="float: right">
+                        <label for="totalc" class="form-label">Total Commande</label>
+                        <input type="text" class="form-control" id="totalc" value="0" aria-describedby="totalcHelp" disabled>
+                    </div>
                 </div>
-            </div>
-            
-            <br />
-            <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                <label class="form-check-label" for="exampleCheck1">CGU</label>
-            </div>
-            <button type="submit" class="btn btn-primary">Valider</button>
-        </form>
 
-    </div>
-</body>
+                <br />
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                    <label class="form-check-label" for="exampleCheck1">CGU</label>
+                </div>
+                <button type="submit" class="btn btn-primary">Valider</button>
+            </form>
+
+        </div>
+    </body>
 </html>

@@ -144,96 +144,101 @@ namespace projet_sage_ecommerce.Controllers
             }
                        
             c.readObject();
+            try {
+                JObject json = JObject.Parse(c.Resultat.resultXml);
 
-            JObject json = JObject.Parse(c.Resultat.resultXml);
-            // Zone principale 
-            ViewData["sitedevente"] = json.GetValue("SOH0_1").SelectToken("SALFCY"); // Site de vente
-            ViewData["numcommande"] = json.GetValue("SOH0_1").SelectToken("SOHNUM"); // Numéro de la commande
-            DateTime date = new DateTime(Int32.Parse(json.GetValue("SOH0_1").SelectToken("ORDDAT").ToString().Substring(0,4)), Int32.Parse(json.GetValue("SOH0_1").SelectToken("ORDDAT").ToString().Substring(4, 2)), Int32.Parse(json.GetValue("SOH0_1").SelectToken("ORDDAT").ToString().Substring(6, 2)));
-            ViewData["datecommande"] = date.ToString().Substring(0, 10); // Date de la commande
-            ViewData["codeclient"] = json.GetValue("SOH0_1").SelectToken("BPCORD"); // Num client
-            // État de la commande
-            ViewData["etatcommande"] = json.GetValue("SOH1_5").SelectToken("ORDSTA_LBL"); // État de la commande
-            ViewData["facturation"] = json.GetValue("SOH1_5").SelectToken("INVSTA_LBL"); // État de la facturation
-            ViewData["allocation"] = json.GetValue("SOH1_5").SelectToken("ALLSTA_LBL"); // État de l'allocation
-            // Fournisseur
-            ViewData["fournisseur"] = json.GetValue("SOH2_1").SelectToken("STOFCY"); // Fournisseur
-            ViewData["fournisseurnom"] = json.GetValue("SOH2_1").SelectToken("ZSTOFCY"); // Nom du fournisseur
-            ViewData["priorite"] = json.GetValue("SOH2_1").SelectToken("DLVPIO_LBL"); // Priorité de la livraison
+                // Zone principale 
+                ViewData["sitedevente"] = json.GetValue("SOH0_1").SelectToken("SALFCY"); // Site de vente
+                ViewData["numcommande"] = json.GetValue("SOH0_1").SelectToken("SOHNUM"); // Numéro de la commande
+                DateTime date = new DateTime(Int32.Parse(json.GetValue("SOH0_1").SelectToken("ORDDAT").ToString().Substring(0, 4)), Int32.Parse(json.GetValue("SOH0_1").SelectToken("ORDDAT").ToString().Substring(4, 2)), Int32.Parse(json.GetValue("SOH0_1").SelectToken("ORDDAT").ToString().Substring(6, 2)));
+                ViewData["datecommande"] = date.ToString().Substring(0, 10); // Date de la commande
+                ViewData["codeclient"] = json.GetValue("SOH0_1").SelectToken("BPCORD"); // Num client
+                                                                                        // État de la commande
+                ViewData["etatcommande"] = json.GetValue("SOH1_5").SelectToken("ORDSTA_LBL"); // État de la commande
+                ViewData["facturation"] = json.GetValue("SOH1_5").SelectToken("INVSTA_LBL"); // État de la facturation
+                                                                                             // Fournisseur
+                ViewData["fournisseur"] = json.GetValue("SOH2_1").SelectToken("STOFCY"); // Fournisseur
+                ViewData["fournisseurnom"] = json.GetValue("SOH2_1").SelectToken("ZSTOFCY"); // Nom du fournisseur
+                ViewData["priorite"] = json.GetValue("SOH2_1").SelectToken("DLVPIO_LBL"); // Priorité de la livraison
 
-            //DEVIS 
-            ViewData["numdevis"] = json.GetValue("SOH3_3").SelectToken("SQHNUM"); // Fournisseur
-            //Articles
-            JArray jsonArray = (JArray)json.GetValue("SOH4_1");//Get list of items
+                //DEVIS 
+                ViewData["numdevis"] = json.GetValue("SOH3_3").SelectToken("SQHNUM"); // Fournisseur
+                                                                                      //Articles
+                JArray jsonArray = (JArray)json.GetValue("SOH4_1");//Get list of items
 
-            int e = 0;
-            foreach (JObject jsonObject in jsonArray)
-            {
-                CAdxModel tempC = new CAdxModel();
-                tempC.WsAlias = "WSYITM";
-                tempC.Param[0] = new CAdxParamKeyValue();
-                tempC.Param[0].key = "ITMREF";
-                tempC.Param[0].value = (string)jsonObject.SelectToken("ITMREF");
-                tempC.readObject();
-                JObject jsonTemp = JObject.Parse(tempC.Resultat.resultXml);
-                ViewData["blob" + e.ToString()] = jsonTemp.GetValue("ITM1_7").SelectToken("IMG");
+                int e = 0;
+                foreach (JObject jsonObject in jsonArray) {
+                    CAdxModel tempC = new CAdxModel();
+                    tempC.WsAlias = "WSYITM";
+                    tempC.Param[0] = new CAdxParamKeyValue();
+                    tempC.Param[0].key = "ITMREF";
+                    tempC.Param[0].value = (string)jsonObject.SelectToken("ITMREF");
+                    tempC.readObject();
+                    JObject jsonTemp = JObject.Parse(tempC.Resultat.resultXml);
+                    ViewData["blob" + e.ToString()] = jsonTemp.GetValue("ITM1_7").SelectToken("IMG");
 
-                ViewData["ITMREF" + e.ToString()] = jsonObject.SelectToken("ITMREF"); // id de l'article
-                ViewData["ITMDES" + e.ToString()] = jsonObject.SelectToken("ITMDES"); // designation
-                ViewData["QTY" + e.ToString()] = jsonObject.SelectToken("QTY"); // quantité
-                ViewData["GROPRI" + e.ToString()] = jsonObject.SelectToken("GROPRI"); // prix unitaire
-                ViewData["LINORDNOT" + e.ToString()] = jsonObject.SelectToken("LINORDNOT"); // total ligne
-                e++;
+                    ViewData["ITMREF" + e.ToString()] = jsonObject.SelectToken("ITMREF"); // id de l'article
+                    ViewData["ITMDES" + e.ToString()] = jsonObject.SelectToken("ITMDES"); // designation
+                    ViewData["QTY" + e.ToString()] = jsonObject.SelectToken("QTY"); // quantité
+                    ViewData["GROPRI" + e.ToString()] = jsonObject.SelectToken("GROPRI"); // prix unitaire
+                    ViewData["LINORDNOT" + e.ToString()] = jsonObject.SelectToken("LINORDNOT"); // total ligne
+                    e++;
+                }
+                ViewData["length"] = e;
+                //Prix
+                ViewData["prixttht"] = json.GetValue("SOH4_4").SelectToken("ORDINVNOT"); // Prix total HT
+                ViewData["prixttTTC"] = json.GetValue("SOH4_4").SelectToken("ORDINVATI"); // Prix total TTC
+
+                JArray jsonArray1 = (JArray)json.GetValue("SOH3_5");//Get list of items
+                JObject jobj = (JObject)jsonArray1[0];
+                JObject jobj1 = (JObject)jsonArray1[2];
+                ViewData["remise"] = jobj.GetValue("INVDTAAMT"); // Remise %
+                ViewData["assurance"] = jobj1.GetValue("INVDTAAMT"); // Assurance %
+
+                //Livraison | Information transporteur
+                ViewData["transporteurnum"] = json.GetValue("SOH2_3").SelectToken("BPTNUM"); // Id du transporteur
+                ViewData["transporteurnom"] = json.GetValue("SOH2_3").SelectToken("ZBPTNUM"); // Nom du transporteur
+                                                                                              //ViewData["modedelivraison"] = json.GetValue("SOH2_3").SelectToken("MDL");
+                ViewData["modedelivraisonnom"] = json.GetValue("SOH2_3").SelectToken("ZMDL");
+                ViewData["livraisonnum"] = json.GetValue("SOH2_4").SelectToken("LASDLVNUM"); //Numéro de la livraison
+                DateTime date1 = new DateTime(Int32.Parse(json.GetValue("SOH2_4").SelectToken("LASDLVDAT").ToString().Substring(0, 4)), Int32.Parse(json.GetValue("SOH2_4").SelectToken("LASDLVDAT").ToString().Substring(4, 2)), Int32.Parse(json.GetValue("SOH2_4").SelectToken("LASDLVDAT").ToString().Substring(6, 2)));
+                ViewData["livraisondate"] = date1.ToString().Substring(0, 10); // Date de la livraison
+
+                ViewData["douane"] = json.GetValue("SOH2_3").SelectToken("ZEECICT"); //Douane
+                ViewData["tournee"] = json.GetValue("SOH2_3").SelectToken("DRN_LBL"); //tournee
+                ViewData["partielle"] = json.GetValue("SOH2_6").SelectToken("DME_LBL"); //partielle
+                DateTime date2 = new DateTime(Int32.Parse(json.GetValue("SOH2_2").SelectToken("DEMDLVDAT").ToString().Substring(0, 4)), Int32.Parse(json.GetValue("SOH2_2").SelectToken("DEMDLVDAT").ToString().Substring(4, 2)), Int32.Parse(json.GetValue("SOH2_2").SelectToken("DEMDLVDAT").ToString().Substring(6, 2)));
+                ViewData["livraisondatedemandee"] = date2.ToString().Substring(0, 10); // Date de la livraison demandée
+
+                DateTime date3 = new DateTime(Int32.Parse(json.GetValue("SOH2_2").SelectToken("SHIDAT").ToString().Substring(0, 4)), Int32.Parse(json.GetValue("SOH2_2").SelectToken("SHIDAT").ToString().Substring(4, 2)), Int32.Parse(json.GetValue("SOH2_2").SelectToken("SHIDAT").ToString().Substring(6, 2)));
+                ViewData["livraisondateexpedition"] = date3.ToString().Substring(0, 10); // Date d'expedition
+
+                ViewData["delai"] = json.GetValue("SOH2_2").SelectToken("DAYLTI"); // délai prévu
+                ViewData["heureprevu"] = json.GetValue("SOH2_2").SelectToken("DEMDLVHOU").ToString().Substring(0, 2) + ":" + json.GetValue("SOH2_2").SelectToken("DEMDLVHOU").ToString().Substring(2, 2); // délai prévu
+                                                                                                                                                                                                          // Adresse 
+                ViewData["adpays"] = json.GetValue("ADB2_1").SelectToken("CRYNAM"); //Pays
+                JArray jsonArray2 = (JArray)json.GetValue("ADB2_1").SelectToken("BPAADDLIG");//Adresse
+                ViewData["rue"] = jsonArray2[0].ToString();
+                ViewData["codepostal"] = json.GetValue("ADB2_1").SelectToken("POSCOD"); //Code postal
+                ViewData["ville"] = json.GetValue("ADB2_1").SelectToken("CTY"); //ville
+                ViewData["statutdelivry"] = json.GetValue("SOH1_5").SelectToken("DLVSTA_LBL"); // statut de la livraison
+                                                                                               //Facturation
+                ViewData["conditionpaiement"] = json.GetValue("SOH3_3").SelectToken("PTE"); // Condition paiement
+                ViewData["nomconditionpaiement"] = json.GetValue("SOH3_3").SelectToken("ZPTE"); // Nom condition paiement
+                ViewData["numerodudevis"] = json.GetValue("SOH3_3").SelectToken("SQHNUM"); // Numéro du devis
+
+                DateTime date4 = new DateTime(Int32.Parse(json.GetValue("SOH3_2").SelectToken("VCRINVCNDDAT").ToString().Substring(0, 4)), Int32.Parse(json.GetValue("SOH3_2").SelectToken("VCRINVCNDDAT").ToString().Substring(4, 2)), Int32.Parse(json.GetValue("SOH3_2").SelectToken("VCRINVCNDDAT").ToString().Substring(6, 2)));
+                ViewData["dateecheance"] = date4.ToString().Substring(0, 10); // Date de l'échéance
+
+                json = JObject.Parse(c.Resultat.resultXml);
+
+                return View("SuiviCommande");
             }
-            ViewData["length"] = e;
-            //Prix
-            ViewData["prixttht"] = json.GetValue("SOH4_4").SelectToken("ORDINVNOT"); // Prix total HT
-            ViewData["prixttTTC"] = json.GetValue("SOH4_4").SelectToken("ORDINVATI"); // Prix total TTC
-
-            JArray jsonArray1 = (JArray)json.GetValue("SOH3_5");//Get list of items
-            JObject jobj = (JObject)jsonArray1[0];
-            JObject jobj1 = (JObject)jsonArray1[2];
-            ViewData["remise"] = jobj.GetValue("INVDTAAMT"); // Remise %
-            ViewData["assurance"] = jobj1.GetValue("INVDTAAMT"); // Assurance %
-
-            //Livraison | Information transporteur
-            ViewData["transporteurnum"] = json.GetValue("SOH2_3").SelectToken("BPTNUM"); // Id du transporteur
-            ViewData["transporteurnom"] = json.GetValue("SOH2_3").SelectToken("ZBPTNUM"); // Nom du transporteur
-            //ViewData["modedelivraison"] = json.GetValue("SOH2_3").SelectToken("MDL");
-            ViewData["modedelivraisonnom"] = json.GetValue("SOH2_3").SelectToken("ZMDL");
-            ViewData["livraisonnum"] = json.GetValue("SOH2_4").SelectToken("LASDLVNUM"); //Numéro de la livraison
-            DateTime date1 = new DateTime(Int32.Parse(json.GetValue("SOH2_4").SelectToken("LASDLVDAT").ToString().Substring(0, 4)), Int32.Parse(json.GetValue("SOH2_4").SelectToken("LASDLVDAT").ToString().Substring(4, 2)), Int32.Parse(json.GetValue("SOH2_4").SelectToken("LASDLVDAT").ToString().Substring(6, 2)));
-            ViewData["livraisondate"] = date1.ToString().Substring(0, 10); // Date de la livraison
+            catch (Exception e) {
+                return View("Error404");
+            }
             
-            ViewData["douane"] = json.GetValue("SOH2_3").SelectToken("ZEECICT"); //Douane
-            ViewData["tournee"] = json.GetValue("SOH2_3").SelectToken("DRN_LBL"); //tournee
-            ViewData["partielle"] = json.GetValue("SOH2_6").SelectToken("DME_LBL"); //partielle
-            DateTime date2 = new DateTime(Int32.Parse(json.GetValue("SOH2_2").SelectToken("DEMDLVDAT").ToString().Substring(0, 4)), Int32.Parse(json.GetValue("SOH2_2").SelectToken("DEMDLVDAT").ToString().Substring(4, 2)), Int32.Parse(json.GetValue("SOH2_2").SelectToken("DEMDLVDAT").ToString().Substring(6, 2)));
-            ViewData["livraisondatedemandee"] = date2.ToString().Substring(0, 10); // Date de la livraison demandée
             
-            DateTime date3 = new DateTime(Int32.Parse(json.GetValue("SOH2_2").SelectToken("SHIDAT").ToString().Substring(0, 4)), Int32.Parse(json.GetValue("SOH2_2").SelectToken("SHIDAT").ToString().Substring(4, 2)), Int32.Parse(json.GetValue("SOH2_2").SelectToken("SHIDAT").ToString().Substring(6, 2)));
-            ViewData["livraisondateexpedition"] = date3.ToString().Substring(0, 10); // Date d'expedition
-
-            ViewData["delai"] = json.GetValue("SOH2_2").SelectToken("DAYLTI"); // délai prévu
-            ViewData["heureprevu"] = json.GetValue("SOH2_2").SelectToken("DEMDLVHOU").ToString().Substring(0, 2) + ":" + json.GetValue("SOH2_2").SelectToken("DEMDLVHOU").ToString().Substring(2, 2); // délai prévu
-            // Adresse 
-            ViewData["adpays"] = json.GetValue("ADB2_1").SelectToken("CRYNAM"); //Pays
-            JArray jsonArray2 = (JArray)json.GetValue("ADB2_1").SelectToken("BPAADDLIG");//Adresse
-            ViewData["rue"] = jsonArray2[0].ToString();
-            ViewData["codepostal"] = json.GetValue("ADB2_1").SelectToken("POSCOD"); //Code postal
-            ViewData["ville"] = json.GetValue("ADB2_1").SelectToken("CTY"); //ville
-            ViewData["statutdelivry"] = json.GetValue("SOH1_5").SelectToken("DLVSTA_LBL"); // statut de la livraison
-                                                                                           //Facturation
-            ViewData["conditionpaiement"] = json.GetValue("SOH3_3").SelectToken("PTE"); // Condition paiement
-            ViewData["nomconditionpaiement"] = json.GetValue("SOH3_3").SelectToken("ZPTE"); // Nom condition paiement
-            ViewData["numerodudevis"] = json.GetValue("SOH3_3").SelectToken("SQHNUM"); // Numéro du devis
-
-            DateTime date4 = new DateTime(Int32.Parse(json.GetValue("SOH3_2").SelectToken("VCRINVCNDDAT").ToString().Substring(0, 4)), Int32.Parse(json.GetValue("SOH3_2").SelectToken("VCRINVCNDDAT").ToString().Substring(4, 2)), Int32.Parse(json.GetValue("SOH3_2").SelectToken("VCRINVCNDDAT").ToString().Substring(6, 2)));
-            ViewData["dateecheance"] = date4.ToString().Substring(0, 10); // Date de l'échéance
-
-            json = JObject.Parse(c.Resultat.resultXml);
-
-            return View("SuiviCommande");
         }
 
         public ActionResult About()
@@ -312,28 +317,36 @@ namespace projet_sage_ecommerce.Controllers
                 Console.WriteLine(c.Resultat.messages[i].message);
             }
 
-            JObject json = JObject.Parse(c.Resultat.resultXml);
+            try {
+                JObject json = JObject.Parse(c.Resultat.resultXml);
 
-            ViewData["nom"] = json.GetValue("ITM0_1").SelectToken("ITMREF"); // client.Resultat.resultXml;
-            ViewData["des"] = json.GetValue("ITM0_1").SelectToken("DES1AXX"); // client.Resultat.resultXml;
-            ViewData["blob"] = json.GetValue("ITM1_7").SelectToken("IMG"); // client.Resultat.resultXml;
-            ViewData["prix"] = json.GetValue("ITS_3").SelectToken("BASPRI"); // client.Resultat.resultXml;
-            ViewData["devise"] = json.GetValue("ITS_3").SelectToken("CUR"); // client.Resultat.resultXml;
-            ViewData["description"] = json.GetValue("ITM0_1").SelectToken("YDESCRIPTION"); // client.Resultat.resultXml;
+                ViewData["nom"] = json.GetValue("ITM0_1").SelectToken("ITMREF"); // client.Resultat.resultXml;
+                ViewData["des"] = json.GetValue("ITM0_1").SelectToken("DES1AXX"); // client.Resultat.resultXml;
+                ViewData["blob"] = json.GetValue("ITM1_7").SelectToken("IMG"); // client.Resultat.resultXml;
+                ViewData["prix"] = json.GetValue("ITS_3").SelectToken("BASPRI"); // client.Resultat.resultXml;
+                ViewData["devise"] = json.GetValue("ITS_3").SelectToken("CUR"); // client.Resultat.resultXml;
+                ViewData["description"] = json.GetValue("ITM0_1").SelectToken("YDESCRIPTION"); // client.Resultat.resultXml;
 
-            c.Param[1] = new CAdxParamKeyValue();
-            c.Param[1].key = "STOFCY";
-            c.Param[1].value = "FR014";
+                c.Param[1] = new CAdxParamKeyValue();
+                c.Param[1].key = "STOFCY";
+                c.Param[1].value = "FR014";
 
-            c.WsAlias = "WSSTOCK";
+                c.WsAlias = "WSSTOCK";
+
+                c.readObject();
+
+                json = JObject.Parse(c.Resultat.resultXml);
+
+                ViewData["quantite"] = json.GetValue("ITF8_1").SelectToken("PHYSTO"); // client.Resultat.resultXml;
+
+                return View("Item", c);
+            }
+            catch (Exception e) {
+                return View("Error404");
+            }
             
-            c.readObject();
 
-            json = JObject.Parse(c.Resultat.resultXml);
-
-            ViewData["quantite"] = json.GetValue("ITF8_1").SelectToken("PHYSTO"); // client.Resultat.resultXml;
-
-            return View("Item", c);
+            
         }
 
         public ActionResult Read()
@@ -423,19 +436,17 @@ namespace projet_sage_ecommerce.Controllers
 
         //--------------------------------------------------devis---------------------------------------------------
 
-        public ActionResult Devis()
+        public ActionResult Devis(String id)
         {
             CAdxModel client = new CAdxModel();
 
             client.WsAlias = "WSYDEVIS"; //WJWSDEVIS
-            //client.Json = "{''}";
 
-            //'ITMREF': '" + id + @"',
             client.Json = @"{
                               'SQH0_1': {
                                 'SALFCY': 'FR015',
                                 'SQHTYP': 'SQN',
-                                'QUODAT': '20210409',
+                                'QUODAT': '20210411',
                                 'BPCORD': 'YYCLF1'
                               },
                               'SQH1_2': {
@@ -452,14 +463,12 @@ namespace projet_sage_ecommerce.Controllers
                               },
                               'SQH2_1': [
                                 {
-                                  'ITMREF': 'HHMANG',
-                                  'QTY': '3'
+                                  'ITMREF': '" + id + @"',
+                                  'QTY': '2'
                                 }
                               ]
                             }";
 
-            //String json2 = client.Json.Replace("'", "\"");
-            //client.Json.Replace("'", "\"");
 
             client.save();
 
@@ -468,6 +477,7 @@ namespace projet_sage_ecommerce.Controllers
             JObject json = JObject.Parse(client.Resultat.resultXml);
             JArray jsonArray = (JArray)json.GetValue("SQH2_1");
 
+            ViewData["numdevis"] = json.GetValue("SQH0_1").SelectToken("SQHNUM");
             ViewData["sitevente"] = json.GetValue("SQH0_1").SelectToken("SALFCY"); // client.Resultat.resultXml;
             ViewData["typedevis"] = json.GetValue("SQH0_1").SelectToken("SQHTYP");
             ViewData["date"] = json.GetValue("SQH0_1").SelectToken("QUODAT");
@@ -485,7 +495,11 @@ namespace projet_sage_ecommerce.Controllers
                 ViewData["qte"] = jsonObject.SelectToken("QTY");
                 e++;
             }
-            ViewData["length"] = e;
+            ViewData["count"] = e;
+
+            //while devis pas validé, on garde dans la session le mm devis 
+            /*c.Param[0].value = Request.Form["order-num"];
+            Session["numcommandeSession"] = c.Param[0].value;*/
 
             return View("Devis", client);
         }
