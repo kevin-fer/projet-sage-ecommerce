@@ -23,13 +23,6 @@
                         <p class="card-text text-justify description">@ViewData["description" + i.ToString()]</p>
                         @if (Int32.Parse(@ViewData["quantite" + i.ToString()].ToString()) == 0)
                         {
-<<<<<<< HEAD
-                            <h5><span style="background-color: #ECE8E5;" class="badge">@ViewData["prix" + i.ToString()] €</span> <span style="background-color: #FA3A3A; color: #FFFFFF;" class="badge">Rupture de stock</span></h5>
-                        }
-                        else
-                        {
-                            <h5><span style="background-color: #ECE8E5;" class="badge">@ViewData["prix" + i.ToString()] €</span> <span style="background-color: #20c997; color: #FFFFFF;" class="badge">@ViewData["quantite" + i.ToString()] en stock</span></h5>
-=======
                             <h5>
                                 <span style="background-color: #ECE8E5;" class="badge d-none d-light-inline-block">@ViewData["prix" + i.ToString()] €</span>
                                 <span style="background-color: #3b3b3b;" class="badge d-none d-dark-inline-block">@ViewData["prix" + i.ToString()] €</span>
@@ -43,7 +36,6 @@
                                 <span style="background-color: #3b3b3b;" class="badge d-none d-dark-inline-block">@ViewData["prix" + i.ToString()] €</span>
                                 <span style="background-color: #20c997; color: #FFFFFF;" class="badge">@ViewData["quantite" + i.ToString()] en stock</span>
                             </h5>
->>>>>>> test
                         }
                         <a class="btn btn-dark" href="https://localhost:44365/Home/Item/@ViewData["nom" + i.ToString()]">Voir plus</a>
                     </div>

@@ -117,44 +117,29 @@ namespace projet_sage_ecommerce.Controllers
 
         [AcceptVerbs(HttpVerbs.Post)]
 
-<<<<<<< HEAD
-        public ActionResult SuiviCommande(CAdxModel c, string status = "")
-=======
         public ActionResult SuiviCommande(CAdxModel c)
->>>>>>> test
-        {
             c = new CAdxModel();
-
             c.WsAlias = "WSYCOMERP";
             c.Param[0] = new CAdxParamKeyValue();
 
             c.Param[0].key = "SOHNUM";
 
-<<<<<<< HEAD
             if(Session["numcommandeSession"] == null)
             {
-                c.Param[0].value = Request.Form["order-num"];
                 Session["numcommandeSession"] = c.Param[0].value;
             }
             else if (Request.Form["order-num"] != (string)Session["numcommandeSession"] && Request.Form["order-num"] != null /*!= String.Empty*/)
-=======
             if(Session["numcommandeSession"] == null || Request.Form["order-num"] != (string)Session["numcommandeSession"] && Request.Form["order-num"] != String.Empty)
->>>>>>> test
-            {
                 c.Param[0].value = Request.Form["order-num"];
-                Session["numcommandeSession"] = c.Param[0].value;
             }
-<<<<<<< HEAD
             else
             {
                 c.Param[0].value = (string)Session["numcommandeSession"];
                 ViewData["numcommande"] = "blank";
-=======
 
             else
             {
                 c.Param[0].value = (string)Session["numcommandeSession"];
->>>>>>> test
             }
                        
             c.readObject();
@@ -163,7 +148,6 @@ namespace projet_sage_ecommerce.Controllers
             // Zone principale 
             ViewData["sitedevente"] = json.GetValue("SOH0_1").SelectToken("SALFCY"); // Site de vente
             ViewData["numcommande"] = json.GetValue("SOH0_1").SelectToken("SOHNUM"); // Numéro de la commande
-<<<<<<< HEAD
             DateTime date = new DateTime(Int32.Parse(json.GetValue("SOH0_1").SelectToken("ORDDAT").ToString().Substring(0,4)), Int32.Parse(json.GetValue("SOH0_1").SelectToken("ORDDAT").ToString().Substring(4, 2)), Int32.Parse(json.GetValue("SOH0_1").SelectToken("ORDDAT").ToString().Substring(6, 2)));
             ViewData["datecommande"] = date.ToString().Substring(0, 10); // Date de la commande
             ViewData["codeclient"] = json.GetValue("SOH0_1").SelectToken("BPCORD"); // Num client
@@ -245,7 +229,6 @@ namespace projet_sage_ecommerce.Controllers
             DateTime date4 = new DateTime(Int32.Parse(json.GetValue("SOH3_2").SelectToken("VCRINVCNDDAT").ToString().Substring(0, 4)), Int32.Parse(json.GetValue("SOH3_2").SelectToken("VCRINVCNDDAT").ToString().Substring(4, 2)), Int32.Parse(json.GetValue("SOH3_2").SelectToken("VCRINVCNDDAT").ToString().Substring(6, 2)));
             ViewData["dateecheance"] = date4.ToString().Substring(0, 10); // Date de l'échéance
 
-=======
             //ViewData["datecommande"] = json.GetValue("SOH0_1").SelectToken("ORDDAT"); // Date de la commande
             //ViewData["codeclient"] = json.GetValue("SOH0_1").SelectToken("BPCORD"); // Num client
             // État de la commande
@@ -272,7 +255,6 @@ namespace projet_sage_ecommerce.Controllers
                 e++;
             }
             */
->>>>>>> test
             json = JObject.Parse(c.Resultat.resultXml);
 
             return View("SuiviCommande");
@@ -470,7 +452,6 @@ namespace projet_sage_ecommerce.Controllers
             CAdxModel client = new CAdxModel();
 
             client.WsAlias = "WSYDEVIS"; //WJWSDEVIS
-<<<<<<< HEAD
             //client.Json = "{''}";
 
             //'ITMREF': '" + id + @"',
@@ -507,7 +488,6 @@ namespace projet_sage_ecommerce.Controllers
             client.save();
 
             //nblig nbre de lignes tableau
-=======
             //client.Json = Request.Form["entreexml"];
             client.Json = "{}";
 
@@ -519,7 +499,6 @@ namespace projet_sage_ecommerce.Controllers
 
             //nblig nbre de lignes tableau
             //YYPS4 exemple devis n° FR0152104SQN00000003
->>>>>>> test
 
             JObject json = JObject.Parse(client.Resultat.resultXml);
             JArray jsonArray = (JArray)json.GetValue("SQH2_1");
@@ -543,13 +522,10 @@ namespace projet_sage_ecommerce.Controllers
             }
             ViewData["length"] = e;
 
-<<<<<<< HEAD
-=======
             client.Param[1] = new CAdxParamKeyValue();
             client.Param[1].key = "STOFCY";
             client.Param[1].value = "FR014";
 
->>>>>>> test
             return View("Devis", client);
         }
 
@@ -560,15 +536,12 @@ namespace projet_sage_ecommerce.Controllers
 
             return View();
         }
-<<<<<<< HEAD
 
         public ActionResult Error404() {
             Response.StatusCode = 404;
             return View("Error404");
         }
 
-=======
        
->>>>>>> test
     }
 }
