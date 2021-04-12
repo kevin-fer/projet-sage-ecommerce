@@ -12,7 +12,8 @@
             <div class="card-body">
                 <h2 class="card-title">@ViewData["des"]</h2>
                 <h5>
-                    <span style="background-color: #ECE8E5;" class="badge">@ViewData["prix"] @ViewData["devise"]</span>
+                    <span style="background-color: #ECE8E5;" class="badge d-none d-light-inline-block">@ViewData["prix"] @ViewData["devise"]</span>
+                    <span style="background-color: #3b3b3b;" class="badge d-none d-dark-inline-block">@ViewData["prix"] @ViewData["devise"]</span>
                     <span style="background-color: #20c997; color: #FFFFFF;" class="badge bg-warning text-dark">@ViewData["nom"]</span>
 
                     @if (Int32.Parse(@ViewData["quantite"].ToString()) == null || Int32.Parse(@ViewData["quantite"].ToString()) == 0)

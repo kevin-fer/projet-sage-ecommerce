@@ -141,6 +141,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-dark.css" />
+    <Content Include="Content\bootstrap-dark.min.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
@@ -161,6 +163,9 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="Content\bootstrap-dark.scss" />
+    <Content Include="Content\bootstrap-dark.css.map" />
+    <Content Include="Content\bootstrap-dark.min.css.map" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -262,7 +267,10 @@
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Views\Home\Commande.cshtml" />
     <Content Include="Views\Home\SuiviCommande.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\Home\Error404.cshtml" />
+=======
+>>>>>>> test
     <None Include="Views\Home\_RechercheArticle.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
