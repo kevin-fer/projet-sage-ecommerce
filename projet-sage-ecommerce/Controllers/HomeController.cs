@@ -437,8 +437,8 @@ namespace projet_sage_ecommerce.Controllers
                                 'BPCORD': 'YYCLF1'
                               },
                               'SQH1_2': {
-                                'STOFCY': 'FR014'
-                                'EECICT': '',
+                                'STOFCY': 'FR014',
+                                'EECICT': ''
                               },
                               'SQH1_4': {
                                 'VACBPR': 'FRA',
