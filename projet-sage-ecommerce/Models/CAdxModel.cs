@@ -60,6 +60,8 @@ namespace projet_sage_ecommerce.Models
 
         public void save()
         {
+            Json = Json.Replace("'", "\"");
+
             this.resultat = Client.save(Context, wsalias, json);
         }
     }

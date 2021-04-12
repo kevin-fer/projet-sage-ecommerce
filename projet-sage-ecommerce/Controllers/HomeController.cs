@@ -336,17 +336,42 @@ namespace projet_sage_ecommerce.Controllers
             CAdxModel client = new CAdxModel();
 
             client.WsAlias = "WSYDEVIS"; //WJWSDEVIS
-            //client.Json = Request.Form["entreexml"];
-            client.Json = "{}";
+            //client.Json = "{''}";
 
-            client.Param[0] = new CAdxParamKeyValue();
-            client.Param[0].key = "SQHNUM";
-            client.Param[0].value = "FR0152104SQN00000003";
+            //'ITMREF': '" + id + @"',
+            client.Json = @"{
+                              'SQH0_1': {
+                                'SALFCY': 'FR015',
+                                'SQHTYP': 'SQN',
+                                'QUODAT': '20210409',
+                                'BPCORD': 'YYCLF1'
+                              },
+                              'SQH1_2': {
+                                'STOFCY': 'FR014'
+                                'EECICT': '',
+                              },
+                              'SQH1_4': {
+                                'VACBPR': 'FRA',
+                                'CUR': 'EUR',
+                                'PRITYP': '1'
+                              },
+                              'SQH3_1': {
+                                'PTE': 'CH30NETEOM'
+                              },
+                              'SQH2_1': [
+                                {
+                                  'ITMREF': 'HHMANG',
+                                  'QTY': '3'
+                                }
+                              ]
+                            }";
 
-            client.readObject();
+            //String json2 = client.Json.Replace("'", "\"");
+            //client.Json.Replace("'", "\"");
+
+            client.save();
 
             //nblig nbre de lignes tableau
-            //YYPS4 exemple devis n° FR0152104SQN00000003
 
             JObject json = JObject.Parse(client.Resultat.resultXml);
             JArray jsonArray = (JArray)json.GetValue("SQH2_1");
@@ -369,10 +394,6 @@ namespace projet_sage_ecommerce.Controllers
                 e++;
             }
             ViewData["length"] = e;
-
-            client.Param[1] = new CAdxParamKeyValue();
-            client.Param[1].key = "STOFCY";
-            client.Param[1].value = "FR014";
 
             return View("Devis", client);
         }
