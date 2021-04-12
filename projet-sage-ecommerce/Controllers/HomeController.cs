@@ -310,28 +310,36 @@ namespace projet_sage_ecommerce.Controllers
                 Console.WriteLine(c.Resultat.messages[i].message);
             }
 
-            JObject json = JObject.Parse(c.Resultat.resultXml);
+            try {
+                JObject json = JObject.Parse(c.Resultat.resultXml);
 
-            ViewData["nom"] = json.GetValue("ITM0_1").SelectToken("ITMREF"); // client.Resultat.resultXml;
-            ViewData["des"] = json.GetValue("ITM0_1").SelectToken("DES1AXX"); // client.Resultat.resultXml;
-            ViewData["blob"] = json.GetValue("ITM1_7").SelectToken("IMG"); // client.Resultat.resultXml;
-            ViewData["prix"] = json.GetValue("ITS_3").SelectToken("BASPRI"); // client.Resultat.resultXml;
-            ViewData["devise"] = json.GetValue("ITS_3").SelectToken("CUR"); // client.Resultat.resultXml;
-            ViewData["description"] = json.GetValue("ITM0_1").SelectToken("YDESCRIPTION"); // client.Resultat.resultXml;
+                ViewData["nom"] = json.GetValue("ITM0_1").SelectToken("ITMREF"); // client.Resultat.resultXml;
+                ViewData["des"] = json.GetValue("ITM0_1").SelectToken("DES1AXX"); // client.Resultat.resultXml;
+                ViewData["blob"] = json.GetValue("ITM1_7").SelectToken("IMG"); // client.Resultat.resultXml;
+                ViewData["prix"] = json.GetValue("ITS_3").SelectToken("BASPRI"); // client.Resultat.resultXml;
+                ViewData["devise"] = json.GetValue("ITS_3").SelectToken("CUR"); // client.Resultat.resultXml;
+                ViewData["description"] = json.GetValue("ITM0_1").SelectToken("YDESCRIPTION"); // client.Resultat.resultXml;
 
-            c.Param[1] = new CAdxParamKeyValue();
-            c.Param[1].key = "STOFCY";
-            c.Param[1].value = "FR014";
+                c.Param[1] = new CAdxParamKeyValue();
+                c.Param[1].key = "STOFCY";
+                c.Param[1].value = "FR014";
 
-            c.WsAlias = "WSSTOCK";
+                c.WsAlias = "WSSTOCK";
+
+                c.readObject();
+
+                json = JObject.Parse(c.Resultat.resultXml);
+
+                ViewData["quantite"] = json.GetValue("ITF8_1").SelectToken("PHYSTO"); // client.Resultat.resultXml;
+
+                return View("Item", c);
+            }
+            catch (Exception e) {
+                return View("Error404");
+            }
             
-            c.readObject();
 
-            json = JObject.Parse(c.Resultat.resultXml);
-
-            ViewData["quantite"] = json.GetValue("ITF8_1").SelectToken("PHYSTO"); // client.Resultat.resultXml;
-
-            return View("Item", c);
+            
         }
 
         public ActionResult Read()
