@@ -421,24 +421,22 @@ namespace projet_sage_ecommerce.Controllers
 
         //--------------------------------------------------devis---------------------------------------------------
 
-        public ActionResult Devis()
+        public ActionResult Devis(String id)
         {
             CAdxModel client = new CAdxModel();
 
             client.WsAlias = "WSYDEVIS"; //WJWSDEVIS
-            //client.Json = "{''}";
 
-            //'ITMREF': '" + id + @"',
             client.Json = @"{
                               'SQH0_1': {
                                 'SALFCY': 'FR015',
                                 'SQHTYP': 'SQN',
-                                'QUODAT': '20210409',
+                                'QUODAT': '20210411',
                                 'BPCORD': 'YYCLF1'
                               },
                               'SQH1_2': {
-                                'STOFCY': 'FR014'
-                                'EECICT': '',
+                                'STOFCY': 'FR014',
+                                'EECICT': ''
                               },
                               'SQH1_4': {
                                 'VACBPR': 'FRA',
@@ -450,14 +448,12 @@ namespace projet_sage_ecommerce.Controllers
                               },
                               'SQH2_1': [
                                 {
-                                  'ITMREF': 'HHMANG',
-                                  'QTY': '3'
+                                  'ITMREF': '" + id + @"',
+                                  'QTY': '2'
                                 }
                               ]
                             }";
 
-            //String json2 = client.Json.Replace("'", "\"");
-            //client.Json.Replace("'", "\"");
 
             client.save();
 
@@ -466,6 +462,7 @@ namespace projet_sage_ecommerce.Controllers
             JObject json = JObject.Parse(client.Resultat.resultXml);
             JArray jsonArray = (JArray)json.GetValue("SQH2_1");
 
+            ViewData["numdevis"] = json.GetValue("SQH0_1").SelectToken("SQHNUM");
             ViewData["sitevente"] = json.GetValue("SQH0_1").SelectToken("SALFCY"); // client.Resultat.resultXml;
             ViewData["typedevis"] = json.GetValue("SQH0_1").SelectToken("SQHTYP");
             ViewData["date"] = json.GetValue("SQH0_1").SelectToken("QUODAT");
@@ -483,7 +480,11 @@ namespace projet_sage_ecommerce.Controllers
                 ViewData["qte"] = jsonObject.SelectToken("QTY");
                 e++;
             }
-            ViewData["length"] = e;
+            ViewData["count"] = e;
+
+            //while devis pas validé, on garde dans la session le mm devis 
+            /*c.Param[0].value = Request.Form["order-num"];
+            Session["numcommandeSession"] = c.Param[0].value;*/
 
             return View("Devis", client);
         }
