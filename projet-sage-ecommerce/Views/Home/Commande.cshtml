@@ -21,14 +21,65 @@
         {
             <h4>Numéro du devis : </h4>
             <div class="d-flex">
-                <input class="form-control" type="search" name="nom_article_recherche" placeholder="Recherche">
+                <input class="form-control" type="search" name="SQHNUM" placeholder="Numéro du devis">
                 <div class="input-group-append">
                     <button class="btn btn-dark" type="submit">
                         <i class="bi bi-search"></i>
                     </button>
                 </div>
             </div>
-            <p>@ViewData["sitevente"]</p>
+
         }
+
+        <div class="row gy-2 gx-3 align-items-center">
+            <div class="col-auto">
+                <div class="col-auto">
+                    <label class="visually-hidden" for="autoSizingInput">Site de vente</label>
+                    <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["sitedevente"]" disabled readonly>
+                </div>
+            </div>
+            <div class="col-auto">
+                <div class="col-auto">
+                    <label class="visually-hidden" for="autoSizingInput">Numéro de la commande</label>
+                    <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["numcommande"]" disabled readonly>
+                </div>
+            </div>
+            <div class="col-auto">
+                <div class="col-auto">
+                    <label class="visually-hidden" for="autoSizingInput">Date de la commande</label>
+                    <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["datecommande"]" disabled readonly>
+                </div>
+            </div>
+            <div class="col-auto">
+                <div class="col-auto">
+                    <label class="visually-hidden" for="autoSizingInput">Référence client</label>
+                    <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["codeclient"]" disabled readonly>
+                </div>
+            </div>
+            <div class="col-auto">
+                <div class="col-auto">
+                    <label class="visually-hidden" for="autoSizingInput">État de la commande</label>
+                    <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["etatcommande"]" disabled readonly>
+                </div>
+            </div>
+            <div class="col-auto">
+                <div class="col-auto">
+                    <label class="visually-hidden" for="autoSizingInput">État de la facturation</label>
+                    <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["facturation"]" disabled readonly>
+                </div>
+            </div>
+            <div class="col-auto">
+                <div class="col-auto">
+                    <label class="visually-hidden" for="autoSizingInput">État de l'allocation</label>
+                    <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["allocation"]" disabled readonly>
+                </div>
+            </div>
+            <div class="col-auto">
+                <div class="col-auto">
+                    <label class="visually-hidden" for="autoSizingInput">Numéro du devis</label>
+                    <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["numdevis"]" disabled readonly>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
