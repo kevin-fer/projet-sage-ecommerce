@@ -1,0 +1,20 @@
+﻿@model projet_sage_ecommerce.Models.CAdxModel
+@{
+    ViewBag.Title = "Error404";
+}
+
+
+
+<div class="container">
+    <h2>Whooops, il semblerait que la page que vous cherchez n'est pas accessible ! </h2>
+    <br />
+    <h1>Erreur 404</h1>
+    <br />
+    <p>Redirigez-vous dans les menus ou cherchez l'article de vos rêves ici : </p>
+    <br />
+    <div class="d-flex">
+        @{
+        Html.RenderPartial("_RechercheArticle");
+        }
+    </div>
+</div>
