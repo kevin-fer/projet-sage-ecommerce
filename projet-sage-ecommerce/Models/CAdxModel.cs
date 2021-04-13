@@ -64,5 +64,9 @@ namespace projet_sage_ecommerce.Models
 
             this.resultat = Client.save(Context, wsalias, json);
         }
+        public void delete()
+        {
+            this.resultat = Client.delete(Context, wsalias, param);
+        }
     }
 }

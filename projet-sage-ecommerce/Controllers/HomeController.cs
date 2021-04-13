@@ -484,6 +484,7 @@ namespace projet_sage_ecommerce.Controllers
             ViewData["client"] = json.GetValue("SQH0_1").SelectToken("BPCORD");
             ViewData["adr_cli"] = json.GetValue("SQH1_1").SelectToken("BPAADD");
             ViewData["siteexpedition"] = json.GetValue("SQH1_2").SelectToken("STOFCY");
+            ViewData["totalht"] = json.GetValue("SQH2_4").SelectToken("QUOINVNOT");
 
             //tableau article
             int e = 0;
@@ -493,15 +494,49 @@ namespace projet_sage_ecommerce.Controllers
                 ViewData["des"] = jsonObject.SelectToken("ITMDES");
                 ViewData["prix"] = jsonObject.SelectToken("NETPRI");
                 ViewData["qte"] = jsonObject.SelectToken("QTY");
+                ViewData["sous-total"] = jsonObject.SelectToken("LINQUONOT");
                 e++;
             }
             ViewData["count"] = e;
 
             //while devis pas validé, on garde dans la session le mm devis 
-            /*c.Param[0].value = Request.Form["order-num"];
-            Session["numcommandeSession"] = c.Param[0].value;*/
+            /*c.Param[0].value = Request.Form["devisnum"];
+            Session["numdevisSession"] = c.Param[0].value;*/
 
             return View("Devis", client);
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult ModifDevis(String id)
+        {
+            CAdxModel client = new CAdxModel();
+
+            client.WsAlias = "WSYDEVIS";
+
+            client.Param[0] = new CAdxParamKeyValue();
+            client.Param[0].key = "SQHNUM";
+            client.Param[0].value = id;
+
+            client.modifyObject();
+
+            return View("Devis", client);
+        }
+
+        public ActionResult DeleteDevis(String id)
+        {
+            CAdxModel client = new CAdxModel();
+
+            client.WsAlias = "WSYDEVIS";
+
+            client.Param[0] = new CAdxParamKeyValue();
+            client.Param[0].key = "SQHNUM";
+            client.Param[0].value = id ;
+
+            //ViewData["devis"] = id ;
+
+            client.delete();
+
+            return View("DeleteDevis", client);
         }
 
         public ActionResult Commande()
