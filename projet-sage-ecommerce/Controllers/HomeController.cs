@@ -144,7 +144,6 @@ namespace projet_sage_ecommerce.Controllers
             }
                        
             c.readObject();
-            try {
                 JObject json = JObject.Parse(c.Resultat.resultXml);
 
                 // Zone principale
@@ -200,10 +199,16 @@ namespace projet_sage_ecommerce.Controllers
                 ViewData["transporteurnom"] = json.GetValue("SOH2_3").SelectToken("ZBPTNUM"); // Nom du transporteur
                                                                                               //ViewData["modedelivraison"] = json.GetValue("SOH2_3").SelectToken("MDL");
                 ViewData["modedelivraisonnom"] = json.GetValue("SOH2_3").SelectToken("ZMDL");
-                ViewData["livraisonnum"] = json.GetValue("SOH2_4").SelectToken("LASDLVNUM"); //Numéro de la livraison
-                DateTime date1 = new DateTime(Int32.Parse(json.GetValue("SOH2_4").SelectToken("LASDLVDAT").ToString().Substring(0, 4)), Int32.Parse(json.GetValue("SOH2_4").SelectToken("LASDLVDAT").ToString().Substring(4, 2)), Int32.Parse(json.GetValue("SOH2_4").SelectToken("LASDLVDAT").ToString().Substring(6, 2)));
-                ViewData["livraisondate"] = date1.ToString().Substring(0, 10); // Date de la livraison
-
+                
+                if(json.GetValue("SOH2_4").SelectToken("LASDLVNUM").ToString() != "") {
+                    DateTime date1 = new DateTime(Int32.Parse(json.GetValue("SOH2_4").SelectToken("LASDLVDAT").ToString().Substring(0, 4)), Int32.Parse(json.GetValue("SOH2_4").SelectToken("LASDLVDAT").ToString().Substring(4, 2)), Int32.Parse(json.GetValue("SOH2_4").SelectToken("LASDLVDAT").ToString().Substring(6, 2)));
+                    ViewData["livraisondate"] = date1.ToString().Substring(0, 10); // Date de la livraison
+                    ViewData["livraisonnum"] = json.GetValue("SOH2_4").SelectToken("LASDLVNUM"); //Numéro de la livraison
+                }
+                else {
+                    ViewData["livraisondate"] = ""; // Date de la livraison
+                    ViewData["livraisonnum"] = ""; //Numéro de la livraison
+                }
                 ViewData["douane"] = json.GetValue("SOH2_3").SelectToken("ZEECICT"); //Douane
                 ViewData["tournee"] = json.GetValue("SOH2_3").SelectToken("DRN_LBL"); //tournee
                 ViewData["partielle"] = json.GetValue("SOH2_6").SelectToken("DME_LBL"); //partielle
@@ -233,10 +238,6 @@ namespace projet_sage_ecommerce.Controllers
                 json = JObject.Parse(c.Resultat.resultXml);
 
                 return View("SuiviCommande");
-            }
-            catch (Exception e) {
-                return View("Error404");
-            }
             
             
         }
