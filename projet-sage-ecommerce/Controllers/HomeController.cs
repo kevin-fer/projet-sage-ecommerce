@@ -117,7 +117,7 @@ namespace projet_sage_ecommerce.Controllers
 
         [AcceptVerbs(HttpVerbs.Post)]
 
-        public ActionResult SuiviCommande(CAdxModel c, string status = "")
+        public ActionResult SuiviCommande(CAdxModel c)
         {
             c = new CAdxModel();
 
@@ -147,7 +147,7 @@ namespace projet_sage_ecommerce.Controllers
             try {
                 JObject json = JObject.Parse(c.Resultat.resultXml);
 
-                // Zone principale 
+                // Zone principale
                 ViewData["sitedevente"] = json.GetValue("SOH0_1").SelectToken("SALFCY"); // Site de vente
                 ViewData["numcommande"] = json.GetValue("SOH0_1").SelectToken("SOHNUM"); // Numéro de la commande
                 DateTime date = new DateTime(Int32.Parse(json.GetValue("SOH0_1").SelectToken("ORDDAT").ToString().Substring(0, 4)), Int32.Parse(json.GetValue("SOH0_1").SelectToken("ORDDAT").ToString().Substring(4, 2)), Int32.Parse(json.GetValue("SOH0_1").SelectToken("ORDDAT").ToString().Substring(6, 2)));
@@ -189,7 +189,7 @@ namespace projet_sage_ecommerce.Controllers
                 ViewData["prixttht"] = json.GetValue("SOH4_4").SelectToken("ORDINVNOT"); // Prix total HT
                 ViewData["prixttTTC"] = json.GetValue("SOH4_4").SelectToken("ORDINVATI"); // Prix total TTC
 
-                JArray jsonArray1 = (JArray)json.GetValue("SOH3_5");//Get list of items
+                JArray jsonArray1 = (JArray)json.GetValue("SOH3_5");// Les réducs / assurances
                 JObject jobj = (JObject)jsonArray1[0];
                 JObject jobj1 = (JObject)jsonArray1[2];
                 ViewData["remise"] = jobj.GetValue("INVDTAAMT"); // Remise %
