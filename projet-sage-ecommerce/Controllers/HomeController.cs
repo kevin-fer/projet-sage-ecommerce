@@ -117,7 +117,7 @@ namespace projet_sage_ecommerce.Controllers
 
         [AcceptVerbs(HttpVerbs.Post)]
 
-        public ActionResult SuiviCommande(CAdxModel c, string status = "")
+        public ActionResult SuiviCommande(CAdxModel c)
         {
             c = new CAdxModel();
 
@@ -144,10 +144,9 @@ namespace projet_sage_ecommerce.Controllers
             }
                        
             c.readObject();
-            try {
                 JObject json = JObject.Parse(c.Resultat.resultXml);
 
-                // Zone principale 
+                // Zone principale
                 ViewData["sitedevente"] = json.GetValue("SOH0_1").SelectToken("SALFCY"); // Site de vente
                 ViewData["numcommande"] = json.GetValue("SOH0_1").SelectToken("SOHNUM"); // Numéro de la commande
                 DateTime date = new DateTime(Int32.Parse(json.GetValue("SOH0_1").SelectToken("ORDDAT").ToString().Substring(0, 4)), Int32.Parse(json.GetValue("SOH0_1").SelectToken("ORDDAT").ToString().Substring(4, 2)), Int32.Parse(json.GetValue("SOH0_1").SelectToken("ORDDAT").ToString().Substring(6, 2)));
@@ -189,7 +188,7 @@ namespace projet_sage_ecommerce.Controllers
                 ViewData["prixttht"] = json.GetValue("SOH4_4").SelectToken("ORDINVNOT"); // Prix total HT
                 ViewData["prixttTTC"] = json.GetValue("SOH4_4").SelectToken("ORDINVATI"); // Prix total TTC
 
-                JArray jsonArray1 = (JArray)json.GetValue("SOH3_5");//Get list of items
+                JArray jsonArray1 = (JArray)json.GetValue("SOH3_5");// Les réducs / assurances
                 JObject jobj = (JObject)jsonArray1[0];
                 JObject jobj1 = (JObject)jsonArray1[2];
                 ViewData["remise"] = jobj.GetValue("INVDTAAMT"); // Remise %
@@ -200,10 +199,16 @@ namespace projet_sage_ecommerce.Controllers
                 ViewData["transporteurnom"] = json.GetValue("SOH2_3").SelectToken("ZBPTNUM"); // Nom du transporteur
                                                                                               //ViewData["modedelivraison"] = json.GetValue("SOH2_3").SelectToken("MDL");
                 ViewData["modedelivraisonnom"] = json.GetValue("SOH2_3").SelectToken("ZMDL");
-                ViewData["livraisonnum"] = json.GetValue("SOH2_4").SelectToken("LASDLVNUM"); //Numéro de la livraison
-                DateTime date1 = new DateTime(Int32.Parse(json.GetValue("SOH2_4").SelectToken("LASDLVDAT").ToString().Substring(0, 4)), Int32.Parse(json.GetValue("SOH2_4").SelectToken("LASDLVDAT").ToString().Substring(4, 2)), Int32.Parse(json.GetValue("SOH2_4").SelectToken("LASDLVDAT").ToString().Substring(6, 2)));
-                ViewData["livraisondate"] = date1.ToString().Substring(0, 10); // Date de la livraison
-
+                
+                if(json.GetValue("SOH2_4").SelectToken("LASDLVNUM").ToString() != "") {
+                    DateTime date1 = new DateTime(Int32.Parse(json.GetValue("SOH2_4").SelectToken("LASDLVDAT").ToString().Substring(0, 4)), Int32.Parse(json.GetValue("SOH2_4").SelectToken("LASDLVDAT").ToString().Substring(4, 2)), Int32.Parse(json.GetValue("SOH2_4").SelectToken("LASDLVDAT").ToString().Substring(6, 2)));
+                    ViewData["livraisondate"] = date1.ToString().Substring(0, 10); // Date de la livraison
+                    ViewData["livraisonnum"] = json.GetValue("SOH2_4").SelectToken("LASDLVNUM"); //Numéro de la livraison
+                }
+                else {
+                    ViewData["livraisondate"] = ""; // Date de la livraison
+                    ViewData["livraisonnum"] = ""; //Numéro de la livraison
+                }
                 ViewData["douane"] = json.GetValue("SOH2_3").SelectToken("ZEECICT"); //Douane
                 ViewData["tournee"] = json.GetValue("SOH2_3").SelectToken("DRN_LBL"); //tournee
                 ViewData["partielle"] = json.GetValue("SOH2_6").SelectToken("DME_LBL"); //partielle
@@ -233,10 +238,6 @@ namespace projet_sage_ecommerce.Controllers
                 json = JObject.Parse(c.Resultat.resultXml);
 
                 return View("SuiviCommande");
-            }
-            catch (Exception e) {
-                return View("Error404");
-            }
             
             
         }
@@ -562,7 +563,7 @@ namespace projet_sage_ecommerce.Controllers
             c.Param[0] = new CAdxParamKeyValue();
 
             c.Param[0].key = "SQHNUM";
-            c.Param[0].value = (string)ViewData["SQHNUM"];
+            c.Param[0].value = "FR0152104SQN00000063";//(string)ViewData["SQHNUM"];
 
             c.readObject();
            
@@ -573,13 +574,13 @@ namespace projet_sage_ecommerce.Controllers
             ViewData["typedevis"] = json.GetValue("SQH0_1").SelectToken("SQHTYP"); // Type du devis --
             ViewData["numerodevis"] = json.GetValue("SQH0_1").SelectToken("SQHNUM"); // Numéro du devis --
             ViewData["codeclient"] = json.GetValue("SQH0_1").SelectToken("BPCORD"); // Num client -- 
-
+/*
             DateTime date = new DateTime(Int32.Parse(json.GetValue("SQH0_1").SelectToken("QUODAT").ToString().Substring(0, 4)), Int32.Parse(json.GetValue("SQH0_1").SelectToken("QUODAT").ToString().Substring(4, 2)), Int32.Parse(json.GetValue("SQH0_1").SelectToken("QUODAT").ToString().Substring(6, 2)));
             ViewData["datedevis"] = date.ToString().Substring(0, 10); // Date de devis
             ViewData["adressebpc"] = json.GetValue("AD1").SelectToken("BPAADD"); // Adresse 
             ViewData["sitefournisseur"] = json.GetValue("SQH1_2").SelectToken("STOFCY"); // Site de fournisseur 
             ViewData["incoterm"] = json.GetValue("SQH1_2").SelectToken("ZEECICT"); // EECICT Douane Incoterm
-
+*/
 
 
             //Articles
@@ -606,7 +607,7 @@ namespace projet_sage_ecommerce.Controllers
             }
             ViewData["length"] = e;
             //Prix
-            ViewData["prixttht"] = json.GetValue("SOH4_4").SelectToken("ORDINVNOT"); // Prix total HT
+            /*ViewData["prixttht"] = json.GetValue("SOH4_4").SelectToken("ORDINVNOT"); // Prix total HT
             ViewData["prixttTTC"] = json.GetValue("SOH4_4").SelectToken("ORDINVATI"); // Prix total TTC
 
             JArray jsonArray1 = (JArray)json.GetValue("SOH3_5");//Get list of items
@@ -649,8 +650,8 @@ namespace projet_sage_ecommerce.Controllers
 
             DateTime date4 = new DateTime(Int32.Parse(json.GetValue("SOH3_2").SelectToken("VCRINVCNDDAT").ToString().Substring(0, 4)), Int32.Parse(json.GetValue("SOH3_2").SelectToken("VCRINVCNDDAT").ToString().Substring(4, 2)), Int32.Parse(json.GetValue("SOH3_2").SelectToken("VCRINVCNDDAT").ToString().Substring(6, 2)));
             ViewData["dateecheance"] = date4.ToString().Substring(0, 10); // Date de l'échéance
-
-            return View();
+            */
+            return View("Commande");
         }
 
         public ActionResult Error404() {

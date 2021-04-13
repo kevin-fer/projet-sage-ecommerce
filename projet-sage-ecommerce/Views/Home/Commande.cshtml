@@ -17,7 +17,7 @@
 <div class="tab-content" id="pills-tabContent">
     <div class="tab-pane fade" id="pills-devis" role="tabpanel" aria-labelledby="pills-devis-tab">
         <h2>Créer une commande à partir d'un devis</h2>
-        @using (Html.BeginForm())
+        @using (Html.BeginForm("Commande", "Home"))
         {
             <h4>Numéro du devis : </h4>
             <div class="d-flex">
@@ -28,7 +28,6 @@
                     </button>
                 </div>
             </div>
-
         }
 
         <div class="row gy-2 gx-3 align-items-center">
