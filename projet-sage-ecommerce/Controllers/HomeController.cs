@@ -554,7 +554,7 @@ namespace projet_sage_ecommerce.Controllers
             c.Param[0] = new CAdxParamKeyValue();
 
             c.Param[0].key = "SQHNUM";
-            c.Param[0].value = (string)ViewData["SQHNUM"];
+            c.Param[0].value = "FR0152104SQN00000063";//(string)ViewData["SQHNUM"];
 
             c.readObject();
            
@@ -565,13 +565,13 @@ namespace projet_sage_ecommerce.Controllers
             ViewData["typedevis"] = json.GetValue("SQH0_1").SelectToken("SQHTYP"); // Type du devis --
             ViewData["numerodevis"] = json.GetValue("SQH0_1").SelectToken("SQHNUM"); // Numéro du devis --
             ViewData["codeclient"] = json.GetValue("SQH0_1").SelectToken("BPCORD"); // Num client -- 
-
+/*
             DateTime date = new DateTime(Int32.Parse(json.GetValue("SQH0_1").SelectToken("QUODAT").ToString().Substring(0, 4)), Int32.Parse(json.GetValue("SQH0_1").SelectToken("QUODAT").ToString().Substring(4, 2)), Int32.Parse(json.GetValue("SQH0_1").SelectToken("QUODAT").ToString().Substring(6, 2)));
             ViewData["datedevis"] = date.ToString().Substring(0, 10); // Date de devis
             ViewData["adressebpc"] = json.GetValue("AD1").SelectToken("BPAADD"); // Adresse 
             ViewData["sitefournisseur"] = json.GetValue("SQH1_2").SelectToken("STOFCY"); // Site de fournisseur 
             ViewData["incoterm"] = json.GetValue("SQH1_2").SelectToken("ZEECICT"); // EECICT Douane Incoterm
-
+*/
 
 
             //Articles
@@ -598,7 +598,7 @@ namespace projet_sage_ecommerce.Controllers
             }
             ViewData["length"] = e;
             //Prix
-            ViewData["prixttht"] = json.GetValue("SOH4_4").SelectToken("ORDINVNOT"); // Prix total HT
+            /*ViewData["prixttht"] = json.GetValue("SOH4_4").SelectToken("ORDINVNOT"); // Prix total HT
             ViewData["prixttTTC"] = json.GetValue("SOH4_4").SelectToken("ORDINVATI"); // Prix total TTC
 
             JArray jsonArray1 = (JArray)json.GetValue("SOH3_5");//Get list of items
@@ -641,8 +641,8 @@ namespace projet_sage_ecommerce.Controllers
 
             DateTime date4 = new DateTime(Int32.Parse(json.GetValue("SOH3_2").SelectToken("VCRINVCNDDAT").ToString().Substring(0, 4)), Int32.Parse(json.GetValue("SOH3_2").SelectToken("VCRINVCNDDAT").ToString().Substring(4, 2)), Int32.Parse(json.GetValue("SOH3_2").SelectToken("VCRINVCNDDAT").ToString().Substring(6, 2)));
             ViewData["dateecheance"] = date4.ToString().Substring(0, 10); // Date de l'échéance
-
-            return View();
+            */
+            return View("Commande");
         }
 
         public ActionResult Error404() {
