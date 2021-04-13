@@ -13,20 +13,38 @@
         <div>
             <h1>Panier</h1>
             <hr />
-            @Html.ActionLink("Modifier", "Devis", "Home", new { id = @ViewData["numdevis"] }, new { @class = "btn btn-warning" })
-            @Html.ActionLink("Supprimer", "DeleteDevis", "Home", new { id = @ViewData["numdevis"] }, new { @class = "btn btn-danger" })
+            @Html.ActionLink("Modifier", "", "", new { id = @ViewData["numdevis"] }, new { @class = "btn btn-warning" })
 
+
+
+
+            @Html.ActionLink("Supprimer", "DeleteDevis", "Home", new { id = @ViewData["numdevis"] }, new { @class = "btn btn-danger", @onclick = "return confirm('Souhaitez-vous supprimer le devis ?')" })
+            <hr />
             <form>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm">
+                            Numéro de devis : @ViewData["numdevis"]
+                        </div>
+                        <div class="col-sm">
+                            Site de vente : @ViewData["sitevente"]
+                        </div>
+                        <div class="col-sm">
+                            Site d'expédition : @ViewData["siteexpedition"]
+                        </div>
+                    </div>
+                </div>
+
                 <div class="mb-3">
                     <br />
                     <label for="date" class="form-label">Date</label>
                     <input type="text" class="form-control" id="date" value="@DateTime.Now.Date.ToString().Substring(0, 10)" aria-describedby="dateHelp" disabled>
 
                     <label for="client" class="form-label">Code client</label>
-                    <input type="text" class="form-control" id="client" value=@ViewData["client"] aria-describedby="nomHelp">
+                    <input type="text" class="form-control" id="client" value=@ViewData["client"] aria-describedby="nomHelp" disabled>
 
                     <label for="adresse" class="form-label">Adresse</label>
-                    <input type="text" class="form-control" id="adresse" value=@ViewData["adr_cli"] aria-describedby="adrHelp">
+                    <input type="text" class="form-control" id="adresse" value=@ViewData["adr_cli"] aria-describedby="adrHelp" disabled>
 
                     <br />
                     <label for="commande" class="form-label">Total Articles</label>
@@ -49,7 +67,7 @@
                                     <td>@ViewData["idarticle"]</td>
                                     <td>@ViewData["des"]</td>
                                     <td>@ViewData["prix"] @ViewData["devise"]</td>
-                                    <td><input type="number" min="0" id="qte" value=@ViewData["qte"] aria-describedby="qteHelp"></td>
+                                    <td><input type="number" min="0" max="30" id="qteinput" value=@ViewData["qte"] aria-describedby="qteHelp"></td>
                                     <td>@ViewData["sous-total"]</td>
                                 </tr>
                             }
@@ -67,6 +85,7 @@
                     <label class="form-check-label" for="exampleCheck1">CGU</label>
                 </div>
                 <button type="submit" class="btn btn-primary">Valider</button>
+
             </form>
 
         </div>

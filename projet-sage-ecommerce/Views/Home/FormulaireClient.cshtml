@@ -3,5 +3,30 @@
     ViewBag.Title = "FormulaireClient";
 }
 
-<h2>FormulaireClient</h2>
+<h2>Informations Client</h2>
 
+<form>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                Numéro article : @ViewData["nom"]
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <br />
+        <label for="client" class="form-label">Code client</label>
+        <input type="text" class="form-control" id="client" value=@ViewData["client"] aria-describedby="nomHelp" disabled>
+
+        <br />
+    </div>
+
+    <br />
+    <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+        <label class="form-check-label" for="exampleCheck1">CGU</label>
+    </div>
+    <button type="submit" class="btn btn-primary">Valider</button>
+    @Html.ActionLink("Devis", "Devis", "Home", new { id = @ViewData["nom"], refClient = @ViewData["client"] }, new { @class = "btn btn-dark btn-lg" })
+</form>

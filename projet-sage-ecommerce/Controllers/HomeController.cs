@@ -434,9 +434,9 @@ namespace projet_sage_ecommerce.Controllers
             return View("Modify", client);
         }
 
-        //--------------------------------------------------devis---------------------------------------------------
+        //--------------------------------------------------création devis---------------------------------------------------
 
-        public ActionResult Devis(String id)
+        public ActionResult Devis(String id) //id article et référence client
         {
             CAdxModel client = new CAdxModel();
 
@@ -464,11 +464,10 @@ namespace projet_sage_ecommerce.Controllers
                               'SQH2_1': [
                                 {
                                   'ITMREF': '" + id + @"',
-                                  'QTY': '2'
+                                  'QTY': '1'
                                 }
                               ]
                             }";
-
 
             client.save();
 
@@ -486,7 +485,7 @@ namespace projet_sage_ecommerce.Controllers
             ViewData["siteexpedition"] = json.GetValue("SQH1_2").SelectToken("STOFCY");
             ViewData["totalht"] = json.GetValue("SQH2_4").SelectToken("QUOINVNOT");
 
-            //tableau article
+            //tableau article dans devis
             int e = 0;
             foreach (JObject jsonObject in jsonArray)
             {
@@ -506,22 +505,31 @@ namespace projet_sage_ecommerce.Controllers
             return View("Devis", client);
         }
 
+        //------------------------------------------------------modifier devis---------------------------------------------
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult ModifDevis(String id)
+        public ActionResult ModifDevis(String id, int qte)
         {
             CAdxModel client = new CAdxModel();
-
             client.WsAlias = "WSYDEVIS";
 
             client.Param[0] = new CAdxParamKeyValue();
             client.Param[0].key = "SQHNUM";
             client.Param[0].value = id;
 
+            client.Json = @"{
+                              'SQH2_1': [
+                                {
+                                  'QTY': '" + qte + @"'
+                                }
+                              ]
+                            }";
+
             client.modifyObject();
 
-            return View("Devis", client);
+            return View("ModifDevis", client);
         }
 
+        //------------------------------------------------------supprimer devis---------------------------------------------
         public ActionResult DeleteDevis(String id)
         {
             CAdxModel client = new CAdxModel();
