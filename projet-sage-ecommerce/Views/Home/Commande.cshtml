@@ -1,43 +1,85 @@
-﻿<!DOCTYPE html>
+﻿@model projet_sage_ecommerce.Models.CAdxModel
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
-    <h1>Mon Panier</h1>
-    <hr />
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Image</th>
-                <th scope="col">Nom</th>
-                <th scope="col">Prix</th>
-                <th scope="col">Quantité</th>
-            </tr>
-        </thead>
-        <tbody>
-            @for (int i = 1; i <= 3; i++)
-            {
-                <tr>
-                    <th scope="row">@i</th>
-                    <td><src img=""></src></td>
-                    <td>Article @i</td>
-                    <td>1</td>
-                    <td>
-                        <input type="number" id="qte" value="0" aria-describedby="qteHelp">
-                        <button type="button" class="btn btn-danger">Supprimer</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-    <div class="mb-3 form-check">
-        <label for="total" class="form-label">Total : </label>
-        <input type="number" class="form-control" id="total" value="0" aria-describedby="dateHelp" disabled>
+@{
+    ViewBag.Title = "Commande";
+}
+
+<h1>Commandes</h1>
+<p>Valider un devis ou créez une commande</p>
+<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="pills-devis-tab" data-toggle="pill" href="#pills-devis" role="tab" aria-controls="pills-devis" aria-selected="true">A partir d'un devis</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="pills-commande-tab" data-toggle="pill" href="#pills-commande" role="tab" aria-controls="pills-commande" aria-selected="false">Créer une commande</a>
+    </li>
+</ul>
+<div class="tab-content" id="pills-tabContent">
+    <div class="tab-pane fade" id="pills-devis" role="tabpanel" aria-labelledby="pills-devis-tab">
+        <h2>Créer une commande à partir d'un devis</h2>
+        @using (Html.BeginForm())
+        {
+            <h4>Numéro du devis : </h4>
+            <div class="d-flex">
+                <input class="form-control" type="search" name="SQHNUM" placeholder="Numéro du devis">
+                <div class="input-group-append">
+                    <button class="btn btn-dark" type="submit">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </div>
+
+        }
+
+        <div class="row gy-2 gx-3 align-items-center">
+            <div class="col-auto">
+                <div class="col-auto">
+                    <label class="visually-hidden" for="autoSizingInput">Site de vente</label>
+                    <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["sitedevente"]" disabled readonly>
+                </div>
+            </div>
+            <div class="col-auto">
+                <div class="col-auto">
+                    <label class="visually-hidden" for="autoSizingInput">Numéro de la commande</label>
+                    <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["numcommande"]" disabled readonly>
+                </div>
+            </div>
+            <div class="col-auto">
+                <div class="col-auto">
+                    <label class="visually-hidden" for="autoSizingInput">Date de la commande</label>
+                    <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["datecommande"]" disabled readonly>
+                </div>
+            </div>
+            <div class="col-auto">
+                <div class="col-auto">
+                    <label class="visually-hidden" for="autoSizingInput">Référence client</label>
+                    <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["codeclient"]" disabled readonly>
+                </div>
+            </div>
+            <div class="col-auto">
+                <div class="col-auto">
+                    <label class="visually-hidden" for="autoSizingInput">État de la commande</label>
+                    <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["etatcommande"]" disabled readonly>
+                </div>
+            </div>
+            <div class="col-auto">
+                <div class="col-auto">
+                    <label class="visually-hidden" for="autoSizingInput">État de la facturation</label>
+                    <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["facturation"]" disabled readonly>
+                </div>
+            </div>
+            <div class="col-auto">
+                <div class="col-auto">
+                    <label class="visually-hidden" for="autoSizingInput">État de l'allocation</label>
+                    <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["allocation"]" disabled readonly>
+                </div>
+            </div>
+            <div class="col-auto">
+                <div class="col-auto">
+                    <label class="visually-hidden" for="autoSizingInput">Numéro du devis</label>
+                    <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["numdevis"]" disabled readonly>
+                </div>
+            </div>
+        </div>
     </div>
-    <button type="submit" class="btn btn-primary">Valider</button>
-</body>
-</html>
+</div>
