@@ -13,8 +13,8 @@
         <div>
             <h1>Panier</h1>
             <hr />
-            <button type="button" class="btn btn-warning">Modifier</button>
-            <button type="button" class="btn btn-danger">Supprimer</button>
+            @Html.ActionLink("Modifier", "Devis", "Home", new { id = @ViewData["numdevis"] }, new { @class = "btn btn-warning" })
+            @Html.ActionLink("Supprimer", "DeleteDevis", "Home", new { id = @ViewData["numdevis"] }, new { @class = "btn btn-danger" })
 
             <form>
                 <div class="mb-3">
@@ -36,8 +36,9 @@
                                 <th scope="col">#</th>
                                 <th scope="col">Nom</th>
                                 <th scope="col">D&eacute;signation</th>
-                                <th scope="col">Prix</th>
+                                <th scope="col">Prix unitaire</th>
                                 <th scope="col">Quantit&eacute;</th>
+                                <th scope="col">Sous-total</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -49,13 +50,14 @@
                                     <td>@ViewData["des"]</td>
                                     <td>@ViewData["prix"] @ViewData["devise"]</td>
                                     <td><input type="number" min="0" id="qte" value=@ViewData["qte"] aria-describedby="qteHelp"></td>
+                                    <td>@ViewData["sous-total"]</td>
                                 </tr>
                             }
                         </tbody>
                     </table>
                     <div style="float: right">
-                        <label for="totalc" class="form-label">Total Commande</label>
-                        <input type="text" class="form-control" id="totalc" value="0" aria-describedby="totalcHelp" disabled>
+                        <label for="totalc" class="form-label">Total</label>
+                        <input type="text" class="form-control" id="totalc" value=@ViewData["sous-total"] aria-describedby="totalcHelp" disabled>
                     </div>
                 </div>
 

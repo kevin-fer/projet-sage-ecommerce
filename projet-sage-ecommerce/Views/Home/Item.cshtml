@@ -31,7 +31,7 @@
                     @ViewData["description"]
                 </p>
                 
-                @Html.ActionLink("Devis", "Devis", "Home", new { id = @ViewData["nom"] }, null)
+                @Html.ActionLink("Devis", "Devis", "Home", new { id = @ViewData["nom"] }, new { @class = "btn btn-dark btn-lg" })
             </div>
         </div>
     </div>
