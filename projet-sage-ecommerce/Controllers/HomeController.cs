@@ -437,22 +437,24 @@ namespace projet_sage_ecommerce.Controllers
 
         //--------------------------------------------------création devis---------------------------------------------------
 
-        public ActionResult Devis(String id) //id article et référence client
+        public ActionResult Devis(String id, String refCli) //id article et référence client
         {
             CAdxModel client = new CAdxModel();
 
             client.WsAlias = "WSYDEVIS"; //WJWSDEVIS
 
+            String date_now = DateTime.Today.ToString("yyyyMMdd");
+
             client.Json = @"{
                               'SQH0_1': {
                                 'SALFCY': 'FR015',
                                 'SQHTYP': 'SQN',
-                                'QUODAT': '20210411',
+                                'QUODAT': '" + date_now + @"',
                                 'BPCORD': 'YYCLF1'
                               },
                               'SQH1_2': {
                                 'STOFCY': 'FR014',
-                                'EECICT': ''
+                                'EECICT': 'DDP'
                               },
                               'SQH1_4': {
                                 'VACBPR': 'FRA',
@@ -461,8 +463,17 @@ namespace projet_sage_ecommerce.Controllers
                               },
                               'SQH3_1': {
                                 'PTE': 'CH30NETEOM'
-                              },
-                              'SQH2_1': [
+                              },'SQH3_4': [
+                                {
+                                    'INVDTAAMT': '5'
+                                    },
+                                    {
+                                    'INVDTAAMT': '0'
+                                    },
+                                    {
+                                    'INVDTAAMT': '2'
+                                }
+                                ],'SQH2_1': [
                                 {
                                   'ITMREF': '" + id + @"',
                                   'QTY': '1'
@@ -508,7 +519,7 @@ namespace projet_sage_ecommerce.Controllers
 
         //------------------------------------------------------modifier devis---------------------------------------------
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult ModifDevis(String id, int qte)
+        public ActionResult ModifyDevis(String id, int qte)
         {
             CAdxModel client = new CAdxModel();
             client.WsAlias = "WSYDEVIS";
@@ -516,6 +527,9 @@ namespace projet_sage_ecommerce.Controllers
             client.Param[0] = new CAdxParamKeyValue();
             client.Param[0].key = "SQHNUM";
             client.Param[0].value = id;
+
+            //qte = Request.Form["qteinput"];
+            qte = Int32.Parse(Request.Form["qteinput"].ToString());
 
             client.Json = @"{
                               'SQH2_1': [
@@ -527,7 +541,18 @@ namespace projet_sage_ecommerce.Controllers
 
             client.modifyObject();
 
-            return View("ModifDevis", client);
+            JObject json = JObject.Parse(client.Resultat.resultXml);
+            JArray jsonArray = (JArray)json.GetValue("SQH2_1");
+
+            //tableau article dans devis
+            foreach (JObject jsonObject in jsonArray)
+            {
+                ViewData["qty1"] = jsonObject.SelectToken("QTY");
+            }
+
+            ViewData["qty2"] = qte;
+
+            return View("ModifyDevis", client);
         }
 
         //------------------------------------------------------supprimer devis---------------------------------------------

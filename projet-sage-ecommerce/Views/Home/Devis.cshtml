@@ -67,7 +67,10 @@
                                     <td>@ViewData["idarticle"]</td>
                                     <td>@ViewData["des"]</td>
                                     <td>@ViewData["prix"] @ViewData["devise"]</td>
-                                    <td><input type="number" min="0" max="30" id="qteinput" value=@ViewData["qte"] aria-describedby="qteHelp"></td>
+                                    @using (Html.BeginForm())
+                                    {
+                                        <td>@Html.TextBox("qteinput", ViewData["qte"], new { @type = "number", @min = "1" })</td>
+                                    }
                                     <td>@ViewData["sous-total"]</td>
                                 </tr>
                             }
@@ -85,6 +88,9 @@
                     <label class="form-check-label" for="exampleCheck1">CGU</label>
                 </div>
                 <button type="submit" class="btn btn-primary">Valider</button>
+                <p>qte : @ViewData["qte"]</p>
+                <p>@ViewData["qty1"]</p>
+                <p>@ViewData["qty2"]</p>
 
             </form>
 

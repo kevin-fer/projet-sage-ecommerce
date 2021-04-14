@@ -32,7 +32,7 @@
                 </p>
 
                 @Html.ActionLink("Devis", "Devis", "Home", new { id = @ViewData["nom"] }, new { @class = "btn btn-dark btn-lg" })
-                
+                <input type="number" min="0" max="30" id="qteinput" value="1" aria-describedby="qteHelp">
             </div>
         </div>
     </div>
