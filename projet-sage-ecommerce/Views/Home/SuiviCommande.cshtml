@@ -127,7 +127,7 @@
                         {
                         <tr>
                             <th scope="row">@i</th>
-                            <td class="w-25"><img src="data:image/png;base64, @ViewData[" blob" + (i-1).ToString()]" alt="Image de l'article" class="img-fluid" style="max-width: 25%;" /></td>
+                            <td class="w-25"><img src="data:image/png;base64, @ViewData["blob" + (i-1).ToString()]" alt="Image de l'article" class="img-fluid" style="max-width: 25%;" /></td>
                             <td>@ViewData["ITMREF" + (i - 1).ToString()]</td>
                             <td>@ViewData["ITMDES" + (i - 1).ToString()]</td>
                             <td>@ViewData["GROPRI" + (i - 1).ToString()] €</td>
