@@ -36,7 +36,7 @@
 }
 <div class="grid-read">
 
-    @if (ViewData["numcommande"] != null)
+    @if (ViewData["numcommande"] != null || Request.QueryString["id"] == "1")
     {
     <div class="result-container shadow p-3 mb-5 bg-body rounded">
         <h1>Suivre la commande N°@ViewData["numcommande"]</h1>

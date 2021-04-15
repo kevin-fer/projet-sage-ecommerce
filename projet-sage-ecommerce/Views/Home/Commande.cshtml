@@ -33,128 +33,137 @@
 <br />
 @if (ViewData["sitedevente"] != null)
 {
-
-    <h2>Informations du devis</h2>
-    <div class="row gy-2 gx-3 align-items-center">
-        <div class="col-auto">
+    using (Html.BeginForm("CreateCommande", "Home"))
+    {
+        <h2>Informations du devis</h2>
+        <div class="row gy-2 gx-3 align-items-center">
             <div class="col-auto">
-                <label class="visually-hidden" for="autoSizingInput">Site de vente</label>
-                <input type="text" class="form-control" id="autoSizingInput" name="sitedevente" placeholder="@ViewData["sitedevente"]" @statusDevis>
+                <div class="col-auto">
+                    <label class="visually-hidden" for="autoSizingInput">Site de vente</label>
+                    <input type="text" class="form-control" id="autoSizingInput" name="sitedevente" placeholder="@ViewData["sitedevente"]" @statusDevis>
+                </div>
             </div>
-        </div>
-        <div class="col-auto">
             <div class="col-auto">
-                <label class="visually-hidden" for="autoSizingInput">Type de devis</label>
-                <input type="text" class="form-control" id="autoSizingInput" name="typedevis" placeholder="@ViewData["typedevis"]" @statusDevis>
+                <div class="col-auto">
+                    <label class="visually-hidden" for="autoSizingInput">Type de devis</label>
+                    <input type="text" class="form-control" id="autoSizingInput" name="typedevis" placeholder="@ViewData["typedevis"]" @statusDevis>
+                </div>
             </div>
-        </div>
-        <div class="col-auto">
             <div class="col-auto">
-                <label class="visually-hidden" for="autoSizingInput">Numéro du devis</label>
-                <input type="text" class="form-control" id="autoSizingInput" name="numerodevis" placeholder="@ViewData["numerodevis"]" @statusDevis>
+                <div class="col-auto">
+                    <label class="visually-hidden" for="autoSizingInput">Numéro du devis</label>
+                    <input type="text" class="form-control" id="autoSizingInput" name="numerodevis" placeholder="@ViewData["numerodevis"]" @statusDevis>
+                </div>
             </div>
-        </div>
-        <div class="col-auto">
             <div class="col-auto">
-                <label class="visually-hidden" for="autoSizingInput">Référence client</label>
-                <input type="text" class="form-control" id="autoSizingInput" name="codeclient" placeholder="@ViewData["codeclient"]" @statusDevis>
+                <div class="col-auto">
+                    <label class="visually-hidden" for="autoSizingInput">Référence client</label>
+                    <input type="text" class="form-control" id="autoSizingInput" name="codeclient" placeholder="@ViewData["codeclient"]" @statusDevis>
+                </div>
             </div>
-        </div>
-        <div class="col-auto">
             <div class="col-auto">
-                <label class="visually-hidden" for="autoSizingInput">Référence commercial</label>
-                <input type="text" class="form-control" id="autoSizingInput" name="codecommercial" placeholder="@ViewData["codecommercial"]" @statusDevis>
+                <div class="col-auto">
+                    <label class="visually-hidden" for="autoSizingInput">Référence commercial</label>
+                    <input type="text" class="form-control" id="autoSizingInput" name="codecommercial" placeholder="@ViewData["codecommercial"]" @statusDevis>
+                </div>
             </div>
-        </div>
-        <div class="col-auto">
             <div class="col-auto">
-                <label class="visually-hidden" for="autoSizingInput">Site de stockage</label>
-                <input type="text" class="form-control" id="autoSizingInput" name="sitedestockage" placeholder="@ViewData["sitedestockage"]" @statusDevis>
+                <div class="col-auto">
+                    <label class="visually-hidden" for="autoSizingInput">Site de stockage</label>
+                    <input type="text" class="form-control" id="autoSizingInput" name="sitedestockage" placeholder="@ViewData["sitedestockage"]" @statusDevis>
+                </div>
             </div>
-        </div>
-        <div class="col-auto">
             <div class="col-auto">
-                <label class="visually-hidden" for="autoSizingInput">Délai de livraison</label>
-                <input type="text" class="form-control" id="autoSizingInput" name="delailivraison" placeholder="@ViewData["delailivraison"]" @statusDevis>
+                <div class="col-auto">
+                    <label class="visually-hidden" for="autoSizingInput">Délai de livraison</label>
+                    <input type="text" class="form-control" id="autoSizingInput" name="delailivraison" placeholder="@ViewData["delailivraison"]" @statusDevis>
+                </div>
             </div>
-        </div>
-        <div class="col-auto">
             <div class="col-auto">
-                <label class="visually-hidden" for="autoSizingInput">Référence adresse</label>
-                <input type="text" class="form-control" id="autoSizingInput" name="adbpc" placeholder="@ViewData["adbpc"]" @statusDevis>
+                <div class="col-auto">
+                    <label class="visually-hidden" for="autoSizingInput">Référence adresse</label>
+                    <input type="text" class="form-control" id="autoSizingInput" name="adbpc" placeholder="@ViewData["adbpc"]" @statusDevis>
+                </div>
             </div>
-        </div>
-        <div class="col-auto">
             <div class="col-auto">
-                <label class="visually-hidden" for="autoSizingInput">Modalité de facturation</label>
-                <input type="text" class="form-control" id="autoSizingInput" name="modalitefacturation" placeholder="@ViewData["modalitefacturation"]" @statusDevis>
+                <div class="col-auto">
+                    <label class="visually-hidden" for="autoSizingInput">Modalité de facturation</label>
+                    <input type="text" class="form-control" id="autoSizingInput" name="modalitefacturation" placeholder="@ViewData["modalitefacturation"]" @statusDevis>
+                </div>
             </div>
-        </div>
-        <div class="col-auto">
             <div class="col-auto">
-                <label class="visually-hidden" for="autoSizingInput">Escompte</label>
-                <input type="text" class="form-control" id="autoSizingInput" name="escompte" placeholder="@ViewData["escompte"]" @statusDevis>
+                <div class="col-auto">
+                    <label class="visually-hidden" for="autoSizingInput">Escompte</label>
+                    <input type="text" class="form-control" id="autoSizingInput" name="escompte" placeholder="@ViewData["escompte"]" @statusDevis>
+                </div>
             </div>
-        </div>
-        <div class="col-auto">
             <div class="col-auto">
-                <label class="visually-hidden" for="autoSizingInput">Remise</label>
-                <input type="text" class="form-control" id="autoSizingInput" name="remise" placeholder="@ViewData["remise"]" @statusDevis>
+                <div class="col-auto">
+                    <label class="visually-hidden" for="autoSizingInput">Remise</label>
+                    <input type="text" class="form-control" id="autoSizingInput" name="remise" placeholder="@ViewData["remise"]" @statusDevis>
+                </div>
             </div>
-        </div>
-        <div class="col-auto">
             <div class="col-auto">
-                <label class="visually-hidden" for="autoSizingInput">Assurance</label>
-                <input type="text" class="form-control" id="autoSizingInput" name="assurance" placeholder="@ViewData["assurance"]" @statusDevis>
+                <div class="col-auto">
+                    <label class="visually-hidden" for="autoSizingInput">Assurance</label>
+                    <input type="text" class="form-control" id="autoSizingInput" name="assurance" placeholder="@ViewData["assurance"]" @statusDevis>
+                </div>
+            </div>
+            <br />
+        </div>
+        <br />
+        <h2>Validez la commande</h2>
+        <div class="row gy-2 gx-3 align-items-center">
+            <div class="col-auto">
+                <div class="col-auto">
+                    @{
+                        var localDateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss").Replace(' ', 'T');
+                        var dateTimeNow = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                    }
+                    <label class="visually-hidden" for="autoSizingInput">Date de la commande</label>
+                    <!--<input type="datetime-local" id="datetime-local" placeholder="@localDateTime" @statusAll>-->
+                    <input type="text" class="form-control" id="autoSizingInput" name="datecommande" placeholder="@dateTimeNow" @statusDevis>
+                </div>
+            </div>
+            <div class="col-auto">
+                <label class="visually-hidden" for="autoSizingInput">Date de livraison demandée</label>
+                <input type="datetime-local" id="datetime-local" id="autoSizingInput" name="livraisondatedemandee" placeholder="@localDateTime" @statusAll>
+                <!--<input type="text" class="form-control" id="autoSizingInput" name="livraisondatedemandee" placeholder="Date de livraison demandée" @statusAll>-->
             </div>
         </div>
         <br />
-    </div>
-    <br />
-    <h2>Le reste</h2>
-    <div class="row gy-2 gx-3 align-items-center">
-        <div class="col-auto">
-            <div class="col-auto">
-                <!--ok-->
-                <label class="visually-hidden" for="autoSizingInput">Date de la commande</label>
-                <input type="text" class="form-control" id="autoSizingInput" name="datecommande" placeholder="Date de la commande" @statusAll>
-            </div>
-        </div>
-        <div class="col-auto">
-            <label class="visually-hidden" for="autoSizingInput">Date de livraison demandée</label>
-            <input type="text" class="form-control" id="autoSizingInput" name="livraisondatedemandee" placeholder="Date de livraison demandée" @statusAll>
-        </div>
-    </div>
-    <br />
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Image</th>
-                <th scope="col">Référence</th>
-                <th scope="col">Désignation</th>
-                <th scope="col">Prix unitaire TTC</th>
-                <th scope="col">Quantité</th>
-                <th scope="col">Fiche article</th>
-            </tr>
-        </thead>
-        <tbody>
-            @for (int i = 1; i <= Int32.Parse(ViewData["length"].ToString()); i++)
-            {
+        <table class="table table-striped">
+            <thead>
                 <tr>
-                    <th scope="row">@i</th>
-                    <td class="w-25"><img src="data:image/png;base64, @ViewData["blob" + (i-1).ToString()]" alt="Image de l'article" class="img-fluid" style="max-width: 25%;" /></td>
-                    <td>@ViewData["nom" + (i - 1).ToString()]</td>
-                    <td>@ViewData["des" + (i - 1).ToString()]</td>
-                    <td>@ViewData["prix" + (i - 1).ToString()] €</td>
-                    <td>@ViewData["quantite" + (i - 1).ToString()]</td>
-                    <td>
-                        <a class="btn btn-dark" href="https://localhost:44365/Home/Item/@ViewData["nom" + (i - 1).ToString()]">Voir plus</a>
-                    </td>
+                    <th scope="col">#</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Référence</th>
+                    <th scope="col">Désignation</th>
+                    <th scope="col">Prix unitaire TTC</th>
+                    <th scope="col">Quantité</th>
+                    <th scope="col">Fiche article</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-    <a class="btn btn-dark" href="https://localhost:44365/Home/CreateCommande/@ViewData["numerodevis"]">Créer la commande</a>
+            </thead>
+            <tbody>
+                @for (int i = 1; i <= Int32.Parse(ViewData["length"].ToString()); i++)
+                {
+                    <tr>
+                        <th scope="row">@i</th>
+                        <td class="w-25"><img src="data:image/png;base64, @ViewData["blob" + (i-1).ToString()]" alt="Image de l'article" class="img-fluid" style="max-width: 25%;" /></td>
+                        <td>@ViewData["nom" + (i - 1).ToString()]</td>
+                        <td>@ViewData["des" + (i - 1).ToString()]</td>
+                        <td>@ViewData["prix" + (i - 1).ToString()] €</td>
+                        <td>@ViewData["quantite" + (i - 1).ToString()]</td>
+                        <td>
+                            <a class="btn btn-dark" href="https://localhost:44365/Home/Item/@ViewData["nom" + (i - 1).ToString()]">Voir plus</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <!--<a class="btn btn-dark" href="https://localhost:44365/Home/CreateCommande/@ViewData["numerodevis"]">Créer la commande</a>-->
+        <input type="submit" class="btn btn-primary" value="Commander"/>
+    }
+
 
 }
