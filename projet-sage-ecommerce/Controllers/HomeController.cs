@@ -638,7 +638,7 @@ namespace projet_sage_ecommerce.Controllers
             c.Param[0] = new CAdxParamKeyValue
             {
                 key = "SQHNUM",
-                value = Session["SQHNUM"] //"FR0152104SQN00000063";
+                value = Session["SQHNUM"].ToString() //"FR0152104SQN00000063";
             };
             System.Diagnostics.Debug.WriteLine(id);
             c.readObject();
@@ -672,14 +672,12 @@ namespace projet_sage_ecommerce.Controllers
                                         items+="},";
                                     }                                  
                                 }
-
-
         items += "]";
             ViewData["length"] = e;
 
             DateTime dt = new DateTime();
             dt = DateTime.Now;
-            String ORDDAT
+            String ORDDAT;
             if (dt.Month.ToString().Length == 1)
             {
                 ORDDAT = dt.Year.ToString() + "0" + dt.Month.ToString() + dt.Day.ToString();
@@ -689,21 +687,24 @@ namespace projet_sage_ecommerce.Controllers
                 ORDDAT = dt.Year.ToString() + dt.Month.ToString() + dt.Day.ToString();
             }
                 
-            System.Diagnostics.Debug.WriteLine("Devis :" + Session["SQHNUM"]);
             String DEMDLVDAT = Request.Form["livraisondatedemandee"].ToString();
-            System.Diagnostics.Debug.WriteLine("DEMDLVDAT before modif " +  DEMDLVDAT);
             DEMDLVDAT = DEMDLVDAT.Replace("-", String.Empty); // yyyy-mm-dd to yyyymmddThh:mm yyyymmddThhmm
-            System.Diagnostics.Debug.WriteLine("DEMDLVDAT sans - " + DEMDLVDAT);
             String DEMDLVHOU = DEMDLVDAT.Replace(":", String.Empty).Substring(9); //hhmmss
-            System.Diagnostics.Debug.WriteLine("DEMDLVHOU split  " + DEMDLVHOU);
             DEMDLVHOU = DEMDLVHOU.Substring(0, 4); //hhmm
-            System.Diagnostics.Debug.WriteLine("DEMDLVHOU pour sage  " + DEMDLVHOU);
             DEMDLVDAT = DEMDLVDAT.Substring(0, 8); //yyyymmdd
-            System.Diagnostics.Debug.WriteLine("DEMDLVDAT pour sage  " + DEMDLVDAT);
 
             dt = dt.AddDays(Int32.Parse(json.GetValue("SQH1_2").SelectToken("DAYLTI").ToString()));
-            String SHIDAT = dt.Year.ToString() + dt.Month.ToString() + dt.Day.ToString();
-            System.Diagnostics.Debug.WriteLine("SHIDAT pour sage  " + SHIDAT);
+            String SHIDAT;
+
+            if (dt.Month.ToString().Length == 1)
+            {
+                SHIDAT = dt.Year.ToString() + "0" + dt.Month.ToString() + dt.Day.ToString();
+            }
+            else
+            {
+                SHIDAT = dt.Year.ToString() + dt.Month.ToString() + dt.Day.ToString();
+            }
+
             ViewData["escompte"] = json.GetValue("SQH3_1").SelectToken("DEP"); // Escompte -- 
             c.Json = @"{
                               'SOH0_1': 
