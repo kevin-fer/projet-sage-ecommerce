@@ -2,83 +2,159 @@
 
 @{
     ViewBag.Title = "Commande";
+    //string test = "disabled readonly";
+    string statusAll = "";
+    string statusDevis = "disabled readonly";
 }
 
-<h1>Commandes</h1>
-<p>Valider un devis ou créez une commande</p>
-<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-    <li class="nav-item">
-        <a class="nav-link active" id="pills-devis-tab" data-toggle="pill" href="#pills-devis" role="tab" aria-controls="pills-devis" aria-selected="true">A partir d'un devis</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" id="pills-commande-tab" data-toggle="pill" href="#pills-commande" role="tab" aria-controls="pills-commande" aria-selected="false">Créer une commande</a>
-    </li>
-</ul>
-<div class="tab-content" id="pills-tabContent">
-    <div class="tab-pane fade" id="pills-devis" role="tabpanel" aria-labelledby="pills-devis-tab">
-        <h2>Créer une commande à partir d'un devis</h2>
-        @using (Html.BeginForm("Commande", "Home"))
-        {
-            <h4>Numéro du devis : </h4>
-            <div class="d-flex">
-                <input class="form-control" type="search" name="SQHNUM" placeholder="Numéro du devis">
-                <div class="input-group-append">
-                    <button class="btn btn-dark" type="submit">
-                        <i class="bi bi-search"></i>
-                    </button>
-                </div>
-            </div>
-        }
+<h1>Créer une commande</h1>
 
-        <div class="row gy-2 gx-3 align-items-center">
-            <div class="col-auto">
-                <div class="col-auto">
-                    <label class="visually-hidden" for="autoSizingInput">Site de vente</label>
-                    <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["sitedevente"]" disabled readonly>
-                </div>
-            </div>
-            <div class="col-auto">
-                <div class="col-auto">
-                    <label class="visually-hidden" for="autoSizingInput">Numéro de la commande</label>
-                    <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["numcommande"]" disabled readonly>
-                </div>
-            </div>
-            <div class="col-auto">
-                <div class="col-auto">
-                    <label class="visually-hidden" for="autoSizingInput">Date de la commande</label>
-                    <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["datecommande"]" disabled readonly>
-                </div>
-            </div>
-            <div class="col-auto">
-                <div class="col-auto">
-                    <label class="visually-hidden" for="autoSizingInput">Référence client</label>
-                    <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["codeclient"]" disabled readonly>
-                </div>
-            </div>
-            <div class="col-auto">
-                <div class="col-auto">
-                    <label class="visually-hidden" for="autoSizingInput">État de la commande</label>
-                    <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["etatcommande"]" disabled readonly>
-                </div>
-            </div>
-            <div class="col-auto">
-                <div class="col-auto">
-                    <label class="visually-hidden" for="autoSizingInput">État de la facturation</label>
-                    <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["facturation"]" disabled readonly>
-                </div>
-            </div>
-            <div class="col-auto">
-                <div class="col-auto">
-                    <label class="visually-hidden" for="autoSizingInput">État de l'allocation</label>
-                    <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["allocation"]" disabled readonly>
-                </div>
-            </div>
-            <div class="col-auto">
-                <div class="col-auto">
-                    <label class="visually-hidden" for="autoSizingInput">Numéro du devis</label>
-                    <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["numdevis"]" disabled readonly>
-                </div>
-            </div>
+@using (Html.BeginForm())
+{
+    string place_holder;
+    if (ViewData["numerodevis"] == null)
+    {
+        place_holder = "Numéro du devis";
+    }
+    else
+    {
+        place_holder = ViewData["numerodevis"].ToString();
+    }
+    <h4>Numéro du devis :</h4>
+    <div class="d-flex">
+        <input class="form-control" type="search" name="SQHNUM" placeholder="Numéro du devis">
+        <div class="input-group-append">
+            <button class="btn btn-dark" type="submit">
+                <i class="bi bi-search"></i>
+            </button>
         </div>
     </div>
-</div>
+}
+<br />
+@if (ViewData["sitedevente"] != null)
+{
+
+    <h2>Informations du devis</h2>
+    <div class="row gy-2 gx-3 align-items-center">
+        <div class="col-auto">
+            <div class="col-auto">
+                <label class="visually-hidden" for="autoSizingInput">Site de vente</label>
+                <input type="text" class="form-control" id="autoSizingInput" name="sitedevente" placeholder="@ViewData["sitedevente"]" @statusDevis>
+            </div>
+        </div>
+        <div class="col-auto">
+            <div class="col-auto">
+                <label class="visually-hidden" for="autoSizingInput">Type de devis</label>
+                <input type="text" class="form-control" id="autoSizingInput" name="typedevis" placeholder="@ViewData["typedevis"]" @statusDevis>
+            </div>
+        </div>
+        <div class="col-auto">
+            <div class="col-auto">
+                <label class="visually-hidden" for="autoSizingInput">Numéro du devis</label>
+                <input type="text" class="form-control" id="autoSizingInput" name="numerodevis" placeholder="@ViewData["numerodevis"]" @statusDevis>
+            </div>
+        </div>
+        <div class="col-auto">
+            <div class="col-auto">
+                <label class="visually-hidden" for="autoSizingInput">Référence client</label>
+                <input type="text" class="form-control" id="autoSizingInput" name="codeclient" placeholder="@ViewData["codeclient"]" @statusDevis>
+            </div>
+        </div>
+        <div class="col-auto">
+            <div class="col-auto">
+                <label class="visually-hidden" for="autoSizingInput">Référence commercial</label>
+                <input type="text" class="form-control" id="autoSizingInput" name="codecommercial" placeholder="@ViewData["codecommercial"]" @statusDevis>
+            </div>
+        </div>
+        <div class="col-auto">
+            <div class="col-auto">
+                <label class="visually-hidden" for="autoSizingInput">Site de stockage</label>
+                <input type="text" class="form-control" id="autoSizingInput" name="sitedestockage" placeholder="@ViewData["sitedestockage"]" @statusDevis>
+            </div>
+        </div>
+        <div class="col-auto">
+            <div class="col-auto">
+                <label class="visually-hidden" for="autoSizingInput">Délai de livraison</label>
+                <input type="text" class="form-control" id="autoSizingInput" name="delailivraison" placeholder="@ViewData["delailivraison"]" @statusDevis>
+            </div>
+        </div>
+        <div class="col-auto">
+            <div class="col-auto">
+                <label class="visually-hidden" for="autoSizingInput">Référence adresse</label>
+                <input type="text" class="form-control" id="autoSizingInput" name="adbpc" placeholder="@ViewData["adbpc"]" @statusDevis>
+            </div>
+        </div>
+        <div class="col-auto">
+            <div class="col-auto">
+                <label class="visually-hidden" for="autoSizingInput">Modalité de facturation</label>
+                <input type="text" class="form-control" id="autoSizingInput" name="modalitefacturation" placeholder="@ViewData["modalitefacturation"]" @statusDevis>
+            </div>
+        </div>
+        <div class="col-auto">
+            <div class="col-auto">
+                <label class="visually-hidden" for="autoSizingInput">Escompte</label>
+                <input type="text" class="form-control" id="autoSizingInput" name="escompte" placeholder="@ViewData["escompte"]" @statusDevis>
+            </div>
+        </div>
+        <div class="col-auto">
+            <div class="col-auto">
+                <label class="visually-hidden" for="autoSizingInput">Remise</label>
+                <input type="text" class="form-control" id="autoSizingInput" name="remise" placeholder="@ViewData["remise"]" @statusDevis>
+            </div>
+        </div>
+        <div class="col-auto">
+            <div class="col-auto">
+                <label class="visually-hidden" for="autoSizingInput">Assurance</label>
+                <input type="text" class="form-control" id="autoSizingInput" name="assurance" placeholder="@ViewData["assurance"]" @statusDevis>
+            </div>
+        </div>
+        <br />
+    </div>
+    <br />
+    <h2>Le reste</h2>
+    <div class="row gy-2 gx-3 align-items-center">
+        <div class="col-auto">
+            <div class="col-auto">
+                <!--ok-->
+                <label class="visually-hidden" for="autoSizingInput">Date de la commande</label>
+                <input type="text" class="form-control" id="autoSizingInput" name="datecommande" placeholder="Date de la commande" @statusAll>
+            </div>
+        </div>
+        <div class="col-auto">
+            <label class="visually-hidden" for="autoSizingInput">Date de livraison demandée</label>
+            <input type="text" class="form-control" id="autoSizingInput" name="livraisondatedemandee" placeholder="Date de livraison demandée" @statusAll>
+        </div>
+    </div>
+    <br />
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Image</th>
+                <th scope="col">Référence</th>
+                <th scope="col">Désignation</th>
+                <th scope="col">Prix unitaire TTC</th>
+                <th scope="col">Quantité</th>
+                <th scope="col">Fiche article</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 1; i <= Int32.Parse(ViewData["length"].ToString()); i++)
+            {
+                <tr>
+                    <th scope="row">@i</th>
+                    <td class="w-25"><img src="data:image/png;base64, @ViewData["blob" + (i-1).ToString()]" alt="Image de l'article" class="img-fluid" style="max-width: 25%;" /></td>
+                    <td>@ViewData["nom" + (i - 1).ToString()]</td>
+                    <td>@ViewData["des" + (i - 1).ToString()]</td>
+                    <td>@ViewData["prix" + (i - 1).ToString()] €</td>
+                    <td>@ViewData["quantite" + (i - 1).ToString()]</td>
+                    <td>
+                        <a class="btn btn-dark" href="https://localhost:44365/Home/Item/@ViewData["nom" + (i - 1).ToString()]">Voir plus</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a class="btn btn-dark" href="https://localhost:44365/Home/CreateCommande/@ViewData["numerodevis"]">Créer la commande</a>
+
+}
