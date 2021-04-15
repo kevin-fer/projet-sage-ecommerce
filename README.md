@@ -4,7 +4,7 @@ Mise en place d’une application de gestion de type E-commerce reliée par Web 
 ## Tuteur enseignant
 * Sébastien De Botton (Université de Paris)
 
-## L'équipe en charge du développement de l'application web avec ASP.NET (C#]
+## L'équipe en charge du développement de l'application web avec ASP.NET (C#)
 * Dayana Villada Rodriguez
 * Quentin Jolivet
 * Luca Martinolli
