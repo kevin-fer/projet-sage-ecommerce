@@ -144,6 +144,7 @@ namespace projet_sage_ecommerce.Controllers
             }
                        
             c.readObject();
+                ViewData["modify"] = "faux";
                 JObject json = JObject.Parse(c.Resultat.resultXml);
 
                 // Zone principale
@@ -795,6 +796,10 @@ namespace projet_sage_ecommerce.Controllers
         public ActionResult Error404() {
             Response.StatusCode = 404;
             return View("Error404");
+        }
+        public ActionResult ModifyCommand() {
+            Response.StatusCode = 404;
+            return View("ModifyCommand");
         }
 
     }
