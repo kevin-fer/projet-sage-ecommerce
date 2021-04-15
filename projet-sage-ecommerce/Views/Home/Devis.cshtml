@@ -13,9 +13,8 @@
         <div>
             <h1>Panier</h1>
             <hr />
+
             @Html.ActionLink("Modifier", "", "", new { id = @ViewData["numdevis"] }, new { @class = "btn btn-warning" })
-
-
 
 
             @Html.ActionLink("Supprimer", "DeleteDevis", "Home", new { id = @ViewData["numdevis"] }, new { @class = "btn btn-danger", @onclick = "return confirm('Souhaitez-vous supprimer le devis ?')" })
@@ -67,9 +66,9 @@
                                     <td>@ViewData["idarticle"]</td>
                                     <td>@ViewData["des"]</td>
                                     <td>@ViewData["prix"] @ViewData["devise"]</td>
-                                    @using (Html.BeginForm())
+                                    @using (Html.BeginForm("ModifyDevis", "Home"))
                                     {
-                                        <td>@Html.TextBox("qteinput", ViewData["qte"], new { @type = "number", @min = "1" })</td>
+                                        <td><input class="form-control" type="number" value=@ViewData["qte"] name="qteinput"></td>
                                     }
                                     <td>@ViewData["sous-total"]</td>
                                 </tr>
@@ -91,7 +90,7 @@
                 <p>qte : @ViewData["qte"]</p>
                 <p>@ViewData["qty1"]</p>
                 <p>@ViewData["qty2"]</p>
-
+                <button type="submit" class="btn btn-primary">Commander</button>
             </form>
 
         </div>

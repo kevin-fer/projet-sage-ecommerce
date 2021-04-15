@@ -438,7 +438,7 @@ namespace projet_sage_ecommerce.Controllers
 
         //--------------------------------------------------création devis---------------------------------------------------
 
-        public ActionResult Devis(String id, String refCli) //id article et référence client
+        public ActionResult Devis(String id) //id article et référence client
         {
             CAdxModel client = new CAdxModel();
 
@@ -498,6 +498,9 @@ namespace projet_sage_ecommerce.Controllers
             ViewData["siteexpedition"] = json.GetValue("SQH1_2").SelectToken("STOFCY");
             ViewData["totalht"] = json.GetValue("SQH2_4").SelectToken("QUOINVNOT");
 
+
+            //System.Diagnostics.Debug.WriteLine("num dev  " + ViewData["numdevis"]);
+
             //tableau article dans devis
             int e = 0;
             foreach (JObject jsonObject in jsonArray)
@@ -529,8 +532,10 @@ namespace projet_sage_ecommerce.Controllers
             client.Param[0].key = "SQHNUM";
             client.Param[0].value = id;
 
-            //qte = Request.Form["qteinput"];
-            qte = Int32.Parse(Request.Form["qteinput"].ToString());
+            //qte = Int32.Parse(Request.Form["qteinput"].ToString());
+            //qte = Int32.Parse(Request["qteinput"]);
+            qte = Int32.Parse(Request.Form["qteinput"]);
+            System.Diagnostics.Debug.WriteLine("qte  " + qte);
 
             client.Json = @"{
                               'SQH2_1': [
@@ -542,7 +547,7 @@ namespace projet_sage_ecommerce.Controllers
 
             client.modifyObject();
 
-            JObject json = JObject.Parse(client.Resultat.resultXml);
+            /*JObject json = JObject.Parse(client.Resultat.resultXml);
             JArray jsonArray = (JArray)json.GetValue("SQH2_1");
 
             //tableau article dans devis
@@ -551,7 +556,7 @@ namespace projet_sage_ecommerce.Controllers
                 ViewData["qty1"] = jsonObject.SelectToken("QTY");
             }
 
-            ViewData["qty2"] = qte;
+            ViewData["qty2"] = qte;*/
 
             return View("ModifyDevis", client);
         }
