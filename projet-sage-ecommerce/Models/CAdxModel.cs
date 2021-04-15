@@ -6,6 +6,7 @@ using projet_sage_ecommerce.WebReference;
 using projet_sage_ecommerce.Models;
 using SAGE_Client_WS;
 using System.Net;
+namespace projet_sage_ecommerce.Properties;
 
 namespace projet_sage_ecommerce.Models
 {
@@ -29,15 +30,14 @@ namespace projet_sage_ecommerce.Models
 
         public CAdxModel()
         {
-            Client.Url = "http://54.75.248.198/soap-generic/syracuse/collaboration/syracuse/CAdxWebServiceXmlCC";
-
-            NetworkCredential netCredential = new NetworkCredential("admin", "X3V11");
+            Client.Url = Properties.Settings.Default.projet_sage_ecommerce_WebReference_CAdxWebServiceXmlCCService;
+            NetworkCredential netCredential = new NetworkCredential(Properties.Settings.Default.user, Properties.Settings.Default.password);
             Client.Credentials = netCredential;
             Client.PreAuthenticate = true;
 
-            Context.codeLang = "FRA";
-            Context.poolAlias = "YPROJETERP";
-            Context.requestConfig = "adxwss.beautify=true&adxwss.optreturn=JSON";
+            Context.codeLang = Properties.Settings.Default.code_lang;
+            Context.poolAlias = Properties.Settings.Default.pool_alias;
+            Context.requestConfig = Properties.Settings.Default.request_config;
         }
 
         public void run()
