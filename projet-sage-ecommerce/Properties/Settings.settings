@@ -5,5 +5,20 @@
     <Setting Name="projet_sage_ecommerce_WebReference_CAdxWebServiceXmlCCService" Type="(Web Service URL)" Scope="Application">
       <Value Profile="(Default)">http://54.75.248.198/soap-generic/syracuse/collaboration/syracuse/CAdxWebServiceXmlCC</Value>
     </Setting>
+    <Setting Name="user" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">admin</Value>
+    </Setting>
+    <Setting Name="password" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">X3V11</Value>
+    </Setting>
+    <Setting Name="code_lang" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">FRA</Value>
+    </Setting>
+    <Setting Name="pool_alias" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">YPROJETERP</Value>
+    </Setting>
+    <Setting Name="request_config" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">adxwss.beautify=true&amp;adxwss.optreturn=JSON</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

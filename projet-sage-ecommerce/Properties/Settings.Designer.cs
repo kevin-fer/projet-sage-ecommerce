@@ -33,5 +33,50 @@ namespace projet_sage_ecommerce.Properties {
                 return ((string)(this["projet_sage_ecommerce_WebReference_CAdxWebServiceXmlCCService"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("admin")]
+        public string user {
+            get {
+                return ((string)(this["user"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("X3V11")]
+        public string password {
+            get {
+                return ((string)(this["password"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("FRA")]
+        public string code_lang {
+            get {
+                return ((string)(this["code_lang"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("YPROJETERP")]
+        public string pool_alias {
+            get {
+                return ((string)(this["pool_alias"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("adxwss.beautify=true&adxwss.optreturn=JSON")]
+        public string request_config {
+            get {
+                return ((string)(this["request_config"]));
+            }
+        }
     }
 }

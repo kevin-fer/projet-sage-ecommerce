@@ -7,60 +7,77 @@ using System.Web.Mvc;
 using Newtonsoft.Json.Linq;
 using Newtonsoft;
 using projet_sage_ecommerce.Models;
-using projet_sage_ecommerce.WebReference;
+using projet_sage_ecommerce.WebReference; //Pour appeler la référence de service
 using SAGE_Client_WS;
 namespace projet_sage_ecommerce.Controllers
 {
+    /// <summary>
+    /// La classe contrôleur MVC HomeController.
+    /// Architecture mono-contrôleur
+    /// La classe HomeController permet :
+    /// Gérer les requêtes de navigateur.
+    /// Récupérer les données du modèle.
+    /// Appeler les modèles de vue qui retournent une réponse.
+    /// </summary>
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        //------------------------------------------------ INDEX ------------------------------------------------------------------------------
+        /// <summary>Permet GET / d'accéder à la page Index contenant un jumbontron et trois articles </summary>
+        /// <return>Retourne la vue Index.cshtml/// </return>
+        public ActionResult Index() // GET: /Home/Index/
         {
+            /// <summary>Instanciation d'un client basé sur la classe model CAdxModel permettant de communiquer avec l'ERP SAGE </summary>
             CAdxModel client = new CAdxModel();
 
+            /// <summary>Nom du service web utilisé, WSYTESTITM pour la gestion des articles en web service </summary>
             client.WsAlias = "WSYTESTITM";
             client.Json = "{}";
 
+            /// <summary>Méthode run permettant d'executer un sous programme L4G de SAGE X3</summary>
             client.run();
 
-            for (int i = 0; i < client.Resultat.messages.Length; i++) // Boucle pour récupérer les messages
+            /// <summary>Récupérer les messages d'erreur</summary>
+            for (int i = 0; i < client.Resultat.messages.Length; i++) 
             {
                 if (client.Resultat.messages[i].type.Equals("1")) Console.WriteLine("INFORMATION : ");
                 if (client.Resultat.messages[i].type.Equals("2")) Console.WriteLine("AVERTISSEMENT : ");
                 if (client.Resultat.messages[i].type.Equals("3")) Console.WriteLine("ERREUR : ");
-                Console.WriteLine(client.Resultat.messages[i].message);
+                System.Diagnostics.Debug.WriteLine("Méthode Index / Run : " + client.Resultat.messages[i].message);
             }
 
-            JObject json = JObject.Parse(client.Resultat.resultXml);
+            /// <summary>Récuperer le flux de la réponse, ici nous récupérons les informations des articles</summary>
+            JObject reponseJson = JObject.Parse(client.Resultat.resultXml);
 
-            JArray jsonArray = (JArray)json.GetValue("GRP1");
-            int e = 0;
-            foreach (JObject jsonObject in jsonArray)
+            /// <summary>Récupération du tableau contenant les articles</summary>
+            JArray arrayOfItem = (JArray)reponseJson.GetValue("GRP1");
+            int e = 0; // e = numéro de l'article, permet de rendre l'identifiant des champs des articles unique
+
+            /// <summary>Pour chaque article, nous récupérons ses informations.</summary>
+            foreach (JObject item in arrayOfItem)
             {
-                ViewData["nom" + e.ToString()] = jsonObject.SelectToken("ITMREF"); // client.Resultat.resultXml;
-                ViewData["des" + e.ToString()] = jsonObject.SelectToken("ITMDES1"); // client.Resultat.resultXml;
-                ViewData["des2" + e.ToString()] = jsonObject.SelectToken("ITMDES2"); // client.Resultat.resultXml;
-                ViewData["blob" + e.ToString()] = jsonObject.SelectToken("BLOB"); // client.Resultat.resultXml;
-                ViewData["prix" + e.ToString()] = jsonObject.SelectToken("BASPRI"); // client.Resultat.resultXml;
-                ViewData["quantite" + e.ToString()] = jsonObject.SelectToken("QTYPCU"); // client.Resultat.resultXml;
+                ViewData["nom" + e.ToString()] = item.SelectToken("ITMREF"); // Identifiant de l'article : ITMREF
+                ViewData["des" + e.ToString()] = item.SelectToken("ITMDES1"); // Désignation de l'article : ITMDES1
+                ViewData["blob" + e.ToString()] = item.SelectToken("BLOB"); // Image sous forme de blob (chaine de caractères representant des informations en base 64)
+                ViewData["prix" + e.ToString()] = item.SelectToken("BASPRI"); // Prix de l'article
+                ViewData["quantite" + e.ToString()] = item.SelectToken("QTYPCU"); // Stock
                 e++;
-            }
-            
-            ViewData["length"] = e;
+            }        
+            ViewData["length"] = e; //Nombre d'article - taille du tableau
 
-            JArray jsonArray3 = (JArray)json.GetValue("GRP3");
+            JArray arrayOfItemDes = (JArray)reponseJson.GetValue("GRP3"); //Description des items dans le groupe GRP3
 
             e = 0;
-            foreach (JObject jsonObject in jsonArray3)
+            /// <summary>Pour chaque description d'article, nous récupérons sa valeur.</summary>
+            foreach (JObject itemDescription in arrayOfItemDes)
             {
-                string des = (string)jsonObject.SelectToken("YDESCRIPTION");
-
-                ViewData["description" + e.ToString()] = des; // client.Resultat.resultXml;
+                ViewData["description" + e.ToString()] = (string)itemDescription.SelectToken("YDESCRIPTION");  // client.Resultat.resultXml;
                 e++;
             }
             
             return View("Index", client);
         }
 
+        //------------------------------------------------ CATALOGUE ------------------------------------------------------------------------------
         public ActionResult Catalogue()
         {
             CAdxModel client = new CAdxModel();
@@ -194,7 +211,7 @@ namespace projet_sage_ecommerce.Controllers
                 //Prix
                 ViewData["prixttht"] = json.GetValue("SOH4_4").SelectToken("ORDINVNOT"); // Prix total HT
                 ViewData["prixttTTC"] = json.GetValue("SOH4_4").SelectToken("ORDINVATI"); // Prix total TTC
-
+            
                 JArray jsonArray1 = (JArray)json.GetValue("SOH3_5");// Les réducs / assurances
                 JObject jobj = (JObject)jsonArray1[0];
                 JObject jobj1 = (JObject)jsonArray1[2];
@@ -899,7 +916,7 @@ namespace projet_sage_ecommerce.Controllers
             ViewData["priorite"] = json.GetValue("SOH2_1").SelectToken("DLVPIO_LBL"); // Priorité de la livraison
 
             //DEVIS 
-            ViewData["numdevis"] = json.GetValue("SOH3_3").SelectToken("SQHNUM"); // Fournisseur
+            ViewData["numdevis"] = id; // Fournisseur
                                                                                   //Articles
             JArray jsonArray = (JArray)json.GetValue("SOH4_1");//Get list of items
 
