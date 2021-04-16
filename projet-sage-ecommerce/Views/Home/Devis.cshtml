@@ -18,6 +18,7 @@
 
 
             @Html.ActionLink("Supprimer", "DeleteDevis", "Home", new { id = @ViewData["numdevis"] }, new { @class = "btn btn-danger", @onclick = "return confirm('Souhaitez-vous supprimer le devis ?')" })
+
             <hr />
             <form>
                 <div class="container">
@@ -40,7 +41,7 @@
                     <input type="text" class="form-control" id="date" value="@DateTime.Now.Date.ToString().Substring(0, 10)" aria-describedby="dateHelp" disabled>
 
                     <label for="client" class="form-label">Code client</label>
-                    <input type="text" class="form-control" id="client" value=@ViewData["client"] aria-describedby="nomHelp" disabled>
+                    <input type="text" class="form-control" id="client" value=@ViewData["client"] aria-describedby="nomHelp">
 
                     <label for="adresse" class="form-label">Adresse</label>
                     <input type="text" class="form-control" id="adresse" value=@ViewData["adr_cli"] aria-describedby="adrHelp" disabled>

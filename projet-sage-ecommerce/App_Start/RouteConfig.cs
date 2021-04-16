@@ -13,6 +13,9 @@ namespace projet_sage_ecommerce
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            // To enable route attribute in controllers
+            routes.MapMvcAttributeRoutes();
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

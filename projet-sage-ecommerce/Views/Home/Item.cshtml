@@ -30,10 +30,17 @@
                     <h4>Description de l'article</h4>
                     @ViewData["description"]
                 </p>
+                @using (Html.BeginForm("Devis","Home"))
+                {
+                    //Html.ActionLink("Devis", "Devis", "Home", new { id = @ViewData["nom"] }, new { @class = "btn btn-dark btn-lg" })
+                    <input type="text" name="itemref" value="@ViewData["nom"]" class="invisible"/>
+                    <hr/>
+                    <input type="number" min="0" max="30" id="qteinput" value="1" name="qte" aria-describedby="qteHelp">
+                    <input type="submit" class="btn btn-primary" value="Devis" />
 
-                @Html.ActionLink("Devis", "Devis", "Home", new { id = @ViewData["nom"] }, new { @class = "btn btn-dark btn-lg" })
-                <input type="number" min="0" max="30" id="qteinput" value="1" aria-describedby="qteHelp">
+                }
             </div>
+
         </div>
     </div>
 </div>

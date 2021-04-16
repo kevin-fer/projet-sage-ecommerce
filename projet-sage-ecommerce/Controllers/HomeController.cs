@@ -461,10 +461,11 @@ namespace projet_sage_ecommerce.Controllers
 
         //--------------------------------------------------création devis---------------------------------------------------
 
-        public ActionResult Devis(String id) //id article et référence client
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult Devis(/*String id, int qte*/) //id article et référence client
         {
             CAdxModel client = new CAdxModel();
-
+            
             client.WsAlias = "WSYDEVIS"; //WJWSDEVIS
 
             String date_now = DateTime.Today.ToString("yyyyMMdd");
@@ -474,7 +475,7 @@ namespace projet_sage_ecommerce.Controllers
                                 'SALFCY': 'FR015',
                                 'SQHTYP': 'SQN',
                                 'QUODAT': '" + date_now + @"',
-                                'BPCORD': 'YYCLF1'
+                                'BPCORD': 'YYCL1'
                               },
                               'SQH1_2': {
                                 'STOFCY': 'FR014',
@@ -499,8 +500,8 @@ namespace projet_sage_ecommerce.Controllers
                                 }
                                 ],'SQH2_1': [
                                 {
-                                  'ITMREF': '" + id + @"',
-                                  'QTY': '1'
+                                  'ITMREF': '" + Request.Form["itemref"] + @"',
+                                  'QTY': '" + Request.Form["qte"] + @"'
                                 }
                               ]
                             }";

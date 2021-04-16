@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using projet_sage_ecommerce.WebReference;
-using projet_sage_ecommerce.Models;
 using SAGE_Client_WS;
 using System.Net;
-namespace projet_sage_ecommerce.Properties;
 
 namespace projet_sage_ecommerce.Models
 {
