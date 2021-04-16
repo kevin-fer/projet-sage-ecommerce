@@ -864,6 +864,21 @@ namespace projet_sage_ecommerce.Controllers
             return RedirectToAction("ResultatCreation", "Home", new { id = jsonResult.GetValue("SOH0_1").SelectToken("SOHNUM")});
         }
 
+        //----------- Supprimer une commande ----------
+        public ActionResult DeleteCommande(String id) {
+            CAdxModel client = new CAdxModel();
+
+            client.WsAlias = "WSYCOMERP";
+
+            client.Param[0] = new CAdxParamKeyValue();
+            client.Param[0].key = "SOHNUM";
+            client.Param[0].value = id;
+
+            client.delete();
+
+            return View("DeleteCommande", client);
+        }
+
         public ActionResult ResultatCreation(CAdxModel c, string id = "0")
         {
             c = new CAdxModel();
