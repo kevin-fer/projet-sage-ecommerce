@@ -490,6 +490,12 @@ namespace projet_sage_ecommerce.Controllers
 
             client.save();
 
+            /*client.Param[0] = new CAdxParamKeyValue
+            {
+                key = "SQHNUM",
+                value = Session["SQHNUM"].ToString() //"FR0152104SQN00000063";
+            };*/
+
             //nblig nbre de lignes tableau
 
             JObject json = JObject.Parse(client.Resultat.resultXml);
@@ -528,12 +534,24 @@ namespace projet_sage_ecommerce.Controllers
         }
 
         //------------------------------------------------------modifier devis---------------------------------------------
+        public ActionResult ModifyDevis()
+        {
+            CAdxModel client = new CAdxModel();
+            client.WsAlias = "WSYDEVIS";
+
+            client.Param[0] = new CAdxParamKeyValue
+            {
+                key = "SQHNUM",
+                value = Session["SQHNUM"].ToString() //"FR0152104SQN00000063";
+            };
+            return View(client);
+        }
+
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult ModifyDevis(String id, int qte)
         {
             CAdxModel client = new CAdxModel();
             client.WsAlias = "WSYDEVIS";
-
             client.Param[0] = new CAdxParamKeyValue();
             client.Param[0].key = "SQHNUM";
             client.Param[0].value = id;

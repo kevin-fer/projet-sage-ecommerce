@@ -66,10 +66,7 @@
                                     <td>@ViewData["idarticle"]</td>
                                     <td>@ViewData["des"]</td>
                                     <td>@ViewData["prix"] @ViewData["devise"]</td>
-                                    @using (Html.BeginForm("ModifyDevis", "Home"))
-                                    {
-                                        <td><input class="form-control" type="number" value=@ViewData["qte"] name="qteinput"></td>
-                                    }
+                                    <td><input class="form-control" id= type="number" value=@ViewData["qte"] name="qteinput"></td>
                                     <td>@ViewData["sous-total"]</td>
                                 </tr>
                             }
@@ -86,10 +83,11 @@
                     <input type="checkbox" class="form-check-input" id="exampleCheck1">
                     <label class="form-check-label" for="exampleCheck1">CGU</label>
                 </div>
-                <button type="submit" class="btn btn-primary">Valider</button>
+                @Html.ActionLink("Valider", "ModifyDevis", "Home", new { qte = Request.Form["qte"] }, new { @class = "btn btn-primary" })
+                
                 <p>qte : @ViewData["qte"]</p>
-                <p>@ViewData["qty1"]</p>
-                <p>@ViewData["qty2"]</p>
+                <p>qte : @Request.Form["qte"]</p>
+
                 <button type="submit" class="btn btn-primary">Commander</button>
             </form>
 
