@@ -20,7 +20,8 @@
             @Html.ActionLink("Supprimer", "DeleteDevis", "Home", new { id = @ViewData["numdevis"] }, new { @class = "btn btn-danger", @onclick = "return confirm('Souhaitez-vous supprimer le devis ?')" })
 
             <hr />
-            <form>
+            @using (Html.BeginForm("Devis", "Home"))
+            {
                 <div class="container">
                     <div class="row">
                         <div class="col-sm">
@@ -64,11 +65,15 @@
                             {
                                 <tr>
                                     <th scope="row">@i</th>
-                                    <td>@ViewData["idarticle"]</td>
-                                    <td>@ViewData["des"]</td>
-                                    <td>@ViewData["prix"] @ViewData["devise"]</td>
-                                    <td><input class="form-control" id= type="number" value=@ViewData["qte"] name="qteinput"></td>
-                                    <td>@ViewData["sous-total"]</td>
+                                    @{ 
+                                        String itminput = "itminput" + (i - 1).ToString(); //itminput0
+                                        String qteinput = "qteinput" + (i - 1).ToString(); //qteinput0
+                                    }
+                                    <td>@ViewData["idarticle" + (i-1).ToString()]<input type="text" value=@ViewData["idarticle" + (i-1).ToString()] name="@itminput" class="invisible"></td>
+                                    <td>@ViewData["des" + (i - 1).ToString()]</td>
+                                    <td>@ViewData["prix" + (i - 1).ToString()] €</td>
+                                    <td><input class="form-control" type="number" value=@ViewData["qte" + (i-1).ToString()] name="@qteinput"></td>
+                                    <td>@ViewData["sous-total" + (i - 1).ToString()] €</td>
                                 </tr>
                             }
                         </tbody>
@@ -77,20 +82,21 @@
                         <label for="totalc" class="form-label">Total</label>
                         <input type="text" class="form-control" id="totalc" value=@ViewData["sous-total"] aria-describedby="totalcHelp" disabled>
                     </div>
+                    <a href="https://localhost:44365/Home/Catalogue" class="btn btn-success">Ajouter un autre article</a>
+                    <button type="submit" class="btn btn-primary">Mettre à jour le devis</button>
                 </div>
 
                 <br />
-                <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label" for="exampleCheck1">CGU</label>
-                </div>
+                <!--
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">CGU</label>
+        </div>-->
+
                 @Html.ActionLink("Valider", "ModifyDevis", "Home", new { qte = Request.Form["qte"] }, new { @class = "btn btn-primary" })
-                
                 <p>qte : @ViewData["qte"]</p>
                 <p>qte : @Request.Form["qte"]</p>
-
-                <button type="submit" class="btn btn-primary">Commander</button>
-            </form>
+            }
 
         </div>
     </body>

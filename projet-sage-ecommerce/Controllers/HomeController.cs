@@ -9,6 +9,8 @@ using Newtonsoft;
 using projet_sage_ecommerce.Models;
 using projet_sage_ecommerce.WebReference; //Pour appeler la référence de service
 using SAGE_Client_WS;
+using Microsoft.VisualBasic;
+
 namespace projet_sage_ecommerce.Controllers
 {
     /// <summary>
@@ -464,18 +466,20 @@ namespace projet_sage_ecommerce.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Devis(/*String id, int qte*/) //id article et référence client
         {
+
             CAdxModel client = new CAdxModel();
             
             client.WsAlias = "WSYDEVIS"; //WJWSDEVIS
 
             String date_now = DateTime.Today.ToString("yyyyMMdd");
-
-            client.Json = @"{
+            if (Session["panierEtat"] == null || Session["panierEtat"].ToString() == "termine") // Si le devis est terminé ou n'a jamais été commencé
+            {
+                client.Json = @"{
                               'SQH0_1': {
                                 'SALFCY': 'FR015',
                                 'SQHTYP': 'SQN',
                                 'QUODAT': '" + date_now + @"',
-                                'BPCORD': 'YYCL1'
+                                'BPCORD': 'YYCLF1'
                               },
                               'SQH1_2': {
                                 'STOFCY': 'FR014',
@@ -506,47 +510,107 @@ namespace projet_sage_ecommerce.Controllers
                               ]
                             }";
 
-            client.save();
+                client.save();
 
-            /*client.Param[0] = new CAdxParamKeyValue
-            {
-                key = "SQHNUM",
-                value = Session["SQHNUM"].ToString() //"FR0152104SQN00000063";
-            };*/
+                JObject reponseJson = JObject.Parse(client.Resultat.resultXml);
 
-            //nblig nbre de lignes tableau
+                ViewData["numdevis"] = reponseJson.GetValue("SQH0_1").SelectToken("SQHNUM");
+                ViewData["sitevente"] = reponseJson.GetValue("SQH0_1").SelectToken("SALFCY"); // client.Resultat.resultXml;
+                ViewData["typedevis"] = reponseJson.GetValue("SQH0_1").SelectToken("SQHTYP");
+                ViewData["date"] = reponseJson.GetValue("SQH0_1").SelectToken("QUODAT");
+                ViewData["client"] = reponseJson.GetValue("SQH0_1").SelectToken("BPCORD");
+                ViewData["adr_cli"] = reponseJson.GetValue("SQH1_1").SelectToken("BPAADD");
+                ViewData["siteexpedition"] = reponseJson.GetValue("SQH1_2").SelectToken("STOFCY");
+                ViewData["totalht"] = reponseJson.GetValue("SQH2_4").SelectToken("QUOINVNOT");
 
-            JObject json = JObject.Parse(client.Resultat.resultXml);
-            JArray jsonArray = (JArray)json.GetValue("SQH2_1");
+                JArray jsonArray = (JArray)reponseJson.GetValue("SQH2_1");
 
-            ViewData["numdevis"] = json.GetValue("SQH0_1").SelectToken("SQHNUM");
-            ViewData["sitevente"] = json.GetValue("SQH0_1").SelectToken("SALFCY"); // client.Resultat.resultXml;
-            ViewData["typedevis"] = json.GetValue("SQH0_1").SelectToken("SQHTYP");
-            ViewData["date"] = json.GetValue("SQH0_1").SelectToken("QUODAT");
-            ViewData["client"] = json.GetValue("SQH0_1").SelectToken("BPCORD");
-            ViewData["adr_cli"] = json.GetValue("SQH1_1").SelectToken("BPAADD");
-            ViewData["siteexpedition"] = json.GetValue("SQH1_2").SelectToken("STOFCY");
-            ViewData["totalht"] = json.GetValue("SQH2_4").SelectToken("QUOINVNOT");
+                int e = 0;
+                foreach (JObject jsonObject in jsonArray)
+                {
+                    ViewData["idarticle" + e.ToString()] = jsonObject.SelectToken("ITMREF"); // article ITMREF et qte QTY
+                    ViewData["des" + e.ToString()] = jsonObject.SelectToken("ITMDES");
+                    ViewData["prix" + e.ToString()] = jsonObject.SelectToken("NETPRI");
+                    ViewData["qte" + e.ToString()] = jsonObject.SelectToken("QTY");
+                    ViewData["sous-total" + e.ToString()] = jsonObject.SelectToken("LINQUONOT");
+                    e++;
+                }
+                ViewData["count"] = e;
+                System.Diagnostics.Debug.WriteLine(client.Resultat.resultXml);
 
-
-            //System.Diagnostics.Debug.WriteLine("num dev  " + ViewData["numdevis"]);
-
-            //tableau article dans devis
-            int e = 0;
-            foreach (JObject jsonObject in jsonArray)
-            {
-                ViewData["idarticle"] = jsonObject.SelectToken("ITMREF"); // article ITMREF et qte QTY
-                ViewData["des"] = jsonObject.SelectToken("ITMDES");
-                ViewData["prix"] = jsonObject.SelectToken("NETPRI");
-                ViewData["qte"] = jsonObject.SelectToken("QTY");
-                ViewData["sous-total"] = jsonObject.SelectToken("LINQUONOT");
-                e++;
+                reponseJson = JObject.Parse(client.Resultat.resultXml);
+                Session["numdevisSession"] = reponseJson.GetValue("SQH0_1").SelectToken("SQHNUM");
+                Session["panierEtat"] = "en cours";
             }
-            ViewData["count"] = e;
+            else
+            {
+                client.Param[0] = new CAdxParamKeyValue();
+                client.Param[0].key = "SQHNUM";
+                client.Param[0].value = Session["numdevisSession"].ToString();
+                System.Diagnostics.Debug.WriteLine("VALUE PANIER " + client.Param[0].value);
+                client.readObject();
 
-            //while devis pas validé, on garde dans la session le mm devis 
-            /*c.Param[0].value = Request.Form["devisnum"];
-            Session["numdevisSession"] = c.Param[0].value;*/
+                JObject reponseJson = JObject.Parse(client.Resultat.resultXml);
+                JArray jsonArray = (JArray)reponseJson.GetValue("SQH2_1");
+                ViewData["count"] = jsonArray.Count;
+                System.Diagnostics.Debug.WriteLine(Request.Form["itminput0"]);
+                int e = 0;
+                
+                foreach (JObject jsonObject in jsonArray)
+                {
+                    System.Diagnostics.Debug.WriteLine(jsonObject.SelectToken("ITMREF").ToString());
+                    for (int i = 0; i < 0; i++)
+                    {
+                        if(Request.Form["itminput" + e.ToString()] == jsonObject.SelectToken("ITMREF").ToString())
+                        {                            
+                            if (Request.Form["qteinput" + e.ToString()] != jsonObject.SelectToken("QTY").ToString())
+                            {
+                                client.Json = @"{
+                                  'SQH2_1': [
+                                    {
+                                      'ITMREF': '" + ViewData["idarticle" + e.ToString()] + @"',
+                                      'QTY': '" + ViewData["qteinput" + e.ToString()] + @"'
+                                    }
+                                  ]
+                                }";
+                                client.modifyObject();
+
+                                reponseJson = JObject.Parse(client.Resultat.resultXml);
+
+                                ViewData["numdevis"] = reponseJson.GetValue("SQH0_1").SelectToken("SQHNUM");
+                                ViewData["sitevente"] = reponseJson.GetValue("SQH0_1").SelectToken("SALFCY"); // client.Resultat.resultXml;
+                                ViewData["typedevis"] = reponseJson.GetValue("SQH0_1").SelectToken("SQHTYP");
+                                ViewData["date"] = reponseJson.GetValue("SQH0_1").SelectToken("QUODAT");
+                                ViewData["client"] = reponseJson.GetValue("SQH0_1").SelectToken("BPCORD");
+                                ViewData["adr_cli"] = reponseJson.GetValue("SQH1_1").SelectToken("BPAADD");
+                                ViewData["siteexpedition"] = reponseJson.GetValue("SQH1_2").SelectToken("STOFCY");
+                                ViewData["totalht"] = reponseJson.GetValue("SQH2_4").SelectToken("QUOINVNOT");
+
+                                jsonArray = (JArray)reponseJson.GetValue("SQH2_1");
+
+                                e = 0;
+                                foreach (JObject item in jsonArray)
+                                {
+                                    ViewData["idarticle" + e.ToString()] = item.SelectToken("ITMREF"); // article ITMREF et qte QTY
+                                    ViewData["des" + e.ToString()] = item.SelectToken("ITMDES");
+                                    ViewData["prix" + e.ToString()] = item.SelectToken("NETPRI");
+                                    ViewData["qte" + e.ToString()] = item.SelectToken("QTY");
+                                    ViewData["sous-total" + e.ToString()] = item.SelectToken("LINQUONOT");
+                                    e++;
+                                }
+                                ViewData["count"] = e;
+                            }
+                        }
+                        else
+                        {
+                            
+                        }
+                    }
+                    
+                    ViewData["qte"] = jsonObject.SelectToken("QTY");
+                    e++;
+                }
+            }
 
             return View("Devis", client);
         }

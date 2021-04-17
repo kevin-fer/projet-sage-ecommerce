@@ -2,7 +2,9 @@
 
 @{
     ViewBag.Title = "SuiviCommande";
-}@if (@ViewData["sitedevente"] == null)
+}
+
+@if (@ViewData["sitedevente"] == null)
 {
 
     using (Html.BeginForm())

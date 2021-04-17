@@ -155,13 +155,13 @@
                         <td>@ViewData["prix" + (i - 1).ToString()] €</td>
                         <td>@ViewData["quantite" + (i - 1).ToString()]</td>
                         <td>
-                            <a class="btn btn-dark" href="https://localhost:44365/Home/Item/@ViewData["nom" + (i - 1).ToString()]">Voir plus</a>
+                            <!--<a class="btn btn-dark" href="https://localhost:44365/Home/Item/@ViewData["nom" + (i - 1).ToString()]">Voir plus</a>-->
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
-        <!--<a class="btn btn-dark" href="https://localhost:44365/Home/CreateCommande/@ViewData["numerodevis"]">Créer la commande</a>-->
+        <a class="btn btn-dark" href="https://localhost:44365/Home/CreateCommande/@ViewData["numerodevis"]">Créer la commande</a>
         <input type="submit" class="btn btn-primary" value="Commander"/>
     }
 
