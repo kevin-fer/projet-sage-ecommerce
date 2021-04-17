@@ -273,7 +273,7 @@
     <Content Include="Views\Home\FormulaireClient.cshtml" />
     <Content Include="Views\Home\DeleteDevis.cshtml" />
     <Content Include="Views\Home\ModifyDevis.cshtml" />
-    <Content Include="Views\Home\ModifyCommand.cshtml" />
+    <Content Include="Views\Home\DeleteCommande.cshtml" />
     <None Include="Views\Home\_RechercheArticle.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

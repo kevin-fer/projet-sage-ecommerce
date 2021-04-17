@@ -40,6 +40,7 @@
 
     @if (ViewData["numcommande"] != null || Request.QueryString["id"] == "1")
     {
+
     <div class="result-container shadow p-3 mb-5 bg-body rounded">
         <h1>Suivre la commande N°@ViewData["numcommande"]</h1>
         <script>
@@ -53,54 +54,62 @@
             }
         </script>
         <button class="btn btn-dark" onclick="test()">Modifier</button>
-        <button class="btn btn-warning">Supprimer</button>
+        @Html.ActionLink("Supprimer", "DeleteCommande", "Home", new { id = @ViewData["numcommande"] }, new { @class = "btn btn-danger", @onclick = "return confirm('Souhaitez-vous supprimer la commande ?')" })
         <br />
         <h2>Les informations sur votre commande</h2>
         <div class="row gy-2 gx-3 align-items-center">
             <div class="col-auto">
-                <div class="col-auto"><!--ok-->
+                <div class="col-auto">
+                    <!--ok-->
                     <label class="visually-hidden" for="autoSizingInput">Site de vente</label>
                     <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["sitedevente"]" disabled readonly>
                 </div>
             </div>
             <div class="col-auto">
-                <div class="col-auto"><!--ok-->
+                <div class="col-auto">
+                    <!--ok-->
                     <label class="visually-hidden" for="autoSizingInput">Numéro de la commande</label>
                     <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["numcommande"]" disabled readonly>
                 </div>
             </div>
             <div class="col-auto">
-                <div class="col-auto"><!--ok-->
+                <div class="col-auto">
+                    <!--ok-->
                     <label class="visually-hidden" for="autoSizingInput">Date de la commande</label>
                     <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["datecommande"]" disabled readonly>
                 </div>
             </div>
             <div class="col-auto">
-                <div class="col-auto"><!--ok-->
+                <div class="col-auto">
+                    <!--ok-->
                     <label class="visually-hidden" for="autoSizingInput">Référence client</label>
                     <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["codeclient"]" disabled readonly>
                 </div>
             </div>
             <div class="col-auto">
-                <div class="col-auto"><!--ok-->
+                <div class="col-auto">
+                    <!--ok-->
                     <label class="visually-hidden" for="autoSizingInput">État de la commande</label>
                     <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["etatcommande"]" disabled readonly>
                 </div>
             </div>
             <div class="col-auto">
-                <div class="col-auto"><!--ok-->
+                <div class="col-auto">
+                    <!--ok-->
                     <label class="visually-hidden" for="autoSizingInput">État de la facturation</label>
                     <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["facturation"]" disabled readonly>
                 </div>
             </div>
             <div class="col-auto">
-                <div class="col-auto"><!--ok-->
+                <div class="col-auto">
+                    <!--ok-->
                     <label class="visually-hidden" for="autoSizingInput">État de l'allocation</label>
                     <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["allocation"]" disabled readonly>
                 </div>
             </div>
             <div class="col-auto">
-                <div class="col-auto"><!--ok-->
+                <div class="col-auto">
+                    <!--ok-->
                     <label class="visually-hidden" for="autoSizingInput">Numéro du devis</label>
                     <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["numdevis"]" disabled readonly>
                 </div>
@@ -146,7 +155,7 @@
                             <td>@ViewData["QTY" + (i - 1).ToString()]</td>
                             <td>@ViewData["LINORDNOT" + (i - 1).ToString()] €</td>
                             <td>
-                                <a class="btn btn-dark" href="https://localhost:44365/Home/Item/@ViewData[" ITMREF" + (i - 1).ToString()]">Voir plus</a>
+                                <a class="btn btn-dark" href="https://localhost:44365/Home/Item/@ViewData["ITMREF" + (i - 1).ToString()]">Voir plus</a>
                             </td>
                         </tr>
                         }
@@ -202,7 +211,7 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade" id="pills-livraison" role="tabpanel" aria-labelledby="pills-livraison-tab">
+            <div class="tab-pane fade" id="pills-livraison" role="tabpanel"aria-labelledby="pills-livraison-tab">
                 <h2>Transporteur</h2>
                 <div class="row gy-2 gx-3 align-items-center">
                     <div class="col-auto">
@@ -295,8 +304,8 @@
                     </div>
                     <div class="col-auto">
                         <div class="col-auto">
-                           <label class="visually-hidden" for="autoSizingInput">Statut de la livraison</label>
-                           <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["statutdelivry"]" disabled readonly>
+                            <label class="visually-hidden" for="autoSizingInput">Statut de la livraison</label>
+                            <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["statutdelivry"]" disabled readonly>
                         </div>
                     </div>
                 </div>
@@ -306,19 +315,19 @@
                     <div class="col-auto">
                         <div class="col-auto">
                             <label class="visually-hidden" for="autoSizingInput">Rue</label>
-                            <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["rue"]" disabled readonly   />
+                            <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["rue"]" disabled readonly />
                         </div>
                     </div>
                     <div class="col-auto">
                         <div class="col-auto">
                             <label class="visually-hidden" for="autoSizingInput">Ville</label>
-                            <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["ville"]" disabled readonly   />
+                            <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["ville"]" disabled readonly />
                         </div>
                     </div>
                     <div class="col-auto">
                         <div class="col-auto">
                             <label class="visually-hidden" for="autoSizingInput">Code postal</label>
-                            <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["codepostal"]" disabled readonly   />
+                            <input type="text" class="form-control" id="autoSizingInput" placeholder="@ViewData["codepostal"]" disabled readonly />
                         </div>
                     </div>
                     <div class="col-auto">
@@ -332,7 +341,7 @@
 
         </div>
     </div>
-            }
+    }
         
     </div>
 
