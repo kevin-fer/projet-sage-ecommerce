@@ -45,7 +45,7 @@ namespace projet_sage_ecommerce.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("X3V11")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Motdepasse-2021")]
         public string password {
             get {
                 return ((string)(this["password"]));
