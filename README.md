@@ -1,6 +1,6 @@
 # projet-sage-ecommerce
 Mise en place d’une application de gestion de type E-commerce reliée par Web Services à SAGE ERP X3
-
+https://i.imgur.com/USxlhws.png
 ## Tuteur enseignant
 * Sébastien De Botton (Université de Paris)
 
