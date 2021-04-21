@@ -278,7 +278,7 @@ namespace projet_sage_ecommerce.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Votre page de contact";
 
             return View();
         }
