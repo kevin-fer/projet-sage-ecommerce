@@ -5,10 +5,10 @@ Logo du dadashop : https://i.imgur.com/USxlhws.png
 * Sébastien De Botton (Université de Paris)
 
 ## L'équipe en charge du développement de l'application web avec ASP.NET (C#)
-* Dayana Villada Rodriguez
-* Quentin Jolivet
-* Luca Martinolli
-* Kévin  Ferreira
+* Dayana Villada Rodriguez @dayana-18
+* Quentin Jolivet @JtQuentin
+* Luca Martinolli @Kramm
+* Kévin  Ferreira @kevin-fer
 
 ## L'équipe en charge des traitements SAGE X3 L4G et de l'application mobile Android avec Xamarin
 * Richard Chen
@@ -33,3 +33,23 @@ Logo du dadashop : https://i.imgur.com/USxlhws.png
 
 ## Suivi commande
 ![image](https://user-images.githubusercontent.com/74706736/116231155-cfc9c680-a758-11eb-847c-85a57a734acd.png)
+![image](https://user-images.githubusercontent.com/74706736/116231226-e6701d80-a758-11eb-8657-54c03bf6aed9.png)
+![image](https://user-images.githubusercontent.com/74706736/116231291-f556d000-a758-11eb-8dcd-e67a00bd9e14.png)
+![image](https://user-images.githubusercontent.com/74706736/116231307-f982ed80-a758-11eb-949e-73699f8eeba8.png)
+![image](https://user-images.githubusercontent.com/74706736/116231329-fe47a180-a758-11eb-97ee-3f28559ac0ed.png)
+
+## Error 404 page
+![image](https://user-images.githubusercontent.com/74706736/116231360-0acbfa00-a759-11eb-9a28-d3756d3795c4.png)
+
+## Version mobile
+![image](https://user-images.githubusercontent.com/74706736/116231414-1e776080-a759-11eb-90ab-405207845987.png)
+![image](https://user-images.githubusercontent.com/74706736/116231427-23d4ab00-a759-11eb-9f5c-64ab8a0b1f6d.png)
+
+## Version tablette
+![image](https://user-images.githubusercontent.com/74706736/116231445-2931f580-a759-11eb-81e5-46aafd97f370.png)
+![image](https://user-images.githubusercontent.com/74706736/116231453-2c2ce600-a759-11eb-8108-778af8eb7987.png)
+
+## Dark mode (test branch)
+![image](https://user-images.githubusercontent.com/74706736/116231473-38b13e80-a759-11eb-9ea8-a6baadb950c3.png)
+![image](https://user-images.githubusercontent.com/74706736/116231498-4070e300-a759-11eb-9841-39b791be10ab.png)
+
