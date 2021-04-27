@@ -1,5 +1,6 @@
 # projet-sage-ecommerce
 Mise en place d’une application de gestion de type E-commerce reliée par Web Services à SAGE ERP X3
+![image](https://user-images.githubusercontent.com/74706736/116231637-6b5b3700-a759-11eb-9291-19f07b134fc4.png)
 Logo du dadashop : https://i.imgur.com/USxlhws.png
 ## Tuteur enseignant
 * Sébastien De Botton (Université de Paris)
