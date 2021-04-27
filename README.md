@@ -8,7 +8,7 @@ Logo du dadashop : https://i.imgur.com/USxlhws.png
 ## L'équipe en charge du développement de l'application web avec ASP.NET (C#)
 * Dayana Villada Rodriguez @dayana-18
 * Quentin Jolivet @JtQuentin
-* Luca Martinolli @Kramm
+* Luca Martinolli @Khalemm
 * Kévin  Ferreira @kevin-fer
 
 ## L'équipe en charge des traitements SAGE X3 L4G et de l'application mobile Android avec Xamarin
