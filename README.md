@@ -27,3 +27,9 @@ Logo du dadashop : https://i.imgur.com/USxlhws.png
 
 ## Page article
 ![image](https://user-images.githubusercontent.com/74706736/116231001-9e50fb00-a758-11eb-9528-1aae0d42bb54.png)
+
+## Page devis
+![image](https://user-images.githubusercontent.com/74706736/116231113-c2144100-a758-11eb-97d5-6e30fb6bf7a0.png)
+
+## Suivi commande
+![image](https://user-images.githubusercontent.com/74706736/116231155-cfc9c680-a758-11eb-847c-85a57a734acd.png)
